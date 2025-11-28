@@ -6,7 +6,7 @@ body {
 
 /* NAVBAR */
 .navbar {
-    background: #222;
+    background: #2b3947;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -15,16 +15,17 @@ body {
 }
 
 .nav-btn {
-    background: #4CAF50;
+    background: white;
     padding: 8px 12px;
-    color: white;
+    color: #2b3947;
     text-decoration: none;
     border-radius: 5px;
     font-weight: bold;
 }
 
 .nav-btn:hover {
-    background: #45a049;
+    background: #6a8aaea9;
+    color : white;
 }
 
 .container {
