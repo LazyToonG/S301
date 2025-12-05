@@ -8,6 +8,8 @@
 - [Diagramme de cas d'utilisation](Diagramme_de_cas_d'utilisation.jpg)
 - [Diagramme de Gantt](Diagramme_de_Gantt.png)
 -------------------------
+- [Maquette du site](Maquette_diffSon.jpg)
+- -----------------------
 - [MEA]()
 - [Schéma Relationnel](Schema_relationnel.md)
 - [Matrice des risques]()
