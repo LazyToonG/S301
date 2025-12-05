@@ -1,6 +1,6 @@
 ## Sommaire
 -------------------------
-- [Présentation](Sommaire.md)
+- [Présentation](Présentation.md)
 - [Consigne diffusion sonore](Consigne_diffusion_sonore.md)
 -------------------------
 - [Cahier des charges](Cahier_des_charges.md)
