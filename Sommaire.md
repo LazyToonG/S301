@@ -1,10 +1,10 @@
 ## Sommaire
 
 - [Présentation](Sommaire.md)
-- [Consigne diffusion sonore](Consigne diffusion sonore.md)
-- [Cahier des charges](Cahier des charges.md)
-- [Diagramme de cas d'utilisation](Diagramme de cas d'utilisation sae 301.jpg)
-- [Diagramme de Gantt](Diagramme de Gantt.png)
-- [User Stories](User stories.md)
+- [Consigne diffusion sonore](Consigne_diffusion_sonore.md)
+- [Cahier des charges](Cahier_des_charges.md)
+- [Diagramme de cas d'utilisation](Diagramme_de_cas_d'utilisation.jpg)
+- [Diagramme de Gantt](Diagramme_de_Gantt.png)
+- [User Stories](User_stories.md)
 
 - [Flask](flask)
