@@ -6,4 +6,4 @@ app.config["SESSION_COOKIE_SECURE"] = True
 # la configuration de la clé secrète est obligatoire
 app.secret_key = 'ma cle secrete unique'
 
-#from app.controllers import *
+from app.controllers import *
