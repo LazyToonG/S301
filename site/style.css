@@ -1,1 +1,49 @@
-body {background-color: #b5d3f0;}
+body {
+    background-color: #b5d3f0;
+    font-family: Times, "Times New Roman", Georgia, serif;
+}
+.test {
+    display : flex;
+    flex-direction: row;
+    background-color: #267ac9;
+    color : white;
+    font-size: 24px;
+    padding: 17px;
+    align-items: center;
+    justify-content: space-between;
+}
+.test div {
+    color : white;
+    background-color: #ffffff4c;
+    margin: 5px;
+    padding: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
+.sombre {
+    color:white;
+    background-color: black;
+}
+
+.clair {
+    color: black;
+    background-color: white;
+}
+
+.h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
