@@ -1,7 +1,33 @@
 body {
     background-color: #b5d3f0;
     font-family: Times, "Times New Roman", Georgia, serif;
+    position: relative; 
+    min-height: 100vh;
+    margin: 0;
 }
+
+body::after {
+    content: "";
+    background-image: url('logo.png'); /* Mettez le bon nom de fichier ici */
+    
+    /* On gère la taille et la position */
+    background-repeat: no-repeat;
+    background-position: center center; /* Centré horizontalement et verticalement */
+    background-size: 500px; /* Ajustez cette taille selon vos envies (ex: 60%) */
+    
+    /* On gère la transparence */
+    opacity: 0.4; /* 0.1 est très discret, 0.2 un peu plus visible. Ne mettez pas trop fort ! */
+    
+    /* On s'assure que l'image reste DERRIÈRE le texte */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Envoie l'image en arrière-plan */
+    pointer-events: none; /* Permet de cliquer "au travers" de l'image si elle passe devant un bouton */
+}
+
 .test {
     display : flex;
     flex-direction: row;
