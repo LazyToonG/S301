@@ -10,6 +10,10 @@
 			{% if session["role"] == "admin" %}
 				<a href="{{ url_for('admin') }}" class="btn btn-primary">Admin Panel</a>
 			{% endif %}
+			<center><div>
+				<h4><strong>Musiquali</strong></h4>
+			</div></center>
+			
 			{% if "logged" in session %}
 				{{ session["username"] }}
 				<a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
