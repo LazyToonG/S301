@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Marketing Dashboard</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="test">
+        <div class="user-info">
+            <div>User: <strong>{{Nom}}</strong></div>
+            <div>{{Role}}</div>
+            <button class="btn-logout">Logout</button>
+        </div>
+        <div class="logo">Musi-quali <img src="logo.png" alt="logo"/></div>
+        <div class="b">
+            <input class="mode sombre" type="button" value="Mode {{...}}"/>
+            <select><option>Français</option></select>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="col-gauche">
+            <button class="btn-bleu">▶ Jouer playlist</button>
+            <button class="btn-bleu">🔀 Shuffle playlist</button>
+
+            <table>
+                <tr><th>Titre</th><th>Genre</th><th>Date</th><th>Auteur</th></tr>
+                <tr><td>Jazz Morning</td><td>Jazz</td><td>12/01</td><td>Artist A</td></tr>
+                <tr><td>Pop Night</td><td>Pop</td><td>11/01</td><td>Artist B</td></tr>
+                <tr><td>Indie Mix</td><td>Rock</td><td>10/01</td><td>Artist C</td></tr>
+            </table>
+            <div style="font-size: 24px; font-weight: bold;">
+                + &nbsp; — &nbsp; ...
+            </div>
+        </div>
+
+        <div class="col-droite">
+            <h3>Upload un nouvelle musique</h3>
+            <div class="upload-zone">
+                <div class="icone-upload">⬆</div> <p>Glisser le fichier ici</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

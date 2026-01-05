@@ -1,0 +1,52 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Commercial Dashboard</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="test">
+        <div class="user-info">
+            <div>User: <strong>{{Nom}}</strong></div>
+            <div>{{Role}}</div>
+            <button class="btn-logout">Logout</button>
+        </div>
+        <div class="logo">Musi-quali <img src="logo.png" alt="logo"/></div>
+        <div class="b">
+            <input class="mode sombre" type="button" value="Mode {{...}}"/>
+            <select><option>Français</option></select>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="col-gauche" style="justify-content: center;">
+            <h3>Jouer un message</h3>
+            
+            <div style="display: flex; align-items: center; background: white; padding: 10px; border-radius: 20px;">
+                🔍 <input type="text" placeholder="chercher message..." style="border:none; outline:none; margin-left: 10px; width: 100%;">
+            </div>
+
+            <div style="margin-top: 30px; display: flex; align-items: center; gap: 10px;">
+                <button style="background:#ff7f50; border-radius: 50%; width: 50px; height: 50px; padding: 0;">▶</button>
+                <div style="display: flex; gap: 2px; align-items: center; height: 40px;">
+                    <div style="width:3px; height:20px; background:black;"></div>
+                    <div style="width:3px; height:35px; background:black;"></div>
+                    <div style="width:3px; height:15px; background:black;"></div>
+                    <div style="width:3px; height:30px; background:black;"></div>
+                    <div style="width:3px; height:25px; background:black;"></div>
+                    <div style="width:3px; height:10px; background:black;"></div>
+                    <div style="width:3px; height:35px; background:black;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-droite">
+            <h3>Upload un nouveau message</h3>
+            <div class="upload-zone">
+                <div class="icone-upload">⬆</div>
+                <p>Importer message vocal</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
