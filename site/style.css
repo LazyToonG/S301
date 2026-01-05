@@ -13,7 +13,7 @@ body::after {
     /* On gère la taille et la position */
     background-repeat: no-repeat;
     background-position: center center; /* Centré horizontalement et verticalement */
-    background-size: 500px; /* Ajustez cette taille selon vos envies (ex: 60%) */
+    background-size: 45vw; /* Ajustez cette taille selon vos envies (ex: 60%) */
     
     /* On gère la transparence */
     opacity: 0.4; /* 0.1 est très discret, 0.2 un peu plus visible. Ne mettez pas trop fort ! */
@@ -72,4 +72,101 @@ body::after {
     align-items: center;
     justify-content: center;
     height: 80vh;
+}
+
+
+/* --- NOUVEAUX STYLES POUR LES DASHBOARDS --- */
+
+/* Conteneur principal pour diviser la page en deux colonnes */
+.main-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 50px;
+    height: calc(100vh - 100px); /* Prend toute la hauteur moins le header */
+    gap: 30px;
+}
+
+.col-gauche, .col-droite {
+    flex: 1; /* Chaque colonne prend 50% de l'espace */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* --- BOUTONS --- */
+button {
+    border: none;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+}
+button:active { transform: scale(0.98); }
+
+.btn-rouge { background-color: #a33e3e; margin-bottom: 10px; width: 100%; text-align: left;}
+.btn-bleu { background-color: #267ac9; margin-bottom: 10px; width: 100%; text-align: left;}
+.btn-logout { background-color: white; color: black; padding: 5px 10px; font-size: 14px;}
+
+/* --- PAGE ADMIN (Logs & Notes) --- */
+.note-jaune {
+    background-color: #fffacd;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    color: black;
+    font-size: 0.9em;
+}
+.console-logs {
+    background-color: #444;
+    color: #0f0; /* Texte vert style hacker */
+    font-family: monospace;
+    flex-grow: 1; /* Prend tout l'espace restant en hauteur */
+    padding: 15px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+.log-header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* --- PAGE MARKETING / COMMERCIAL (Upload & Table) --- */
+.upload-zone {
+    border: 3px dashed #555;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+.upload-zone:hover { background-color: rgba(255, 255, 255, 0.5); }
+.icone-upload { font-size: 50px; font-weight: bold; }
+
+/* Table simple */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.5);
+}
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+
+/* Info utilisateur dans le header */
+.user-info {
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    line-height: 1.2;
 }
