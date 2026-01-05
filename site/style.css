@@ -166,7 +166,7 @@ th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
 /* Info utilisateur dans le header */
 .user-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     font-size: 14px;
     line-height: 1.2;
 }
