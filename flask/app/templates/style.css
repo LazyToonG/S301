@@ -43,6 +43,7 @@ body::after {
     background-color: #ffffff4c;
     margin: 5px;
     padding: 10px;
+    border-radius: 10px;
 }
 
 .logo {
@@ -54,6 +55,18 @@ body::after {
 .logo img {
     height: 60px;
     width: auto;
+}
+
+.seconnecte {
+    height: 50px;
+    width: 110px;
+    background-color: #f33b3bb1;
+    color : white;
+    font-family: Times, "Times New Roman", Georgia, serif;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-top: 15px; 
 }
 
 .sombre {
