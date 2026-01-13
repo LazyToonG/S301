@@ -4,28 +4,19 @@
     <title>Commercial Dashboard</title>
     <link href="style.css" rel="stylesheet">
 </head>
-<body>
+<body class=""> <!-- ajout class sombre ici -->
     {% include 'nav_v2.html' %}
 
-    <div class="main-content">
+    <div class="main-content"> <!-- ajout class sombre ici -->
         <div class="col-gauche" style="justify-content: center;">
             <h3>Jouer un message</h3>
             
-            <div style="display: flex; align-items: center; background: white; padding: 10px; border-radius: 20px;">
+            <div class="recherche" style="display: flex; align-items: center; background: white; padding: 10px; border-radius: 20px;">
                 🔍 <input type="text" placeholder="chercher message..." style="border:none; outline:none; margin-left: 10px; width: 100%;">
             </div>
 
             <div style="margin-top: 30px; display: flex; align-items: center; gap: 10px;">
                 <button style="background:#ff7f50; border-radius: 50%; width: 50px; height: 50px; padding: 0;">▶</button>
-                <div style="display: flex; gap: 2px; align-items: center; height: 40px;">
-                    <div style="width:3px; height:20px; background:black;"></div>
-                    <div style="width:3px; height:35px; background:black;"></div>
-                    <div style="width:3px; height:15px; background:black;"></div>
-                    <div style="width:3px; height:30px; background:black;"></div>
-                    <div style="width:3px; height:25px; background:black;"></div>
-                    <div style="width:3px; height:10px; background:black;"></div>
-                    <div style="width:3px; height:35px; background:black;"></div>
-                </div>
             </div>
         </div>
 
