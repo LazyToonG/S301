@@ -1,4 +1,4 @@
-class schedule : 
+class Schedule : 
     def __init__(self,planning):
         self.monday= planning["monday"]
         self.tuesday= planning["tuesday"]

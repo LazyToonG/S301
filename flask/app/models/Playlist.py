@@ -1,4 +1,4 @@
-class playlist:
+class Playlist:
     def __init__(self, name):
         self.name = name
         self.songs = []
