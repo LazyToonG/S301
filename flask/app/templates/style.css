@@ -69,14 +69,20 @@ body::after {
     margin-top: 15px; 
 }
 
+#langue {
+    border-radius: 7px;
+}
+
 .sombre {
     color:white;
     background-color: black;
+    border-radius: 7px;
 }
 
 .clair {
     color: black;
     background-color: white;
+    border-radius: 7px;
 }
 
 .h1 {
