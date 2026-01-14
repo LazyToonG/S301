@@ -6,5 +6,6 @@ class IndexController:
 
     @app.route('/', methods=['GET'])
     def index():
-        metadata = {"title": "Accueil", "pagename": "index"}
-        return render_template('index.html', metadata=metadata)
+        mode="sombre"
+        metadata = {"title": "Accueil", "pagename": "accueil"}
+        return render_template('login_v2.html', metadata=metadata, mode=mode)

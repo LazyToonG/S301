@@ -57,7 +57,7 @@ class LoginController:
                     return redirect(url_for("index"))
             else:
                 msg_error = 'Invalid Credentials'
-        return render_template('login.html', msg_error=msg_error)
+        return render_template('login_v2.html', msg_error=msg_error)
 
     @app.route("/signin", methods=['GET', 'POST'])
     def signin():

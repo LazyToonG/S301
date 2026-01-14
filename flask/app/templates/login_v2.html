@@ -2,15 +2,14 @@
     <head>
         <meta charset="utf-8">
         <title>Site</title>
-        <link href="style.css" rel="stylesheet">
-        <script src="scripts.js"></script>  
+        <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     </head>
     <body class=""> <!-- ajout class sombre ici -->
         <div class="test"> <!-- ajout class sombre ici -->
             <div class="page">Login</div>
-            <div class="logo">Musi-quali <img src="logo.png" alt="logo"/></div>
+            <div class="logo">Musi-quali <img src="{{ url_for('static', filename='logo.png') }}" alt="logo"/></div>
             <div class="b">
-                <input class="mode_sombre" type="button" value="Mode {{...}}"/>
+                <input class="mode_sombre" type="button" value="Mode "+{{mode}}/>
                 <select name="langue" id="langue">
                     <option value="Langue">Français</option>
                     <option value="Langue">Anglais</option>

@@ -1,4 +1,4 @@
-bodys {
+body {
     background-color: #b5d3f0;
     font-family: Times, "Times New Roman", Georgia, serif;
     position: relative; 
@@ -59,7 +59,7 @@ body.sombre {
     z-index: -1; 
 }
 
-.bienvenue {
+.nav {
     display : flex;
     flex-direction: row;
     background-color: #267ac9;
@@ -71,7 +71,7 @@ body.sombre {
 }
 
 
-.bienvenue div {
+.nav div {
     color : white;
     background-color: #ffffff4c;
     margin: 5px;
