@@ -1,5 +1,5 @@
 import sqlite3
-from models import Musique
+from app.models.Musique import Musique
 
 class MusiqueDAO:
     def __init__(self, db_name="database.db"):
