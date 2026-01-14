@@ -7,7 +7,7 @@ import bcrypt
 class UserSqliteDAO(UserDAOInterface):
 
     def __init__(self):
-        self.databasename = app.static_folder + '/data/users.db'
+        self.databasename = app.static_folder + '/data/database.db'
         self._initTable()
 
     def _getDbConnection(self):
