@@ -6,6 +6,14 @@ body {
     margin: 0;
 }
 
+body.sombre {
+    background-color: #0e1a25;
+    font-family: Times, "Times New Roman", Georgia, serif;
+    position: relative; 
+    min-height: 100vh;
+    margin: 0;
+}
+
 body::after {
     content: "";
     background-image: url('logo.png'); /* Mettez le bon nom de fichier ici */
@@ -73,16 +81,21 @@ body::after {
     border-radius: 7px;
 }
 
-.sombre {
+.mode_sombre {
     color:white;
     background-color: black;
     border-radius: 7px;
 }
 
-.clair {
+.mode_clair {
     color: black;
     background-color: white;
     border-radius: 7px;
+}
+
+.sombre {
+    color : white;
+    background-color: #083967;
 }
 
 .h1 {
@@ -91,6 +104,7 @@ body::after {
     align-items: center;
     justify-content: center;
     height: 80vh;
+    gap: 10px;
 }
 
 
