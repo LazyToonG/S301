@@ -1,0 +1,11 @@
+from app.models.RaspberryDAO import RaspberrySqliteDAO as RaspberryDAO
+
+class RaspberryService():
+    def __init__(self):
+        self.rdao = RaspberryDAO()
+
+    def montreR(self):
+         return self.rdao.findAll
+    
+    def ajoutR(self, identifiant, ipRasp):
+	    return self.rdao.createUser(identifiant, ipRasp)
