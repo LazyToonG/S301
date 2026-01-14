@@ -6,10 +6,10 @@ from app.models.Raspberry import Raspberry
 class RaspberrySqliteDAO():
 
 	def __init__(self):
-			self.databasename = app.root_path + 'static/data//database.db'
+			self.databasename = app.static_folder + '/data//database.db'
 			self._initTable()
 			
-	def getDbConnection(self):
+	def _getDbConnection(self):
 		""" connect the database and returns the connection object """
 		""" connection à la base de données. Retourne l'objet connection """
 		conn = sqlite3.connect(self.databasename)

@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, Flask
 from app import app
 from app.controllers.LoginController import reqrole
 
-from models import MusiqueDAO
+from app.models.MusiqueDAO import MusiqueDAO
 
 app = Flask(__name__)
 dao = MusiqueDAO()
