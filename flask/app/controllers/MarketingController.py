@@ -9,6 +9,12 @@ dao = MusiqueDAO()
 
 @app.route("/")
 def index():
+    traductions={}
+    langue_choisie = request.args.get('lang')
+    if langue_choisie not in ['fr', 'en']:
+        langue_choisie = 'fr'
+    textes = traductions[langue_choisie]
+
     sort = request.args.get("sort", "date")
     musiques = dao.get_5_musiques(sort)
     return render_template("index.html", musiques=musiques, sort=sort)

@@ -38,8 +38,16 @@ def reqrole(role):
 
 class LoginController:
 
+    
+
     @app.route('/login', methods=['GET', 'POST'])
     def login():
+        traductions={}
+        langue_choisie = request.args.get('lang')
+        if langue_choisie not in ['fr', 'en']:
+            langue_choisie = 'fr'
+        textes = traductions[langue_choisie]
+        
         msg_error = None
         if request.method == 'POST':
             user = us.login(request.form["username"], request.form["password"])

@@ -82,15 +82,15 @@ body::after {
 }
 
 .mode_sombre {
-    color:white;
-    background-color: black;
-    border-radius: 7px;
+    background-color: rgba(0, 0, 0, 0);
+    border:none;
+    font-size:20px;
 }
 
 .mode_clair {
-    color: black;
-    background-color: white;
-    border-radius: 7px;
+    background-color: rgba(0, 0, 0, 0);
+    border:none;
+    font-size:20px;
 }
 
 .sombre {

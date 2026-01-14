@@ -2,17 +2,17 @@
     <head>
         <meta charset="utf-8">
         <title>Site</title>
-        <link href="{{ url_for('static', filename='style_accueil.css') }}" rel="stylesheet">  
+        <link href="{{ url_for('static', filename='style_accueil.css') }}" rel="stylesheet">
     </head>
     <body class=""> <!-- ajout class sombre ici -->
         <div class="nav"> <!-- ajout class sombre ici -->
-            <div class="page">Login</div>
+            <div class="page" id="login">Login</div>
             <div class="logo">Musi-quali <img src="{{ url_for('static', filename='logo.png') }}" alt="logo"/></div>
             <div class="b">
-                <input class="mode_sombre" type="button" value="Mode "+{{mode}}/> <!-- modif class input entre mode_clair quand mode de la page est sombre, mode_sombre quand le mode de la page est clair -->
-                <select name="langue" id="langue">
-                    <option value="Langue">Français</option>
-                    <option value="Langue">Anglais</option>
+                <input class="mode_sombre" type="button" value="🌒" id="bouton"/> <!-- modif class input entre mode_clair quand mode de la page est sombre, mode_sombre quand le mode de la page est clair -->
+                <select name="langue" id="select-langue">
+                    <option value="fr" {% if current_lang == 'fr' %}selected{% endif %}>Français</option>
+                    <option value="en" {% if current_lang == 'en' %}selected{% endif %}>English</option>
                 </select>
             </div>
         </div>
@@ -20,26 +20,17 @@
         <br>
         <br>
         <div class="h1">
-            <h1>Bienvenue sur Musi-quali, votre plateforme de diffusion sonore</h1>
+            <h1>{{ t.titre }}</h1>
         </div>
         <div class="presentation"> <!-- ajout class sombre ici -->
-            <p>
-                Musi-quali est une plateforme qui vous permettra de diffuser de la musique et des messages sonores dans votre établissement.
-                Vous pouvez préparer à l'avance un planning de musiques et de messages de publicité directement en ligne, faire des annonces
-                quand vous voulez, et notre plateforme marche même en cas de coupure de connexion.
-            </p>
+            <p>{{ t.desc_1 }}</p>
             <br>
-            <h3>
-                Besoin d'une ambiance sonore dans votre magasin ? Utilisez Musi-quali !
-            </h3>
+            <h3>{{ t.desc_2 }}</h3>
         </div>
 
         <div class="equipe"> <!-- ajout class sombre ici -->
-            <p>
-                Nous somme une équipe d'éudiants en deuxième année en BUT Informatique à l'Universitée Sorbonne Paris Nord.
-            </p>
-            <p>
-                Notre équipe est composée de :
+            <p>{{ t.equipe_intro }}</p>
+            <p>{{ t.equipe_liste }}</p>
                 <ul>
                     <li>Darragh BOYLAN</li>
                     <li>Djibril CHEBLAL</li>
@@ -48,7 +39,8 @@
                     <li>Arthur SHISHKOVSKIY-RYSCHENKOW</li>
                     <li>Anas TALBI</li>
                 </ul>
-            </p>
         </div>
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>
 </html>
