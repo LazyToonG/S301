@@ -63,3 +63,5 @@ class MusiqueDAO:
         cursor.execute("DELETE FROM musique WHERE id = ?", (musique_id,))
         conn.commit()
         conn.close()
+
+    #me suis fait chier pour rien ici je crois

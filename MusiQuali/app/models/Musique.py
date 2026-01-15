@@ -5,3 +5,6 @@ class Musique:
         self.auteur = auteur
         self.genre = genre
         self.date = date
+
+#c qui l'ennemi des champignons?
+#les champioui
