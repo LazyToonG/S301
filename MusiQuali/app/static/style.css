@@ -1,0 +1,203 @@
+body {
+    background-color: #b5d3f0;
+    font-family: Times, "Times New Roman", Georgia, serif;
+    position: relative; 
+    min-height: 100vh;
+    margin: 0;
+}
+
+body.sombre {
+    background-color: #0e1a25;
+    font-family: Times, "Times New Roman", Georgia, serif;
+    position: relative; 
+    min-height: 100vh;
+    margin: 0;
+}
+
+body::after {
+    content: "";
+    background-image: url('logo.png'); /* Mettez le bon nom de fichier ici */
+    
+    /* On gère la taille et la position */
+    background-repeat: no-repeat;
+    background-position: center center; /* Centré horizontalement et verticalement */
+    background-size: 45vw; /* Ajustez cette taille selon vos envies (ex: 60%) */
+    
+    /* On gère la transparence */
+    opacity: 0.4; /* 0.1 est très discret, 0.2 un peu plus visible. Ne mettez pas trop fort ! */
+    
+    /* On s'assure que l'image reste DERRIÈRE le texte */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Envoie l'image en arrière-plan */
+    pointer-events: none; /* Permet de cliquer "au travers" de l'image si elle passe devant un bouton */
+}
+
+.test {
+    display : flex;
+    flex-direction: row;
+    background-color: #267ac9;
+    color : white;
+    font-size: 24px;
+    padding: 17px;
+    align-items: center;
+    justify-content: space-between;
+}
+.test div {
+    color : white;
+    background-color: #ffffff4c;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo img {
+    height: 60px;
+    width: auto;
+}
+
+.seconnecte {
+    height: 50px;
+    width: 110px;
+    background-color: #f33b3bb1;
+    color : white;
+    font-family: Times, "Times New Roman", Georgia, serif;
+    font-size: 15px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-top: 15px; 
+}
+
+#langue {
+    border-radius: 7px;
+}
+
+.mode_sombre {
+    background-color: rgba(0, 0, 0, 0);
+    border:none;
+    font-size:20px;
+}
+
+.mode_clair {
+    background-color: rgba(0, 0, 0, 0);
+    border:none;
+    font-size:20px;
+}
+
+.sombre {
+    color : white;
+    background-color: #083967;
+}
+
+.h1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    gap: 10px;
+}
+
+
+/* Conteneur principal pour diviser la page en deux colonnes */
+.main-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 50px;
+    height: calc(100vh - 100px); /* Prend toute la hauteur moins le header */
+    gap: 30px;
+}
+
+.col-gauche, .col-droite {
+    flex: 1; /* Chaque colonne prend 50% de l'espace */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* --- BOUTONS --- */
+button {
+    border: none;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+}
+button:active { transform: scale(0.98); }
+
+.btn-rouge { background-color: #a33e3e; margin-bottom: 10px; width: 100%; text-align: left;}
+.btn-bleu { background-color: #267ac9; margin-bottom: 10px; width: 100%; text-align: left;}
+.btn-logout { background-color: white; color: black; padding: 5px 10px; font-size: 14px;}
+
+/* --- PAGE ADMIN (Logs & Notes) --- */
+.note-jaune {
+    background-color: #fffacd;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    color: black;
+    font-size: 0.9em;
+}
+.console-logs {
+    background-color: #444;
+    color: #0f0; /* Texte vert style hacker */
+    font-family: monospace;
+    flex-grow: 1; /* Prend tout l'espace restant en hauteur */
+    padding: 15px;
+    border-radius: 5px;
+    overflow-y: auto;
+}
+.log-header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* --- PAGE MARKETING / COMMERCIAL (Upload & Table) --- */
+.upload-zone {
+    border: 3px dashed #555;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+.upload-zone:hover { background-color: rgba(255, 255, 255, 0.5); }
+.icone-upload { font-size: 50px; font-weight: bold; }
+
+/* Table simple */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: rgba(255,255,255,0.5);
+}
+th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+
+/* Info utilisateur dans le header */
+.user-info {
+    display: flex;
+    flex-direction: row;
+    font-size: 14px;
+    line-height: 1.2;
+}
