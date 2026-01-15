@@ -2,11 +2,12 @@
     <head>
         <meta charset="utf-8">
         <title>Site</title>
+        <link rel="icon" href="../static/logo.png" type="image/png">
         <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     </head>
     <body class=""> <!-- ajout class sombre ici -->
-        <div class="test"> <!-- ajout class sombre ici -->
-            <div class="page">Login</div>
+        <div class="nav"> <!-- ajout class sombre ici -->
+            <div class="page">{{t.login}}</div>
             <div class="logo">Musi-quali <img src="{{ url_for('static', filename='logo.png') }}" alt="logo"/></div>
             <div class="b">
                 <input class="mode_sombre" type="button" value="🌒" id="bouton"/>
@@ -17,11 +18,11 @@
             </div>
         </div>
         <div class="h1">
-            <h1>Login : <input class="login" type="text"/></h1>
-            <h1>Password : <input class="password" type="text"/></h1>
+            <h1>{{t.h1}} :<input class="login" type="text"/></h1>
+            <h1>{{t.password}} : <input class="password" type="text"/></h1>
             <input class="seconnecte" type="button" value="Se connecter"/>
         </div>
         
-        <script src="{{ url_for('static', filename='langue.js') }}"></script>
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>
 </html>

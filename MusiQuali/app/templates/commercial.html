@@ -2,13 +2,14 @@
 <head>
     <meta charset="utf-8">
     <title>Commercial Dashboard</title>
+    <link rel="icon" href="../static/logo.png" type="image/png">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
 </head>
 <body class=""> <!-- ajout class sombre ici -->
     {% include 'nav_v2.html' %}
     <div class="main-content"> <!-- ajout class sombre ici -->
         <div class="col-gauche" style="justify-content: center;">
-            <h3>{{h3_1}}</h3>
+            <h3>{{ t.h3_1 }}</h3>
             
             <div class="recherche" style="display: flex; align-items: center; background: white; padding: 10px; border-radius: 20px;">
                 🔍 <input type="text" placeholder="chercher message..." style="border:none; outline:none; margin-left: 10px; width: 100%;">
@@ -20,10 +21,10 @@
         </div>
 
         <div class="col-droite">
-            <h3>{{h3_2}}</h3>
+            <h3>{{ t.h3_2 }}</h3>
             <div class="upload-zone">
                 <div class="icone-upload">⬆</div>
-                <p>{{p}}</p>
+                <p>{{ t.p }}</p>
             </div>
         </div>
     </div>

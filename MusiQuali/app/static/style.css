@@ -36,7 +36,7 @@ body::after {
     pointer-events: none; /* Permet de cliquer "au travers" de l'image si elle passe devant un bouton */
 }
 
-.test {
+.nav {
     display : flex;
     flex-direction: row;
     background-color: #267ac9;
@@ -46,7 +46,7 @@ body::after {
     align-items: center;
     justify-content: space-between;
 }
-.test div {
+.nav div {
     color : white;
     background-color: #ffffff4c;
     margin: 5px;

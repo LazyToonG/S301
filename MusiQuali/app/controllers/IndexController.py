@@ -8,6 +8,7 @@ class IndexController:
     def index():
         traductions = {
             'fr': {
+                "login" : "Se connecter",
                 'titre': "Bienvenue sur Musi-quali, votre plateforme de diffusion sonore",
                 'desc_1': "Musi-quali est une plateforme qui vous permettra de diffuser de la musique et des messages sonores dans votre établissement. Vous pouvez préparer à l'avance un planning de musiques et de messages de publicité directement en ligne, faire des annonces quand vous voulez, et notre plateforme marche même en cas de coupure de connexion.",
                 'desc_2': "Besoin d'une ambiance sonore dans votre magasin ? Utilisez Musi-quali !",
@@ -15,6 +16,7 @@ class IndexController:
                 'equipe_liste': "Notre équipe est composée de :"
             },
             'en': {
+                "login" : "Login",
                 'titre': "Welcome to Musi-quali, your sound broadcasting platform",
                 'desc_1': "Musi-quali is a platform that allows you to broadcast music and audio messages in your establishment. You can prepare a schedule of music and advertising messages in advance directly online, make announcements whenever you want, and our platform even works in the event of a connection failure.",
                 'desc_2': "Need a sound atmosphere in your store? Use Musi-quali!",

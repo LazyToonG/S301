@@ -36,5 +36,5 @@ if (selectLangue) {
 
 document.getElementById('login').addEventListener('click',page_login)
 function page_login(){
-    document.location.href="http://localhost:8000/login_v2.html";
+    document.location.href="http://localhost:8000/login";
 }

@@ -42,7 +42,23 @@ class LoginController:
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        traductions={}
+        traductions={
+            "fr" : {
+                "user" : "Utilisateur",
+                "logout" : "Déconnexion",
+                "login" : "Se connecter",
+                "h1" : "Nom d'utilisateur",
+                "password" : "Mot de passe"
+            },
+
+            "en" : {
+                "user" : "User",
+                "logout" : "Logout",
+                "login" : "Login",
+                "h1" : "Username",
+                "password" : "Password"
+            }
+        }
         langue_choisie = request.args.get('lang')
         if langue_choisie not in ['fr', 'en']:
             langue_choisie = 'fr'
@@ -65,7 +81,7 @@ class LoginController:
                     return redirect(url_for("index"))
             else:
                 msg_error = 'Invalid Credentials'
-        return render_template('login_v2.html', msg_error=msg_error)
+        return render_template('login_v2.html', msg_error=msg_error, t=textes, current_lang=langue_choisie)
 
     @app.route("/signin", methods=['GET', 'POST'])
     def signin():

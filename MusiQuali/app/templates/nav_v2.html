@@ -1,7 +1,7 @@
-<div class="test"> <!-- ajout class sombre ici -->
+<div class="nav"> <!-- ajout class sombre ici -->
     <div class="user-info">
-        <div>User: <strong>{{Nom}}</strong></div>
-        <div style="font-size: 0.9em;">{{Role}}</div> <button class="btn-logout">Logout</button>
+        <div>{{t.user}}: <strong>{{Nom}}</strong></div>
+        <div style="font-size: 0.9em;">{{Role}}</div> <button class="btn-logout">{{t.logout}}</button>
     </div>
 
     <div class="logo">Musi-quali <img src="{{ url_for('static', filename='logo.png') }}" alt="logo"/></div>
