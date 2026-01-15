@@ -13,6 +13,15 @@
             <button class="btn-rouge">Mettre à jour les M3U</button>
             <button class="btn-rouge">Playlist (accès page playlist)</button>
             <button class="btn-rouge">Base de données (accès BD)</button>
+            <form action="/fruit/add" method="POST">
+            <div class="mb-3 mt-3">
+                <label for="identifiant" class="form-label">"Quel est l'identifiant de la nouvelle Raspberry que vous voulez insérer ?"</label>
+                <input type="text" class="form-control" id="identifiant" placeholder="Entrez l'identifiant de la Raspberry" name="identifiant">
+                <label for="ip" class="form-label">"Quel est l'adresse IP de cette nouvelle Raspberry que vous voulez insérer ?"</label>
+                <input type="text" class="form-control" id="ip" placeholder="Entrez l'adresse IP de la Raspberry" name="ip">
+            </div>
+            <button type="submit" class="submit">Submit</button>
+</form>
             
             <p>Dernier rafraîchissement : 10:45</p>
 
