@@ -1,4 +1,6 @@
 class Raspberry:
-    def __init__(self, identifiant, ipRasp):
-        self.identifiant = identifiant
+    def __init__(self, idRasp, nom, ipRasp, entreprise):
+        self.idRasp = idRasp
+        self.nom = nom
         self.ipRasp = ipRasp
+        self.entreprise = entreprise

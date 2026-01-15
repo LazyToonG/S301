@@ -4,8 +4,10 @@ class RaspberryService():
     def __init__(self):
         self.rdao = RaspberryDAO()
 
-    def montreR(self):
+    def montreToutRasp(self):
          return self.rdao.findAll
     
     def ajoutR(self, identifiant, ipRasp):
 	    return self.rdao.createUser(identifiant, ipRasp)
+    
+

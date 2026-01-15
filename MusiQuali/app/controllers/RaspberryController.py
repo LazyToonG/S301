@@ -9,7 +9,16 @@ rs = RaspberryService()
 @app.route('/test', methods = ['POST'])
 def ajoutDansRasp():
     rs.ajoutR(request.form["identifiant"], request.form["ip"])
-    return render_template("/testRasp")
+
+@app.route('/admin', methods = ['POST'])
+def ToutRaspberry():
+    toutRasp = rs.montreToutRasp()
+    list = ()
+    for chaque in toutRasp:
+        if toutRasp.entreprise: #vérifier quel entreprise vient la raspberry
+            list.append(chaque)
+            subprocess.run(["ping", chaque.ipRasp])
+    return render_template("admin", listRasp = list)
 
     today = datetime.datetime.today()
 

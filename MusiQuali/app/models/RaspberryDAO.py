@@ -20,8 +20,10 @@ class RaspberrySqliteDAO():
 		conn = self._getDbConnection()
 		conn.execute('''
 			CREATE TABLE IF NOT EXISTS raspberry (
-				identifiant TEXT NOT NULL DEFAULT 'raspberry',
-				ipRasp TEXT PRIMARY KEY 
+			    idRasp SERIAL PRIMARY KEY,
+				nom TEXT NOT NULL DEFAULT 'raspberry',
+				ipRasp TEXT NOT NULL,
+			   	entreprise TEXT NOT NULL
 			)
 		''')
 		conn.commit()
