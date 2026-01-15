@@ -29,4 +29,4 @@ class IndexController:
             langue_choisie = 'fr'
         textes = traductions[langue_choisie]
         metadata = {"title": "Accueil", "pagename": "accueil"}
-        return render_template('index.html', metadata=metadata, t=textes, current_lang=langue_choisie)
+        return render_template('testRasp.html', metadata=metadata, t=textes, current_lang=langue_choisie)
