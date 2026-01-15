@@ -6,7 +6,7 @@ import subprocess, datetime
 
 rs = RaspberryService()
 
-@app.route('/jsp', methods = ['GET'])
+@app.route('/admin', methods = ['GET'])
 def ajoutDansRasp():
     rs.ajoutR(request.form["identifiant"], request.form["ip"])
 
