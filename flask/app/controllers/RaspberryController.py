@@ -6,10 +6,11 @@ import subprocess, datetime
 
 rs = RaspberryService()
 
-@app.route('/test', methods = ['POST'])
+@app.route('/jsp', methods = ['GET'])
 def ajoutDansRasp():
     rs.ajoutR(request.form["identifiant"], request.form["ip"])
-    return render_template("/testRasp")
+
+#supposer envoyer un fichier à raspberry mais y'a un problème car quel raspberry?
 
     today = datetime.datetime.today()
 
