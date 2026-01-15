@@ -27,8 +27,4 @@ class IndexController:
             langue_choisie = 'fr'
         textes = traductions[langue_choisie]
         metadata = {"title": "Accueil", "pagename": "accueil"}
-<<<<<<< HEAD
         return render_template('index.html', metadata=metadata, t=textes, current_lang=langue_choisie)
-=======
-        return render_template('admin.html', metadata=metadata, t=textes, current_lang=langue_choisie)
->>>>>>> 56187d30dc076fac997330071ca9a8fe4e87d0b5
