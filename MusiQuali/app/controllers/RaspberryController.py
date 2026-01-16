@@ -6,19 +6,19 @@ import subprocess, datetime
 
 rs = RaspberryService()
 
-@app.route('/test', methods = ['POST'])
+@app.route('/testRasp', methods = ['POST'])
 def ajoutDansRasp():
-    rs.ajoutR(request.form["identifiant"], request.form["ip"])
+    rs.ajoutR(request.form["nom"], request.form["ipRasp"])
+    return redirect(url_for('ToutRaspberry'))
 
-@app.route('/admin', methods = ['POST'])
+@app.route('/admin', methods = ['GET'])
 def ToutRaspberry():
     toutRasp = rs.montreToutRasp()
-    list = ()
+    tab = []
     for chaque in toutRasp:
-        if toutRasp.entreprise: #vérifier quel entreprise vient la raspberry
-            list.append(chaque)
-            subprocess.run(["ping", chaque.ipRasp])
-    return render_template("admin", listRasp = list)
+            tab.append(chaque)
+            subprocess.run(["ping", "-c", "1", chaque.ipRasp])
+    return render_template("admin.html", listRasp = tab)
 
     today = datetime.datetime.today()
 

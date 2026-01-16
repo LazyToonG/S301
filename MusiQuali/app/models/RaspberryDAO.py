@@ -6,7 +6,7 @@ from app.models.Raspberry import Raspberry
 class RaspberrySqliteDAO():
 
 	def __init__(self):
-			self.databasename = app.static_folder + '/data//database.db'
+			self.databasename = app.static_folder + '/data/database.db'
 			self._initTable()
 			
 	def _getDbConnection(self):
@@ -20,10 +20,9 @@ class RaspberrySqliteDAO():
 		conn = self._getDbConnection()
 		conn.execute('''
 			CREATE TABLE IF NOT EXISTS raspberry (
-			    idRasp SERIAL PRIMARY KEY,
+			    idRasp INTEGER PRIMARY KEY AUTOINCREMENT,
 				nom TEXT NOT NULL DEFAULT 'raspberry',
-				ipRasp TEXT NOT NULL,
-			   	entreprise TEXT NOT NULL
+				ipRasp TEXT NOT NULL
 			)
 		''')
 		conn.commit()
@@ -31,20 +30,23 @@ class RaspberrySqliteDAO():
 
 	def findAll(self):
 		""" trouve tous les raspberry """
-		conn = self.getDbConnection()
-		raspberry = conn.execute('SELECT * FROM raspberrys').fetchall()
+		conn = self._getDbConnection()
+		raspberry = conn.execute('SELECT * FROM raspberry').fetchall()
 		raspberry_instances = list()
 		for r in raspberry:
-			raspberry_instances.append(Raspberry(dict(r)))
+			# Ici on crée l'objet Raspberry avec les colonnes de la DB
+			raspberry_instances.append(
+				Raspberry(r["idRasp"], r["nom"], r["ipRasp"])
+			)
 		conn.close()
 		return raspberry_instances
-		
-	def createRasp(self, identifiant, ipRasp):
+	
+	def createRasp(self, nom, ipRasp):
 		conn = self._getDbConnection()
 		try:
 			conn.execute(
-				"INSERT INTO raspberry (identifiant, ipRasp) VALUES (:identifiant, :ipRasp)",
-				{"identifiant":identifiant, "ipRasp":ipRasp}
+				"INSERT INTO raspberry (idRasp, nom, ipRasp) VALUES (:idRasp, :nom, :ipRasp)",
+				{"idRasp":1,"nom":nom, "ipRasp":ipRasp}
 			)
 			conn.commit()
 			return True
