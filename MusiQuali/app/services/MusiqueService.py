@@ -2,14 +2,14 @@
 from app.DAO.MusiqueDAO import MusiqueDAO
 from app.services.TraductionService import Traductionservice
 
-class MarketingService:
+class MusiqueService:
     def __init__(self):
         self.dao = MusiqueDAO()
         self.ts = Traductionservice()
 
     def get_traductions(self, lang):
         if lang not in ['fr', 'en']:
-            lang = 'fr'
+            lang = 'fr'#au cas ou on se sert de langues jsp
         traductions = self.ts.tradMarketing()
         return traductions[lang]
 
@@ -21,10 +21,6 @@ class MarketingService:
             return self.dao.get_by_titre(titre)
         return None
 
-    def search_by_auteur(self, auteur):
-        if auteur:
-            return self.dao.get_by_auteur(auteur)
-        return None
 
     def delete_musique(self, musique_id):
         self.dao.delete_musique(musique_id)

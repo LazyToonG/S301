@@ -2,9 +2,9 @@
 from flask import render_template, request, redirect, url_for, abort
 from app import app
 from app.controllers.LoginController import reqrole
-from app.services.MarketingService import MarketingService
+from app.services.MusiqueService import MusiqueService
 
-service = MarketingService()
+service = MusiqueService()
 
 class MarketingController:
 
