@@ -54,7 +54,7 @@ app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
 ALLOWED_EXTENSIONS = {"mp3"} #fichiers autorisés
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True) #créer dossier
-
+#mettre dans /tsatic/data
 def allowed_file(filename):
     return (
         "." in filename and

@@ -39,7 +39,7 @@ class PlaylisteDAO:
 
         result = []
         for bloc in data.split("|"):
-            titre, heure = bloc.split("@")
+            titre, heure = bloc.split("@") #modifier
             result.append(
                 Musique(Musique(titre), heure)
             )
