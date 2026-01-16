@@ -22,7 +22,7 @@ class MarketingController:
             "marketing_v2.html",
             metadata=metadata,
             sort=sort,
-            t=textes,
+           # t=textes,
             current_lang=langue_choisie,
             musiques=musiques
         )
