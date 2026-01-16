@@ -1,4 +1,4 @@
-from app.models.UserDAO import UserSqliteDAO as UserDAO
+from MusiQuali.app.DAO.UserDAO import UserSqliteDAO as UserDAO
 
 class UserService():
     def __init__(self):

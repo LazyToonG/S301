@@ -38,12 +38,11 @@ class PlaylisteDAO:
             return []
 
         result = []
-        for bloc in data.split("|"):
-            titre, heure = bloc.split("@") #modifier
-            result.append(
-                Musique(Musique(titre), heure)
-            )
+        for bloc in data.split("|"): #id|id|id|id...
+            titre = bloc  
+            result.append(Musique(titre))
         return result
+
 
 #c'est qui l'ennemi des champignons?
 #les champioui
