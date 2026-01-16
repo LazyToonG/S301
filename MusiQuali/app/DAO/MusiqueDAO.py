@@ -29,32 +29,12 @@ class MusiqueDAO:
         return Musique(*row) if row else None
 
 
-    def get_by_auteur(self, auteur):
-
-        conn = self.get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM musique WHERE auteur = ?", (auteur,))
-        rows = cursor.fetchall()
-        conn.close()
-
-        return [Musique(*row) for row in rows]
-
-    def get_by_genre(self, genre):
-
-        conn = self.get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM musique WHERE genre = ?", (genre,))
-        rows = cursor.fetchall()
-        conn.close()
-
-        return [Musique(*row) for row in rows]
-
-    def get_by_date(self, date):
-        conn = self.get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM musique WHERE date = ?", (date,))
-        rows = cursor.fetchall()
-        conn.close()
+    def create(self, title, length, path, playlist_id):
+        conn = self.get_db()
+        conn.execute('INSERT INTO music (title, duration, path, playlist_id) VALUES (?, ?, ?, ?)',
+                     (title, int(length), path, playlist_id))
+        conn.commit()
+        conn.close() 
 
     def delete_musique(self, musique_id):
 
