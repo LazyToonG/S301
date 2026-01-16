@@ -42,19 +42,19 @@ class MusiqueService:
 
     def save_file(self, file, playlist_id=None):
         if file.filename == "":
-            raise ValueError("No selected file")
+            raise ValueError("Aucun fichier selectionné")
         if not self.allowed_file(file.filename):
-            raise ValueError("Only MP3 files allowed")
+            raise ValueError("fichiers autorisés : {ALLOWED_EXTENSIONS}")
 
         filename = secure_filename(file.filename)
         filepath = os.path.join(self.upload_folder, filename)
         file.save(filepath)
 
-        # Extraire la durée
+        # mutagen pour extraire metadonnées
         audio = MP3(filepath)
-        duration = int(audio.info.length)  # durée en secondes
+        duration = int(audio.info.length)  # ( en secondes)
 
-        # Sauvegarder dans la base
+        # appelle create de musiqueDAO
         self.dao.create(title=filename, length=duration, path=filepath, playlist_id=playlist_id)
 
         return {"filename": filename, "duration": duration, "path": filepath}
