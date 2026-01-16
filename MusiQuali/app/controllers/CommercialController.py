@@ -4,7 +4,6 @@ from app.controllers.LoginController import reqrole
 
 class CommercialController:
 
-
     @app.route('/commercial', methods=['GET'])
     @reqrole("commercial")
     def commercial_dashboard():

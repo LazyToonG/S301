@@ -116,13 +116,7 @@ ul {
     border-radius: 7px;
 }
 
-.mode_sombre {
-    background-color: rgba(0, 0, 0, 0);
-    border:none;
-    font-size:20px;
-}
-
-.mode_clair {
+.btn-mode {
     background-color: rgba(0, 0, 0, 0);
     border:none;
     font-size:20px;

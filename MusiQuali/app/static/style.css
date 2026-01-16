@@ -4,6 +4,9 @@ body {
     position: relative; 
     min-height: 100vh;
     margin: 0;
+    display: flex;
+    flex-direction: column;  
+    min-height: 100vh;
 }
 
 body.sombre {
@@ -54,6 +57,11 @@ body::after {
     border-radius: 10px;
 }
 
+#fin_nav {
+    display :flex;
+    align-items: end;
+}
+
 .logo {
     display: flex;
     align-items: center;
@@ -81,13 +89,7 @@ body::after {
     border-radius: 7px;
 }
 
-.mode_sombre {
-    background-color: rgba(0, 0, 0, 0);
-    border:none;
-    font-size:20px;
-}
-
-.mode_clair {
+.btn-mode {
     background-color: rgba(0, 0, 0, 0);
     border:none;
     font-size:20px;
@@ -108,24 +110,24 @@ body::after {
 }
 
 
-/* Conteneur principal pour diviser la page en deux colonnes */
 .main-content {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     padding: 20px 50px;
-    height: calc(100vh - 100px); /* Prend toute la hauteur moins le header */
+    flex: 1;
     gap: 30px;
 }
 
 .col-gauche, .col-droite {
-    flex: 1; /* Chaque colonne prend 50% de l'espace */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    justify-content: flex-start !important;
+    gap: 15px; 
 }
 
-/* --- BOUTONS --- */
+
+/* boutons */
 button {
     border: none;
     color: white;
@@ -139,11 +141,34 @@ button {
 }
 button:active { transform: scale(0.98); }
 
-.btn-rouge { background-color: #a33e3e; margin-bottom: 10px; width: 100%; text-align: left;}
-.btn-bleu { background-color: #267ac9; margin-bottom: 10px; width: 100%; text-align: left;}
-.btn-logout { background-color: white; color: black; padding: 5px 10px; font-size: 14px;}
+.btn-rouge { 
+    background-color: #a33e3e; 
+    margin-bottom: 10px; 
+    width: 100%; 
+    text-align: left;
+}
+.btn-bleu { 
+    background-color: #267ac9; 
+    margin-bottom: 10px; 
+    width: 100%; 
+    text-align: left;
+}
+.btn-logout { 
+    background-color: white; 
+    color: black; 
+    padding: 5px 10px; 
+    font-size: 14px;
+}
 
-/* --- PAGE ADMIN (Logs & Notes) --- */
+.btn-logout-sombre { 
+    background-color: black; 
+    color: white; 
+    padding: 5px 10px; 
+    font-size: 14px;
+}
+
+
+/* --- admin --- */
 .note-jaune {
     background-color: #fffacd;
     padding: 15px;
@@ -154,9 +179,8 @@ button:active { transform: scale(0.98); }
 }
 .console-logs {
     background-color: #444;
-    color: #0f0; /* Texte vert style hacker */
     font-family: monospace;
-    flex-grow: 1; /* Prend tout l'espace restant en hauteur */
+    flex-grow: 1;
     padding: 15px;
     border-radius: 5px;
     overflow-y: auto;
@@ -171,7 +195,16 @@ button:active { transform: scale(0.98); }
     justify-content: space-between;
 }
 
-/* --- PAGE MARKETING / COMMERCIAL (Upload & Table) --- */
+.form-rasberry {
+    flex-direction: column;
+    display: flex;
+}
+
+.form-control {
+    width: 235px;
+}
+
+/* --- marketing et commercial --- */
 .upload-zone {
     border: 3px dashed #555;
     border-radius: 15px;
@@ -186,7 +219,7 @@ button:active { transform: scale(0.98); }
 .upload-zone:hover { background-color: rgba(255, 255, 255, 0.5); }
 .icone-upload { font-size: 50px; font-weight: bold; }
 
-/* Table simple */
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -194,7 +227,7 @@ table {
 }
 th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
 
-/* Info utilisateur dans le header */
+
 .user-info {
     display: flex;
     flex-direction: row;
