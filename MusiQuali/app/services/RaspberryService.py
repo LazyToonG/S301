@@ -1,4 +1,4 @@
-from app.models.RaspberryDAO import RaspberrySqliteDAO as RaspberryDAO
+from app.DAO.RaspberryDAO import RaspberrySqliteDAO as RaspberryDAO
 
 class RaspberryService():
     def __init__(self):

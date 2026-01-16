@@ -3,6 +3,9 @@ from flask import session, flash, abort
 from app import app
 from functools import wraps
 from app.services.UserService import UserService
+from app.services.TraductionService import Traductionservice
+
+ts = Traductionservice()
 
 us = UserService()
 
@@ -42,23 +45,7 @@ class LoginController:
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        traductions={
-            "fr" : {
-                "user" : "Utilisateur",
-                "logout" : "Déconnexion",
-                "login" : "Se connecter",
-                "h1" : "Nom d'utilisateur",
-                "password" : "Mot de passe"
-            },
-
-            "en" : {
-                "user" : "User",
-                "logout" : "Logout",
-                "login" : "Login",
-                "h1" : "Username",
-                "password" : "Password"
-            }
-        }
+        traductions=ts.tradLogin()
         langue_choisie = request.args.get('lang')
         if langue_choisie not in ['fr', 'en']:
             langue_choisie = 'fr'
