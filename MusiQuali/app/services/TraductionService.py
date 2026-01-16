@@ -20,6 +20,25 @@ class Traductionservice():
             }
         }
     
+    def tradLogin(self):
+        return {
+            "fr" : {
+                "user" : "Utilisateur",
+                "logout" : "Déconnexion",
+                "index" : "Accueil",
+                "h1" : "Nom d'utilisateur",
+                "password" : "Mot de passe"
+            },
+
+            "en" : {
+                "user" : "User",
+                "logout" : "Logout",
+                "index" : "Home",
+                "h1" : "Username",
+                "password" : "Password"
+            }
+        }
+    
     def tradAdmin(self):
         return {
             "fr" : {

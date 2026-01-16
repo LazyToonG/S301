@@ -62,6 +62,10 @@ body::after {
     align-items: end;
 }
 
+#index:hover {
+    color: red;
+}
+
 .logo {
     display: flex;
     align-items: center;

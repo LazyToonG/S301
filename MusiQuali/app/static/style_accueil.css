@@ -92,6 +92,10 @@ body.sombre {
     padding: 10px;
 }
 
+#login:hover {
+    color: red;
+}
+
 p {
     font-size: 20px;
 }

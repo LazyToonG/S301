@@ -69,4 +69,11 @@ if (btnLogin) {
     btnLogin.addEventListener('click', page_login);
 }
 
+function page_index(){
+    document.location.href="http://localhost:8000";
+}
+const btnIndex = document.getElementById('index');
+if (btnIndex) {
+    btnIndex.addEventListener('click', page_index);
+}
 
