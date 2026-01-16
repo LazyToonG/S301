@@ -1,5 +1,5 @@
 import sqlite3
-from Playliste import Playliste, MusiqueChoisie
+from Playliste import Playliste
 import Musique
 
 class PlaylisteDAO:
@@ -28,9 +28,9 @@ class PlaylisteDAO:
     #c'est sans doute plus efficace de faire un table intermédiaire dans la bd mais je trouve que c plus drole de faire comme ca
 
     def _musiques_to_str(self, musiques):
-        # MusiqueChoisie -> "id@heure|id@heure"
+        # MusiqueChoisie -> "id|id|id|id"
         return "|".join(
-            f"{mc.musique.id}@{mc.heure}" #idMusique@heure|idMusique@heure
+            f"{mc.musique.id}" 
             for mc in musiques
         )
     def _str_to_musiques(self, data):
@@ -41,11 +41,12 @@ class PlaylisteDAO:
         for bloc in data.split("|"):
             titre, heure = bloc.split("@")
             result.append(
-                MusiqueChoisie(Musique(titre), heure)
+                Musique(Musique(titre), heure)
             )
         return result
 
-
+#c'est qui l'ennemi des champignons?
+#les champioui
     def insert(self, p: Playliste):
         conn = sqlite3.connect(self.db)
         cur = conn.cursor()
@@ -104,7 +105,7 @@ class PlaylisteDAO:
         p.MusiqueAJouer = self._str_to_musiques(row[7])
         return p
 
-#je me rends compte que g codé avec des accents putain
+#je me rends compte que g codé avec des accents putain, c pas un des 7 pêchés ca?
 
     def getByX(self, field, value): #je fais une methode commmune à toutes que je réutilise vous avez vu le pro
         conn = sqlite3.connect(self.db)
@@ -126,7 +127,7 @@ class PlaylisteDAO:
         return result
 
     def getByEntreprise(self, entreprise):
-        return self.getByX("entreprise", entreprise) #pas sur si on se sert de tous mais elles sont la.
+        return self.getByX("entreprise", entreprise) #pas sur si on se sert de tous mais elles sont la si jamais.
     def getByJourPrevu(self, jour):
         return self.getByX("jour_prevu", jour)
     def getByDateCree(self, date):

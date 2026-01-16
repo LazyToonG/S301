@@ -64,4 +64,3 @@ class MusiqueDAO:
         conn.commit()
         conn.close()
 
-    #me suis fait chier pour rien ici je crois
