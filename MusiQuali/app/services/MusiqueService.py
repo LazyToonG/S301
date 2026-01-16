@@ -1,6 +1,14 @@
-
+import os
 from app.DAO.MusiqueDAO import MusiqueDAO
 from app.services.TraductionService import Traductionservice
+from mutagen.mp3 import MP3
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = "uploads"
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+ALLOWED_EXTENSIONS = {"mp3"}
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 class MusiqueService:
     def __init__(self):
@@ -24,3 +32,29 @@ class MusiqueService:
 
     def delete_musique(self, musique_id):
         self.dao.delete_musique(musique_id)
+
+        def __init__(self):
+            self.dao = MusiqueDAO()
+            self.upload_folder = UPLOAD_FOLDER
+
+    def allowed_file(self, filename):
+        return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
+
+    def save_file(self, file, playlist_id=None):
+        if file.filename == "":
+            raise ValueError("No selected file")
+        if not self.allowed_file(file.filename):
+            raise ValueError("Only MP3 files allowed")
+
+        filename = secure_filename(file.filename)
+        filepath = os.path.join(self.upload_folder, filename)
+        file.save(filepath)
+
+        # Extraire la durée
+        audio = MP3(filepath)
+        duration = int(audio.info.length)  # durée en secondes
+
+        # Sauvegarder dans la base
+        self.dao.create(title=filename, length=duration, path=filepath, playlist_id=playlist_id)
+
+        return {"filename": filename, "duration": duration, "path": filepath}

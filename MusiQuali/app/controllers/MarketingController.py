@@ -40,10 +40,16 @@ class MarketingController:
             return render_template("marketing_v2.html", musiques=[musiques])
         return redirect(url_for("marketing"))
 
-    @app.route("/search_by_auteur")
-    def search_by_auteur():
-        auteur = request.args.get("auteur")
-        musiques = service.search_by_auteur(auteur)
-        if musiques:
-            return render_template("marketing_v2.html", musiques=musiques)
-        return redirect(url_for("marketing"))
+    @app.route("/upload", methods=["POST"])
+    def upload():
+        file = request.files.get("audio")
+        if not file:
+            abort(400, "No file part")
+
+        try:
+            result = service.save_file(file)
+            return f"MP3 uploaded successfully: {result['filename']} ({result['duration']}s)", 200
+        except ValueError as e:
+            abort(400, str(e))
+        except Exception as e:
+            abort(500, f"Internal server error: {str(e)}")
