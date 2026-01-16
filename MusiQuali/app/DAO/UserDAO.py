@@ -1,7 +1,7 @@
 import sqlite3
 from app import app
 from app.models.User import User
-from MusiQuali.app.DAO.UserDAOInterface import UserDAOInterface
+from app.DAO.UserDAOInterface import UserDAOInterface
 import bcrypt
 
 class UserSqliteDAO(UserDAOInterface):

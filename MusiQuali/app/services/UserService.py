@@ -1,4 +1,4 @@
-from MusiQuali.app.DAO.UserDAO import UserSqliteDAO as UserDAO
+from app.DAO.UserDAO import UserSqliteDAO as UserDAO
 
 class UserService():
     def __init__(self):
@@ -23,3 +23,4 @@ class UserService():
         return self.udao.deleteByUsername(username)
 
 #cccccccccccccccccommmmmmmenttaireeeeeeeeeeeeeee
+#réel

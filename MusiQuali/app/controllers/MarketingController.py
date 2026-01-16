@@ -3,7 +3,7 @@ from app import app
 import os
 from app.controllers.LoginController import reqrole
 
-from MusiQuali.app.DAO.MusiqueDAO import MusiqueDAO
+from app.DAO.MusiqueDAO import MusiqueDAO
 
 app = Flask(__name__)
 dao = MusiqueDAO()
