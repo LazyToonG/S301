@@ -1,6 +1,9 @@
 from flask import render_template, request, redirect, url_for, Flask
 from app import app
 from app.controllers.LoginController import reqrole
+from app.services.TraductionService import Traductionservice
+
+ts = Traductionservice()
 
 from app.models.MusiqueDAO import MusiqueDAO
 
@@ -12,32 +15,7 @@ class MarketingController:
     @app.route('/marketing', methods=['GET'])
     @reqrole("marketing")
     def marketing():
-        traductions = {
-            'fr': {
-                "user" : "Utilisateur",
-                "logout" : "Déconnexion",
-                "play" : "Jouer playlist",
-                "shuffle" : "Lecture aléatoire",
-                "titre" : "Titre",
-                "genre" : "Genre",
-                "date" : "Date",
-                "auteur" : "Artiste",
-                "h3" : "Télécharger une nouvelle musique",
-                "p" : "Glisser le fichier ici"
-            },
-            'en': {
-                "user" : "User",
-                "logout" : "Logout",
-                "play" : "Play playlist",
-                "shuffle" : "Shuffle playlist",
-                "titre" : "Title",
-                "genre" : "Genre",
-                "date" : "Date",
-                "auteur" : "Artist",
-                "h3" : "Download new music",
-                "p" : "Drag the file here"
-            }
-        }
+        traductions = ts.tradMarketing()
         langue_choisie = request.args.get('lang')
         if langue_choisie not in ['fr', 'en']:
             langue_choisie = 'fr'
