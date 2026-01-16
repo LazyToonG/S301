@@ -3,6 +3,9 @@ from flask import session, flash, abort
 from app import app
 from functools import wraps
 from app.services.UserService import UserService
+from app.services.TraductionService import Traductionservice
+
+ts = Traductionservice()
 
 us = UserService()
 
@@ -42,7 +45,7 @@ class LoginController:
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        traductions={}
+        traductions=ts.tradLogin()
         langue_choisie = request.args.get('lang')
         if langue_choisie not in ['fr', 'en']:
             langue_choisie = 'fr'
@@ -65,7 +68,7 @@ class LoginController:
                     return redirect(url_for("index"))
             else:
                 msg_error = 'Invalid Credentials'
-        return render_template('login_v2.html', msg_error=msg_error)
+        return render_template('login_v2.html', msg_error=msg_error, t=textes, current_lang=langue_choisie)
 
     @app.route("/signin", methods=['GET', 'POST'])
     def signin():
