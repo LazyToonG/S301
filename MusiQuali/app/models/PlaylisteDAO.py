@@ -3,14 +3,14 @@ from Playliste import Playliste
 import Musique
 
 class PlaylisteDAO:
-    def __init__(self, db="MusiQuali.db"):
+    def __init__(self, db="database.db"):
         self.db = db
         self._init_db()
 
     def _init_db(self):
         conn = sqlite3.connect(self.db)
         conn.execute("""
-            CREATE TABLE IF NOT EXISTS playliste (
+            CREATE TABLE IF NOT EXISTS playlist (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 titre TEXT,
                 auteur TEXT,
@@ -55,7 +55,7 @@ class PlaylisteDAO:
 
         if p.id is None:
             cur.execute("""
-                INSERT INTO playliste
+                INSERT INTO playlist
                 (titre, auteur, genre, date_cree, jour_prevu, entreprise, musiques)
                 VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (
@@ -70,7 +70,7 @@ class PlaylisteDAO:
             p.id = cur.lastrowid #donner id automatiquement
         else: # si la playliste existe déja , on fait une maj
             cur.execute("""
-                UPDATE playliste
+                UPDATE playlist
                 SET titre=?, auteur=?, genre=?, date_cree=?, jour_prevu=?, entreprise=?, musiques=?
                 WHERE id=?
             """, (
@@ -91,7 +91,7 @@ class PlaylisteDAO:
         conn = sqlite3.connect(self.db)
         cur = conn.cursor()
 
-        cur.execute("SELECT * FROM playliste WHERE id=?", (id,))
+        cur.execute("SELECT * FROM playlist WHERE id=?", (id,))
         row = cur.fetchone()
         conn.close()
 
@@ -111,7 +111,7 @@ class PlaylisteDAO:
         conn = sqlite3.connect(self.db)
         cur = conn.cursor()
 
-        cur.execute(f"SELECT * FROM playliste WHERE {field} = ?", (value,))
+        cur.execute(f"SELECT * FROM playlist WHERE {field} = ?", (value,))
         rows = cur.fetchall()
         conn.close()
 

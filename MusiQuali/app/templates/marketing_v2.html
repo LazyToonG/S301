@@ -24,10 +24,12 @@
         </div>
 
         <div class="col-droite">
-            <h3>Upload une nouvelle musique</h3>
-            <div class="upload-zone">
-                <div class="icone-upload">⬆</div> <p>Glisser le fichier ici</p>
-            </div>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <label for="audio">Upload MP3:</label>
+                <input type="file" id="audio" name="audio" accept=".mp3" required />
+                <button type="submit">Upload</button>
+            </form>
+
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
