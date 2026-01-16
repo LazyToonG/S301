@@ -1,6 +1,6 @@
 import sqlite3
-from Playliste import Playliste
-import Musique
+from models.Playliste import Playliste
+import models.Musique
 
 class PlaylisteDAO:
     def __init__(self, db="database.db"):
