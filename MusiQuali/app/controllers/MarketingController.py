@@ -11,7 +11,6 @@ playlist_service = PlaylistService()
 class MarketingController:
 
     @app.route('/marketing', methods=['GET'])
-    @reqrole("marketing")
     def marketing():
 
         langue_url = request.args.get('lang')
@@ -22,13 +21,13 @@ class MarketingController:
         else:
             langue_choisie = session.get('langue')
 
-        textes = service.get_traductions(langue_choisie)
+        """textes = service.get_traductions(langue_choisie)"""
 
         sort = request.args.get("sort", "date")
         musiques = service.get_musiques(sort)
 
         metadata = {"title": "Espace Marketing", "pagename": "marketing"}
-        return render_template("marketing_v2.html", metadata=metadata, sort=sort, t=textes, current_lang=langue_choisie, musiques=musiques)
+        return render_template("marketing_v2.html", metadata=metadata, sort=sort, current_lang=langue_choisie, musiques=musiques , t=service)
 
     @app.route("/delete/<int:id>")
     def delete(id):
@@ -74,7 +73,7 @@ class MarketingController:
         # sécurité aussi
         if not playlist_id:
             abort(400, "Aucune playlist sélectionnée")
-            
+
         playlist = playlist_service.get_by_id(int(playlist_id))
 
         if not playlist:

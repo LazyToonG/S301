@@ -1,19 +1,21 @@
 import sqlite3
 from app.models.Musique import Musique
+from app import app
 from mutagen.mp3 import MP3
 
 class MusicDAO:
-    def __init__(self, db_name="database.db"):
-        self.db_name = db_name
+
 
     def get_connection(self):
-        return sqlite3.connect(self.db_name)
+        conn = sqlite3.connect(app.static_folder + '/data/database.db')
+        conn.row_factory = sqlite3.Row
+        return conn
 
     def get_musiques(self, order_by="titre"):
-        """ordre pardefaut c'est titres'"""
+        """ordre par defaut c'est titres'"""
         conn = self.get_connection()
         cursor = conn.cursor()
-        cursor.execute(f"""SELECT * FROM musique ORDER BY {order_by} ASC LIMIT 5""")
+        cursor.execute("SELECT id, title, artist, path FROM music")
         rows = cursor.fetchall()
         conn.close()
 
@@ -23,7 +25,7 @@ class MusicDAO:
 
         conn = self.get_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM musique WHERE titre = ?", (titre,))
+        cursor.execute("SELECT id, title, artist, path FROM music WHERE title = ?", (titre,))
         row = cursor.fetchone()
         conn.close()
 
@@ -31,7 +33,7 @@ class MusicDAO:
 
 
     def create(self, title, length, path, playlist_id):
-        conn = self.get_db()
+        conn = self.get_connection()
         conn.execute('INSERT INTO music (title, duration, path, playlist_id) VALUES (?, ?, ?, ?)',
                      (title, int(length), path, playlist_id))
         conn.commit()
@@ -41,13 +43,12 @@ class MusicDAO:
 
         conn = self.get_connection()
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM musique WHERE id = ?", (musique_id,))
+        cursor.execute("DELETE FROM music WHERE id = ?", (musique_id,))
         conn.commit()
         conn.close()
 
     def get_by_playlist_id(self, playlist_id):
-        conn = get_db()
+        conn = self.get_connection()
         musics = conn.execute('SELECT * FROM music WHERE playlist_id = ?', (playlist_id,)).fetchall()
         conn.close()
         return musics
-
