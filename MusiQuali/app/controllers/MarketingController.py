@@ -4,7 +4,12 @@ from app import app
 from app.controllers.LoginController import reqrole
 from app.services.MusiqueService import MusiqueService
 
+<<<<<<< HEAD
+ts = Traductionservice()
+#app = Flask(__name__)
+=======
 service = MusiqueService()
+>>>>>>> 4574ce3a675bd18fba8a6a6c65a7c5ff5f074889
 
 class MarketingController:
 

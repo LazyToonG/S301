@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planning Adaptatif</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='planning_style.css') }}">
+</head>
+<body>
+    <div class="controls-bar">
+        <label>Zoom : <input type="range" min="1" max="10" value="2" step="0.5" id="zoomRange"></label>
+        <button id="saveToFileBtn" style="padding: 5px 15px; cursor: pointer;">Sauvegarder le planning</button>
+    </div>
+    <div class="planning-container">
+        <div class="time-scale">
+            <div style="height: 40px;"></div> <!-- Alignement avec header -->
+            {% for h in range(24) %}
+                <div class="hour-marker">{{ "%02d:00"|format(h) }}</div>
+            {% endfor %}
+        </div>
+        {% for day in ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] %}
+            {% set data = planning.get_day_data(day) %}
+            <div class="day-column" data-start-time="{{ data.start_offset_min * 60 }}">
+                <div class="day-header">{{ day|capitalize }}</div>
+                <div class="drop-zone" id="list-{{ day }}" data-day="{{ day }}" style="height: 2880px;">
+                    {% for m in data.musics %}
+                        <div class="music-task" data-duration="{{ m.duration }}" data-start-sec="{{ m.start_sec }}" style="height: {{ (m.duration / 60) * 2 }}px; top: {{ (m.start_sec / 60) * 2 }}px;">
+                            <strong>{{ m.time }}</strong><br>
+                            {{ m.obj.titre }} - {{ m.obj.artiste }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Fenêtre Modale -->
+    <div id="addMusicModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Ajouter une musique</h3>
+            
+            <div class="form-group">
+                <label for="mStartTime">Heure de début :</label>
+                <input type="time" id="mStartTime" readonly>
+            </div>
+            <div class="form-group">
+                <label for="mTitle">Titre :</label>
+                <input type="text" id="mTitle">
+            </div>
+            <div class="form-group">
+                <label for="mArtist">Artiste :</label>
+                <input type="text" id="mArtist">
+            </div>
+            <div class="form-group">
+                <label for="mDuration">Durée (s) :</label>
+                <input type="number" id="mDuration">
+            </div>
+            
+            <button id="saveMusicBtn">Ajouter</button>
+            <button id="deleteMusicBtn" class="btn-danger" style="display:none;">Supprimer</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='planning_script.js') }}"></script>
+</body>
+</html>

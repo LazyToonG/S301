@@ -1,0 +1,73 @@
+from flask import Blueprint, render_template, request, jsonify, send_file, redirect, url_for, flash
+from app.services.service_playlist import service_playlist
+"""from app.services.service_music import service_music"""
+from app.services.service_schedule import service_schedule
+from app import app
+
+class commercial_Controller:
+
+    @app.route('/commercial', methods=['GET'])
+    def voir_planning():
+        return render_template('planning.html', planning=service_schedule.get_planning())
+
+    @app.route('/admin')
+    def admin_page():
+        playlists = service_playlist.get_all_playlists()
+        return render_template('admin.html', playlists=playlists)
+
+    @app.route('/add_playlist', methods=['POST'])
+    def add_playlist():
+        name = request.form.get('name')
+        if name:
+            service_playlist.create_playlist(name)
+            flash(f"Playlist '{name}' créée avec succès.")
+        return redirect(url_for('main.admin_page'))
+
+    @app.route('/add_music', methods=['POST'])
+    def add_music():
+        playlist_id = request.form.get('playlist_id')
+        title = request.form.get('title')
+        artist = request.form.get('artist')
+        duration = request.form.get('duration')
+        path = request.form.get('path')
+
+        if playlist_id and title and duration:
+            service_music.add_music(playlist_id, title, artist, duration, path)
+            flash(f"Musique '{title}' ajoutée avec succès.")
+        else:
+            flash("Erreur : Champs manquants.")
+        
+        return redirect(url_for('main.admin_page'))
+
+    @app.route('/api/playlists')
+    def get_playlists():
+        data = service_playlist.get_playlists_api_data()
+        return jsonify(data)
+
+    @app.route('/move', methods=['POST'])
+    def move_music():
+        data = request.json
+        service_schedule.move_task(
+            data['from_day'],
+            int(data['from_index']),
+            data['to_day'],
+            int(data['to_index'])
+        )
+        return jsonify(success=True)
+
+    @app.route('/sync_day', methods=['POST'])
+    def sync_day():
+        data = request.json
+        day = data.get('day')
+        tasks = data.get('tasks', [])
+        start_time = data.get('start_time')
+        service_schedule.sync_day(day, tasks, start_time)
+        return jsonify(success=True)
+
+    @app.route('/save_export', methods=['POST'])
+    def save_export():
+        try:
+            mem_file = service_schedule.export_planning()
+            return send_file(mem_file, as_attachment=True, download_name='planning_export.txt', mimetype='text/plain')
+        except Exception as e:
+            return jsonify(success=False, message=f"Erreur technique lors de l'exportation : {str(e)}"), 500

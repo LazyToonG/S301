@@ -1,5 +1,3 @@
-from MusiQuali.app.models import Musique
-
 
 class Playliste:
     def __init__(self, titre, genre, dateCrée, jourPrévu, Entreprise, id=None):
