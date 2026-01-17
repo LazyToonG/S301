@@ -3,13 +3,10 @@ from flask import render_template, request, redirect, url_for, abort, session
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.MusiqueService import MusiqueService
+from app.services.playlistServiceMarketing import PlaylistService
 
-<<<<<<< HEAD
-ts = Traductionservice()
-#app = Flask(__name__)
-=======
 service = MusiqueService()
->>>>>>> 4574ce3a675bd18fba8a6a6c65a7c5ff5f074889
+playlist_service = PlaylistService()
 
 class MarketingController:
 
@@ -46,16 +43,56 @@ class MarketingController:
             return render_template("marketing_v2.html", musiques=[musiques])
         return redirect(url_for("marketing"))
 
-    @app.route("/upload", methods=["POST"])
+    @app.route("/playlist/create", methods=["POST"])
+    @reqrole("marketing")
+    def create_playlist():
+        titre = request.form.get("titre")
+
+        if not titre:
+            abort(400, "Titre de playlist obligatoire")
+
+        playlist_service.create_playlist(
+            titre=titre,
+            auteur="marketing",
+            genre=None,
+            jour_prevu=None,
+            entreprise=None
+        )
+
+        return redirect(url_for("marketing"))
+
+
+    @app.route("/upload", methods=["POST"])#upload
+    @reqrole("marketing")
     def upload():
         file = request.files.get("audio")
+        playlist_id = request.form.get("playlist_id")
+
+        # sécurité
         if not file:
-            abort(400, "No file part")
+            abort(400, "Aucun fichier envoyé")
+        # sécurité aussi
+        if not playlist_id:
+            abort(400, "Aucune playlist sélectionnée")
+            
+        playlist = playlist_service.get_by_id(int(playlist_id))
+
+        if not playlist:
+            abort(400, "Playlist invalide")
 
         try:
+            # sauvegarde via MusiqueService
             result = service.save_file(file)
-            return f"MP3 uploaded successfully: {result['filename']} ({result['duration']}s)", 200
-        except ValueError as e:
+
+            # ajout à la playliste
+            playlist_service.add_music_to_playlist(
+                playlist.id,
+                result["music"]  # Music(result["id"]) 
+            )
+
+            return redirect(url_for("marketing"))
+
+        except ValueError as e: #sécurité
             abort(400, str(e))
         except Exception as e:
             abort(500, f"Internal server error: {str(e)}")

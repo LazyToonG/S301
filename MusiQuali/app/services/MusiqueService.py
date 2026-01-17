@@ -1,5 +1,5 @@
 import os
-from app.DAO.MusiqueDAO import MusiqueDAO
+from app.DAO.MusicDAO import MusicDAO
 from app.services.TraductionService import Traductionservice
 from mutagen.mp3 import MP3
 from werkzeug.utils import secure_filename
@@ -12,7 +12,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 class MusiqueService:
     def __init__(self):
-        self.dao = MusiqueDAO()
+        self.dao = MusicDAO()
         self.ts = Traductionservice()
 
     def get_traductions(self, lang):
@@ -34,7 +34,7 @@ class MusiqueService:
         self.dao.delete_musique(musique_id)
 
     def __init__(self):
-        self.dao = MusiqueDAO()
+        self.dao = MusicDAO()
         self.upload_folder = UPLOAD_FOLDER
 
     def allowed_file(self, filename):

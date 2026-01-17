@@ -17,13 +17,48 @@
 
     </div>
 
-        <div class="col-droite">
-    <h3>Upload une nouvelle musique</h3>
+        <h3>Playlist</h3>
 
+<select id="playlist-select">
+    <option value="">-- Choisir une playlist --</option>
+    {% for p in playlists %}
+        <option value="{{ p.id }}">{{ p.titre }}</option><!--déroule playlist-->
+    {% endfor %}
+</select>
+
+<form action="{{ url_for('create_playlist') }}" method="POST">
+    <input name="titre" placeholder="Nouvelle playlist" required>
+    <button type="submit">Créer</button>
+</form>
+
+<hr>
+
+<form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="playlist_id" id="playlist-id">
+
+    <div class="upload-zone disabled" id="upload-zone">
+        <p>Sélectionne une playlist</p> <!--accepte fichier-->
+        <input
+            type="file"
+            id="audio-input"
+            name="audio"
+            accept=".mp3"
+            style="display:none"
+            disabled
+        >
+    </div>
+
+    <button type="submit" disabled id="btn-upload">
+        Envoyer
+    </button>
+</form>
+    <!--formulaire d'upload-->
     <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-        <div class="upload-zone" onclick="document.getElementById('audio-input').click();"> <!--ca maaaaaarche -->
+        <input type="hidden" name="playlist_id" id="playlist-id-hidden">
+
+        <div class="upload-zone disabled" id="upload-zone">
             <div class="icone-upload">⬆</div>
-            <p>Drag And Drop ou cliquer</p>
+            <p>Sélectionne d’abord une playlist</p>
 
             <input
                 type="file"
@@ -31,9 +66,17 @@
                 name="audio"
                 accept=".mp3"
                 style="display: none;"
+                disabled
                 required
             >
         </div>
+
+        <button type="submit" class="btn-upload" disabled id="btn-upload">
+            Envoyer
+        </button>
+    </form>
+</div>
+
 
         <button type="submit" class="btn-upload">
             Envoyer
@@ -44,24 +87,31 @@
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 
-    <!--script js pour drag and drop-->
+    <!--script js pour drag and drop--> <!--raaaa je connais pas bien le js--><!--bordel c'est moche c'est immonde-->
     <script> 
-const uploadZone = document.querySelector('.upload-zone');//def de la zone qui accepte le drag and drop
-const fileInput = document.getElementById('audio-input');//type de fichier accepté (je v voir si je peux le limiter encore plus pour que ca prenne que mp3 mais le backend le fait deja alors je verrai apres)
 
-uploadZone.addEventListener('dragover', (e) => {//quand le fichier est au-dessus de la zone de dépot
-    e.preventDefault();//autorise dépot
-    uploadZone.classList.add('dragover'); //crée class css (je v créer un css qui assombrit la zone --- g mis le css dans style.css)
-});
 
-uploadZone.addEventListener('dragleave', () => {//quand le fichier n'est plus audessus de la zone
-    uploadZone.classList.remove('dragover');//efface la classe css
-});
+const playlistSelect = document.getElementById('playlist-select');
+const uploadZone = document.getElementById('upload-zone');
+const fileInput = document.getElementById('audio-input');
+const uploadBtn = document.getElementById('btn-upload');
+const hiddenPlaylist = document.getElementById('playlist-id-hidden');
 
-uploadZone.addEventListener('drop', (e) => {//quand le fichier est drop
-    e.preventDefault();//empeche le fichier d'etre ouvert
-    uploadZone.classList.remove('dragover');//efface la classe css
-    fileInput.files = e.dataTransfer.files; //copie les fichiers déposées dans "file" pour etre repris par le controlleur
+playlistSelect.addEventListener('change', () => { // Quand l’utilisateur choisit une playlist
+    if (playlistSelect.value) {
+        uploadZone.classList.remove('disabled'); // activ de la zone d’upload,
+        uploadZone.onclick = () => fileInput.click();
+        fileInput.disabled = false;
+        uploadBtn.disabled = false;
+        hiddenPlaylist.value = playlistSelect.value; //stocker id
+        uploadZone.querySelector('p').innerText = "Drag and drop ou cliquer";
+    } else { //insulter le user il fais pas ce que je lui dis de faire
+        uploadZone.classList.add('disabled');
+        fileInput.disabled = true;
+        uploadBtn.disabled = true;
+        hiddenPlaylist.value = "";
+        uploadZone.querySelector('p').innerText = "veuillez sélectionner une playlist";
+    }
 });
 </script>
     {% include 'fin_nav.html' %}
