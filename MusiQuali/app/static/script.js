@@ -1,55 +1,75 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const themeSauvegarde = localStorage.getItem('theme');
+        if (themeSauvegarde === 'sombre') {
+        activerModeSombre();
+    }
+});
+
 const boutonMode = document.getElementById('bouton');
 if (boutonMode) {
     boutonMode.addEventListener('click', chgt_mode);
 }
 
-document.getElementById('bouton').addEventListener('click',chgt_mode)
+function chgt_mode(event) {
+    let bouton = event.target;
+    
+    if (bouton.classList.contains('mode-sombre')) {
+        activerModeSombre();
+        localStorage.setItem('theme', 'sombre');
+    } 
+    else {
+        activerModeClair();
+        localStorage.setItem('theme', 'clair');
+    }
+}
 
-function chgt_mode(event){
-
-    let bouton=event.target;
-    let btnLogout = document.getElementById('logout');
+function activerModeSombre() {
+    let bouton = document.getElementById('bouton');
+    let body = document.querySelector('body');
+    let nav = document.querySelector('.nav');
     let presentation = document.querySelector('.presentation');
     let equipe = document.querySelector('.equipe');
-    let nav = document.querySelector('.nav');
-    let fin_nav = document.getElementById('fin_nav');
-    let body = document.querySelector('body');
+    let btnLogout = document.getElementById('logout');
 
-    if (bouton.classList.contains('mode-sombre')){ // passe du clair au sombre
+    if(body) body.classList.add('sombre');
+    if(nav) nav.classList.add('sombre');
+    if(presentation) presentation.classList.add('sombre');
+    if(equipe) equipe.classList.add('sombre');
+
+    if (bouton) {
         bouton.classList.remove('mode-sombre');
         bouton.classList.add('mode-clair');
-        bouton.value="☀️"
-
-        if(body) {body.classList.add('sombre')};
-        if(nav) {nav.classList.add('sombre')};
-        if(fin_nav) {fin_nav.classList.add('sombre')};
-        if (presentation) {presentation.classList.add('sombre')};
-        if (equipe) {equipe.classList.add('sombre')};
-        if (btnLogout) {
-            btnLogout.classList.remove('btn-logout');
-            btnLogout.classList.add('btn-logout-sombre');
-        }
+        bouton.value = "☀️";
     }
-    else if (bouton.classList.contains('mode-clair')){ // passe du sombre au clair
+
+    if (btnLogout) {
+        btnLogout.classList.remove('btn-logout');
+        btnLogout.classList.add('btn-logout-sombre');
+    }
+}
+
+function activerModeClair() {
+    let bouton = document.getElementById('bouton');
+    let body = document.querySelector('body');
+    let nav = document.querySelector('.nav');
+    let presentation = document.querySelector('.presentation');
+    let equipe = document.querySelector('.equipe');
+    let btnLogout = document.getElementById('logout');
+
+    if(body) body.classList.remove('sombre');
+    if(nav) nav.classList.remove('sombre');
+    if(presentation) presentation.classList.remove('sombre');
+    if(equipe) equipe.classList.remove('sombre');
+
+    if (bouton) {
         bouton.classList.remove('mode-clair');
         bouton.classList.add('mode-sombre');
-        bouton.value="🌒"
+        bouton.value = "🌒";
+    }
 
-        if(body) {body.classList.remove('sombre')};
-        if(nav) {nav.classList.remove('sombre')};
-        if (presentation) {presentation.classList.remove('sombre')};
-        if (equipe) {equipe.classList.remove('sombre')};
-        if (btnLogout) {
-            btnLogout.classList.remove('btn-logout-sombre');
-            btnLogout.classList.add('btn-logout');
-        }
-
-        document.querySelector('body').classList.remove('sombre');
-        document.querySelector('.nav').classList.remove('sombre');
-        document.querySelector('.presentation').classList.remove('sombre');
-        document.querySelector('.equipe').classList.remove('sombre');
-        document.getElementById('logout').classList.remove('btn-logout-sombre');
-        document.getElementById('logout').classList.add('btn-logout');
+    if (btnLogout) {
+        btnLogout.classList.remove('btn-logout-sombre');
+        btnLogout.classList.add('btn-logout');
     }
 }
 
@@ -66,6 +86,7 @@ function page_login(){
 }
 const btnLogin = document.getElementById('login');
 if (btnLogin) {
+    console.log('login')
     btnLogin.addEventListener('click', page_login);
 }
 
@@ -74,6 +95,7 @@ function page_index(){
 }
 const btnIndex = document.getElementById('index');
 if (btnIndex) {
+    console.log('index')
     btnIndex.addEventListener('click', page_index);
 }
 

@@ -1,103 +1,61 @@
-from flask import render_template, request, redirect, url_for, Flask, abort
+# app/controllers/MarketingController.py
+from flask import render_template, request, redirect, url_for, abort, session
 from app import app
-import os
 from app.controllers.LoginController import reqrole
-from app.services.TraductionService import Traductionservice
+from app.services.MusiqueService import MusiqueService
 
+<<<<<<< HEAD
 ts = Traductionservice()
 #app = Flask(__name__)
+=======
+service = MusiqueService()
+>>>>>>> 4574ce3a675bd18fba8a6a6c65a7c5ff5f074889
 
 class MarketingController:
 
     @app.route('/marketing', methods=['GET'])
     @reqrole("marketing")
     def marketing():
-        traductions = ts.tradMarketing()
-        langue_choisie = request.args.get('lang')
-        if langue_choisie not in ['fr', 'en']:
-            langue_choisie = 'fr'
-        textes = traductions[langue_choisie]
+
+        langue_url = request.args.get('lang')
+        
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
+        textes = service.get_traductions(langue_choisie)
 
         sort = request.args.get("sort", "date")
-        #musiques = dao.get_5_musiques(sort)
+        musiques = service.get_musiques(sort)
 
         metadata = {"title": "Espace Marketing", "pagename": "marketing"}
-        return render_template("marketing_v2.html", metadata=metadata, sort=sort, t=textes, current_lang=langue_choisie)
+        return render_template("marketing_v2.html", metadata=metadata, sort=sort, t=textes, current_lang=langue_choisie, musiques=musiques)
 
     @app.route("/delete/<int:id>")
     def delete(id):
-        dao.delete_musique(id)
+        service.delete_musique(id)
         return redirect(url_for("marketing"))
 
     @app.route("/search_by_titre")
     def search_by_titre():
         titre = request.args.get("titre")
-        if titre:
-            musiques = dao.get_by_titre(titre)
-            return render_template("marketing_v2.html", musiques=musiques)
+        musiques = service.search_by_titre(titre)
+        if musiques:
+            return render_template("marketing_v2.html", musiques=[musiques])
         return redirect(url_for("marketing"))
 
+    @app.route("/upload", methods=["POST"])
+    def upload():
+        file = request.files.get("audio")
+        if not file:
+            abort(400, "No file part")
 
-    @app.route("/search_by_auteur")
-    def search_by_auteur():
-        auteur = request.args.get("auteur")
-        if auteur:
-            musiques = dao.get_by_auteur(auteur)
-            return render_template("marketing_v2.html", musiques=musiques)
-        return redirect(url_for("marketing"))
-
-
-#Upload de mp3
-
-UPLOAD_FOLDER = "uploads"
-MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB conseillé (suffisant+sécu)
-
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
-
-ALLOWED_EXTENSIONS = {"mp3"} #fichiers autorisés
-
-os.makedirs(UPLOAD_FOLDER, exist_ok=True) #créer dossier
-#mettre dans /tsatic/data
-def allowed_file(filename):
-    return (
-        "." in filename and
-        filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS, 
-    )
-
-#fdp va
-@app.route("/upload", methods=["POST"])
-def upload():
-
-    file = request.files["audio"]
-
-    if file.filename == "":
-        abort(400, "No selected file")
-
-    if not allowed_file(file.filename):
-        abort(400, "Only MP3 files allowed")
-
-    # Sécurité,     anti injection
-    from werkzeug.utils import secure_filename
-    filename = secure_filename(file.filename)
-
-    filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-    file.save(filepath)#construit db
-
-
-
-    return "MP3 uploaded successfully", 200
-
-
-#import sqlite3
-
-#conn = sqlite3.connect("music.db")
-#cursor = conn.cursor()
-
-#cursor.execute(
-  #  "INSERT INTO songs (filename, filepath, mimetype, size) VALUES (?, ?, ?, ?)",
- #   (filename, filepath, file.mimetype, os.path.getsize(filepath))
-#)
-
-#conn.commit()
-#conn.close()
+        try:
+            result = service.save_file(file)
+            return f"MP3 uploaded successfully: {result['filename']} ({result['duration']}s)", 200
+        except ValueError as e:
+            abort(400, str(e))
+        except Exception as e:
+            abort(500, f"Internal server error: {str(e)}")

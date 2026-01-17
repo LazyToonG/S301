@@ -5,9 +5,11 @@ class RaspberryService():
         self.rdao = RaspberryDAO()
 
     def montreToutRasp(self):
-         return self.rdao.findAll
+         return self.rdao.findAll()
     
     def ajoutR(self, identifiant, ipRasp):
-	    return self.rdao.createUser(identifiant, ipRasp)
+	    return self.rdao.createRasp(identifiant, ipRasp)
+    
+
     
 

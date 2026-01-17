@@ -7,7 +7,7 @@ class Playliste:
         self.dateCrée = dateCrée #les 3 pour le tri dans la vue , jsp si on se servira de tous les filtres mais je mets au cas ou
         self.jourPrévu = jourPrévu
         self.Entreprise = Entreprise # ca dépend de comment on fait la bd 
-        self.MusiqueAJouer = [] #dans le dao je transforme en "id@heure|id@heure|etc" pour la bd
+        self.MusiqueAJouer = [] #dans le dao je transforme en "id|id|etc" pour la bd
         #un objet peut avoir en attribut un autre (= composition si il en dépend sinon agregation)
         #g crée un objet ChoixMusique qui sera pris en argument, c'est le titre d'une musique et une heure. 
         #il y a sans doute un meilleur moyen de faire, notemment avec les dictionnaires mais bon
