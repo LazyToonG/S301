@@ -1,8 +1,7 @@
-import sqlite3
+import sqlite3, bcrypt
 from app import app
 from app.models.User import User
 from app.DAO.UserDAOInterface import UserDAOInterface
-import bcrypt
 
 class UserSqliteDAO(UserDAOInterface):
 
@@ -78,3 +77,10 @@ class UserSqliteDAO(UserDAOInterface):
         conn.commit()
         conn.close()
         return True
+
+    
+
+        
+
+
+

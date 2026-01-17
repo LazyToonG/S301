@@ -1,14 +1,13 @@
-import sqlite3
+import sqlite3, os, subprocess
 from app import app
 from app.models.Raspberry import Raspberry
 
-#à finir
 class RaspberrySqliteDAO():
 
 	def __init__(self):
-			self.databasename = app.static_folder + '/data/database.db'
-			self._initTable()
-			
+		self.databasename = app.static_folder + '/data/database.db'
+		self._initTable()
+		
 	def _getDbConnection(self):
 		""" connect the database and returns the connection object """
 		""" connection à la base de données. Retourne l'objet connection """
@@ -45,8 +44,8 @@ class RaspberrySqliteDAO():
 		conn = self._getDbConnection()
 		try:
 			conn.execute(
-				"INSERT INTO raspberry (idRasp, nom, ipRasp) VALUES (:idRasp, :nom, :ipRasp)",
-				{"idRasp":1,"nom":nom, "ipRasp":ipRasp}
+				"INSERT INTO raspberry (nom, ipRasp) VALUES (:nom, :ipRasp)",
+				{"nom":nom, "ipRasp":ipRasp}
 			)
 			conn.commit()
 			return True
@@ -54,3 +53,27 @@ class RaspberrySqliteDAO():
 			return False
 		finally:
 			conn.close()
+
+	
+
+class RaspberryVerifieChemin:
+
+	rdao = RaspberrySqliteDAO()
+	
+	def __init__(self, chemin):
+		self.chemin = chemin
+
+	def estAJour(self):
+		raspberrys = rdao.findAll()
+
+		fichier = RaspberryVerifieChemin()
+		# Stocke le temps de dernière modification
+		dernier_time = os.path.getmtime(fichier)
+
+		# Plus tard
+		nouveau_time = os.path.getmtime(fichier)
+
+		if nouveau_time != dernier_time:
+			for r in raspberrys:
+				subprocess.run(["scp", "-v", fichier, r["nom"]+"@"+r["ipRasp"]+":/home/darragh/Images"])
+

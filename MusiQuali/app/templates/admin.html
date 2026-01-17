@@ -15,15 +15,17 @@
             <button class="btn-rouge">{{t.btn_rouge_3}}</button>
             <button class="btn-rouge">{{t.btn_rouge_4}}</button>
             <br>
-            <form action="/fruit/add" method="POST">
-                <div class="form-rasberry">
-                    <label for="identifiant" class="form-label">{{t.q_form_1}}</label><br>
-                    <input type="text" class="form-control" id="identifiant" placeholder="{{t.t_form_1}}" name="identifiant"><br>
-                    <label for="ip" class="form-label">{{t.q_form_2}}</label><br>
-                    <input type="text" class="form-control" id="ip" placeholder="{{t.t_form_2}}" name="ip">
-                </div>
+            <form action="/testRasp" method="POST">
+            <div class="mb-3 mt-3">
+                <label for="nom" class="form-label">Quel est l'identifiant de la nouvelle Raspberry que vous voulez insérer ?</label>
                 <br>
-                <button type="submit" class="submit" style="background-color: #a33e3e; margin-bottom: 20px; text-align: left;">Submit</button>
+                <input type="text" class="form-control" id="nom" placeholder="Entrez l'identifiant de la Raspberry" name="nom">
+                <br>
+                <label for="ipRasp" class="form-label">Quel est l'adresse IP de cette nouvelle Raspberry que vous voulez insérer ?</label>
+                <br>
+                <input type="text" class="form-control" id="ipRasp" placeholder="Entrez l'adresse IP de la Raspberry" name="ipRasp">
+            </div>
+                <button type="submit" class="submit" style="background-color: #a33e3e; margin-bottom: 20px; text-align: left;">Validez</button>
             </form>
             
             <p>{{t.refresh}} : 10:45</p>
