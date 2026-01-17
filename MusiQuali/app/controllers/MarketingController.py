@@ -9,7 +9,7 @@ service = MusiqueService()
 playlist_service = PlaylistService()
 
 class MarketingController:
-
+#reqlogfantome ici lol
     @app.route('/marketing', methods=['GET'])
     def marketing():
 
