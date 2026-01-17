@@ -1,7 +1,7 @@
 import sqlite3
 from app import app
 from app.models.User import User
-from app.models.UserDAOInterface import UserDAOInterface
+from app.DAO.UserDAOInterface import UserDAOInterface
 import bcrypt
 
 class UserSqliteDAO(UserDAOInterface):
