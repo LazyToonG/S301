@@ -56,9 +56,9 @@ class RaspberrySqliteDAO():
 
 	
 
-class RaspberryVerifieChemin:
+rdao = RaspberrySqliteDAO()
 
-	rdao = RaspberrySqliteDAO()
+class RaspberryVerifieChemin():
 	
 	def __init__(self, chemin):
 		self.chemin = chemin
@@ -75,5 +75,5 @@ class RaspberryVerifieChemin:
 
 		if nouveau_time != dernier_time:
 			for r in raspberrys:
-				subprocess.run(["scp", "-v", fichier, r["nom"]+"@"+r["ipRasp"]+":/home/darragh/Images"])
+				subprocess.run(["scp", "-v", fichier, r["nom"]+"@"+r["ipRasp"]+":/home/"+r["nom"]+"/Music/"])
 
