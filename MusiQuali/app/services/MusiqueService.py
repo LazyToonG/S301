@@ -33,9 +33,9 @@ class MusiqueService:
     def delete_musique(self, musique_id):
         self.dao.delete_musique(musique_id)
 
-        def __init__(self):
-            self.dao = MusiqueDAO()
-            self.upload_folder = UPLOAD_FOLDER
+    def __init__(self):
+        self.dao = MusiqueDAO()
+        self.upload_folder = UPLOAD_FOLDER
 
     def allowed_file(self, filename):
         return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS

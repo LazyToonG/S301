@@ -238,3 +238,19 @@ th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
     font-size: 14px;
     line-height: 1.2;
 }
+
+
+
+
+/*zone de upload des fichiers*/
+.upload-zone {
+    border: 2px dashed #ccc;
+    padding: 40px;
+    text-align: center;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+/*assombrit quand fichier survole*/
+.upload-zone.dragover {
+    background-color: #f0f8ff;
+    border-color: #007bff;
+}
