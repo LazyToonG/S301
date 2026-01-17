@@ -43,7 +43,6 @@ class MarketingController:
         return redirect(url_for("marketing"))
 
     @app.route("/playlist/create", methods=["POST"])
-    @reqrole("marketing")
     def create_playlist():
         titre = request.form.get("titre")
 
