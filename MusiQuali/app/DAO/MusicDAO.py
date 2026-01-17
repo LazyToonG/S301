@@ -15,7 +15,7 @@ class MusicDAO:
         """ordre par defaut c'est titres'"""
         conn = self.get_connection()
         cursor = conn.cursor()
-        cursor.execute(f"""SELECT * FROM music """)
+        cursor.execute("SELECT id, title, artist, path FROM music")
         rows = cursor.fetchall()
         conn.close()
 
@@ -25,7 +25,7 @@ class MusicDAO:
 
         conn = self.get_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM music WHERE titre = ?", (titre,))
+        cursor.execute("SELECT id, title, artist, path FROM music WHERE title = ?", (titre,))
         row = cursor.fetchone()
         conn.close()
 
@@ -52,4 +52,3 @@ class MusicDAO:
         musics = conn.execute('SELECT * FROM music WHERE playlist_id = ?', (playlist_id,)).fetchall()
         conn.close()
         return musics
-
