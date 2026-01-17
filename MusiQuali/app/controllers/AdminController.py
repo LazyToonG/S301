@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, session
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.TraductionService import Traductionservice
@@ -11,8 +11,15 @@ class AdminController:
     @reqrole("admin")
     def admin_dashboard():
         traductions=ts.tradAdmin()
+
+        langue_url = request.args.get('lang')
         
-        langue_choisie = request.args.get('lang')
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
         if langue_choisie not in ['fr', 'en']:
             langue_choisie = 'fr'
         textes = traductions[langue_choisie]

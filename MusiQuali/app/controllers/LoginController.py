@@ -41,12 +41,18 @@ def reqrole(role):
 
 class LoginController:
 
-    
-
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         traductions=ts.tradLogin()
-        langue_choisie = request.args.get('lang')
+
+        langue_url = request.args.get('lang')
+        
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
         if langue_choisie not in ['fr', 'en']:
             langue_choisie = 'fr'
         textes = traductions[langue_choisie]

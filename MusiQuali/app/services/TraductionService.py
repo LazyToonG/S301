@@ -52,6 +52,7 @@ class Traductionservice():
                 "q_form_2" : "Quel est l'adresse IP de cette nouvelle Raspberry que vous voulez insérer ?",
                 "t_form_1" : "Entrez l'identifiant de la Raspberry",
                 "t_form_2" : "Entrez l'adresse IP de la Raspberry",
+                "valider" : "Validez",
                 "refresh" : "Dernier rafraîchissement",
                 "notes" : "Notes",
                 "contacts" : "Contacts"
@@ -68,6 +69,7 @@ class Traductionservice():
                 "q_form_2" : "What is the IP address of this new Raspberry Pi that you want to insert?",
                 "t_form_1" : "Enter the Raspberry ID",
                 "t_form_2" : "Enter the IP address of the Raspberry",
+                "valider" : "Validate",
                 "refresh" : "Last refresh",
                 "notes" : "Notes",
                 "contacts" : "Contacts"

@@ -1,5 +1,5 @@
 # app/controllers/MarketingController.py
-from flask import render_template, request, redirect, url_for, abort
+from flask import render_template, request, redirect, url_for, abort, session
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.MusiqueService import MusiqueService
@@ -11,21 +11,22 @@ class MarketingController:
     @app.route('/marketing', methods=['GET'])
     @reqrole("marketing")
     def marketing():
-        langue_choisie = request.args.get('lang', 'fr')
+
+        langue_url = request.args.get('lang')
+        
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
         textes = service.get_traductions(langue_choisie)
 
         sort = request.args.get("sort", "date")
         musiques = service.get_musiques(sort)
 
         metadata = {"title": "Espace Marketing", "pagename": "marketing"}
-        return render_template(
-            "marketing_v2.html",
-            metadata=metadata,
-            sort=sort,
-           # t=textes,
-            current_lang=langue_choisie,
-            musiques=musiques
-        )
+        return render_template("marketing_v2.html", metadata=metadata, sort=sort, t=textes, current_lang=langue_choisie, musiques=musiques)
 
     @app.route("/delete/<int:id>")
     def delete(id):

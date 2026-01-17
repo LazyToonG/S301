@@ -1,7 +1,7 @@
 import os
 from app.DAO.MusiqueDAO import MusiqueDAO
 from app.services.TraductionService import Traductionservice
-from mutagen.mp3 import MP3
+#from mutagen.mp3 import MP3
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = "uploads"

@@ -17,15 +17,15 @@
             <br>
             <form action="/testRasp" method="POST">
             <div class="mb-3 mt-3">
-                <label for="nom" class="form-label">Quel est l'identifiant de la nouvelle Raspberry que vous voulez insérer ?</label>
+                <label for="nom" class="form-label">{{t.q_form_1}}</label>
                 <br>
-                <input type="text" class="form-control" id="nom" placeholder="Entrez l'identifiant de la Raspberry" name="nom">
+                <input type="text" class="form-control" id="nom" placeholder="{{t.t_form_1}}" name="nom">
                 <br>
-                <label for="ipRasp" class="form-label">Quel est l'adresse IP de cette nouvelle Raspberry que vous voulez insérer ?</label>
+                <label for="ipRasp" class="form-label">{{t.q_form_2}}</label>
                 <br>
-                <input type="text" class="form-control" id="ipRasp" placeholder="Entrez l'adresse IP de la Raspberry" name="ipRasp">
+                <input type="text" class="form-control" id="ipRasp" placeholder="{{t.t_form_2}}" name="ipRasp">
             </div>
-                <button type="submit" class="submit" style="background-color: #a33e3e; margin-bottom: 20px; text-align: left;">Validez</button>
+                <button type="submit" class="submit" style="background-color: #a33e3e; margin-bottom: 20px; text-align: left;">{{t.valider}}</button>
             </form>
             
             <p>{{t.refresh}} : 10:45</p>

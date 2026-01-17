@@ -1,6 +1,6 @@
 import sqlite3
 from app.models.Musique import Musique
-from mutagen.mp3 import MP3
+#from mutagen.mp3 import MP3
 
 class MusiqueDAO:
     def __init__(self, db_name="database.db"):
