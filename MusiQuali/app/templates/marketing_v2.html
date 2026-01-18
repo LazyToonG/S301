@@ -13,7 +13,7 @@
 
     <h2 class="section-title">Playlist</h2>
 
-    <!-- Create playlist -->
+    <!-- creer playlist -->
     <section class="card">
         <h3>Créer une nouvelle playlist</h3>
         <form id="create-playlist-form" action="/playlist/create" method="POST" class="form-inline">
@@ -27,7 +27,7 @@
         </form>
     </section>
 
-    <!-- Select playlist -->
+    <!-- select playlist -->
     <section class="card">
         <label for="playlist-select">Choisir une playlist</label>
         <select id="playlist-select">
@@ -38,7 +38,7 @@
         </select>
     </section>
 
-    <!-- Upload audio -->
+    <!-- upload mp3 -->
     <section class="card">
         <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
             <input type="hidden" name="playlist_id" id="playlist-id">
@@ -93,7 +93,7 @@
             }
         });
 
-        // Drag & drop
+        // Dragon drop
         uploadZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadZone.classList.add('dragover');
