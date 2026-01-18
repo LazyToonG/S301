@@ -78,10 +78,3 @@ def upload():
     playlist_service.add_music_to_playlist(playlist.id, music.id)
 
     return redirect(url_for("marketing"))
-
-
-def upload():
-    print("Upload reached")  # debogage
-    print(request.method)
-    print(request.files)
-    return "OK"

@@ -1,6 +1,7 @@
 import sqlite3
 from app.models.Playliste import Playliste
 import os
+from app.models.db import get_db
 
 class PlaylisteDAO:
 
@@ -23,7 +24,6 @@ class PlaylisteDAO:
         conn = sqlite3.connect(self.db)
         cursor = conn.cursor()
         cursor.execute("PRAGMA table_info(playlist)")
-        print(cursor.fetchall())
         conn.execute("""
             CREATE TABLE IF NOT EXISTS playlist (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,

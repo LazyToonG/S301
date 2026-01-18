@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, send_file, redirect, url_for, flash
 from app.services.service_playlist import service_playlist
-"""from app.services.service_music import service_music"""
 from app.services.service_schedule import service_schedule
 from app import app
 
@@ -8,7 +7,8 @@ class commercial_Controller:
 
     @app.route('/commercial', methods=['GET'])
     def voir_planning():
-        return render_template('planning.html', planning=service_schedule.get_planning())
+        playlists = service_playlist.get_playlists_api_data()
+        return render_template('planning.html', planning=service_schedule.get_planning(), playlists=playlists)
 
     @app.route('/admin')
     def admin_page():
@@ -23,21 +23,21 @@ class commercial_Controller:
             flash(f"Playlist '{name}' créée avec succès.")
         return redirect(url_for('main.admin_page'))
 
-    @app.route('/add_music', methods=['POST'])
-    def add_music():
-        playlist_id = request.form.get('playlist_id')
-        title = request.form.get('title')
-        artist = request.form.get('artist')
-        duration = request.form.get('duration')
-        path = request.form.get('path')
+    # @app.route('/add_music', methods=['POST'])
+    # def add_music():
+    #     playlist_id = request.form.get('playlist_id')
+    #     title = request.form.get('title')
+    #     artist = request.form.get('artist')
+    #     duration = request.form.get('duration')
+    #     path = request.form.get('path')
 
-        if playlist_id and title and duration:
-            service_music.add_music(playlist_id, title, artist, duration, path)
-            flash(f"Musique '{title}' ajoutée avec succès.")
-        else:
-            flash("Erreur : Champs manquants.")
-        
-        return redirect(url_for('main.admin_page'))
+    #     if playlist_id and title and duration:
+    #         # service_music n'est pas disponible ici pour le moment
+    #         # service_music.add_music(playlist_id, title, artist, duration, path)
+    #         flash(f"Musique '{title}' ajoutée avec succès.")
+    #     else:
+    #         flash("Erreur : Champs manquants.")
+    #     return redirect(url_for('main.admin_page'))
 
     @app.route('/api/playlists')
     def get_playlists():

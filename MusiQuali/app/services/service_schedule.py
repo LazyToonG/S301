@@ -17,7 +17,9 @@ class ScheduleService:
             items = self.schedule_dao.get_items_by_day(day)
             musics = []
             for item in items:
-                musics.append(Music(item['title'], item['path'], item['duration'], item['artist']))
+                m = Music(item['id'], item['title'], item['path'], item['duration'])
+                m.artist = item['artist']
+                musics.append(m)
             planning_data[day] = [start_time] + musics
         return Schedule(planning_data)
 
@@ -28,14 +30,24 @@ class ScheduleService:
         # Mise à jour du Modèle en mémoire
         new_musics = []
         for t in tasks:
-            new_musics.append(Music(t['title'], t.get('path', ''), int(t['duration']), t['artist']))
+            try:
+                duration = int(t.get('duration', 0))
+            except (ValueError, TypeError):
+                duration = 0
+            m = Music(None, t['title'], t.get('path', ''), duration)
+            m.artist = t.get('artist', '')
+            new_musics.append(m)
         self.planning_model.update_day(day, new_musics, start_time)
 
         # Mise à jour de la Base de Données via DAO
         self.schedule_dao.update_start_time(day, start_time)
         self.schedule_dao.clear_day_items(day)
         for i, t in enumerate(tasks):
-            self.schedule_dao.add_item(day, i, t['title'], t['artist'], int(t['duration']), t.get('path', ''))
+            try:
+                duration = int(t.get('duration', 0))
+            except (ValueError, TypeError):
+                duration = 0
+            self.schedule_dao.add_item(day, i, t['title'], t.get('artist', ''), duration, t.get('path', ''))
 
     def move_task(self, from_day, from_index, to_day, to_index):
         self.planning_model.move_task(from_day, from_index, to_day, to_index)
