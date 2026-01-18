@@ -73,13 +73,35 @@
 
     <button type="submit">Créer l'utilisateur</button>
 </form>
+<h2>Rechercher un utilisateur</h2>
+
+<form method="post" action="/admin/search" class="user-search-form">
+    <input
+        type="text"
+        name="username"
+        placeholder="user recherché"
+        required
+    >
+    <button type="submit">Rechercher</button>
+</form>
+{% if searched_users %}
+    <h3>Résultat</h3>
+    <ul>
+    {% for user in searched_users %}
+        <li>
+            Nom : <strong>{{ user.username }}</strong><br>
+            Rôle : <strong>{{ user.role }}</strong>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
 
 
         </div>
     </div>
 </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-    {% include 'fin_nav.html' %}
+
 </body>
 </html>

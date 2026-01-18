@@ -9,8 +9,8 @@ user_service = UserService()
 
 @app.route("/admin", methods=["GET"])
 def users_page():
-    users = user_service.getUsers()
-    return render_template("admin.html", users=users)
+
+    return render_template("admin.html")
 
 
 # Création utilisateur
@@ -35,11 +35,16 @@ def create_user():
 
 
 @app.route("/admin/search", methods=["POST"])
-def search_user():
+def admin_search_user():
     username = request.form.get("username")
 
     if not username:
-        return redirect(url_for("users_page"))
+        return redirect(url_for("admin_page"))
 
-    users = user_service.getUserByUsername(username)
-    return render_template("admin.html", users=users)
+    searched_users = user_service.getUserByUsername(username)
+
+    return render_template(
+        "admin.html",
+        searched_users=searched_users
+    )
+
