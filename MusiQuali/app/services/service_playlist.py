@@ -24,7 +24,7 @@ class PlaylistService:
                         'name': m.title, 
                         'artist': "", 
                         'path': m.path, 
-                        'length': m.length
+                        'duration': m.duration
                     })
             data[pl.title] = musics_data
         return data
