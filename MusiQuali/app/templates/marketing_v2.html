@@ -9,11 +9,7 @@
     {% include 'nav_v2.html' %}
 
     <div class="main-content">
-        <div class="col-gauche">
-            <button class="btn-bleu">▶ {{t.play}}</button>
-            <button class="btn-bleu">🔀 {{t.shuffle}}</button>
-        </div>
-
+    
         <h3>Playlist</h3>
         <h3>Créer une nouvelle playlist</h3>
         <form id="create-playlist-form" action="/playlist/create" method="POST">
