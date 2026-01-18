@@ -24,6 +24,9 @@ class AdminController:
             langue_choisie = 'fr'
         textes = traductions[langue_choisie]
 
+        user=session['username']
+        role=session['role']
+
         metadata = {"title": "Panel Admin", "pagename": "admin"}
 
         data = {
@@ -32,7 +35,7 @@ class AdminController:
             "playlist_ok": True,
         }
 
-        return render_template('admin.html', metadata=metadata, data=data, t=textes, current_lang=langue_choisie)
+        return render_template('admin.html', metadata=metadata, data=data, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/admin/playlist/resync', methods=['POST'])
     @reqrole("admin")

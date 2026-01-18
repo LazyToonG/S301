@@ -93,22 +93,6 @@ if (selectLangue) {
     });
 }
 
-function page_login(){
-    document.location.href="http://localhost:8000/login";
-}
-const btnLogin = document.getElementById('login');
-if (btnLogin) {
-    btnLogin.addEventListener('click', page_login);
-}
-
-function page_index(){
-    document.location.href="http://localhost:8000";
-}
-const btnIndex = document.getElementById('index');
-if (btnIndex) {
-    btnIndex.addEventListener('click', page_index);
-}
-
 const btnLogout = document.getElementById('logout');
 if(btnLogout) {
     btnLogout.addEventListener('click', function(){

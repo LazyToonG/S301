@@ -27,7 +27,13 @@ class Traductionservice():
                 "logout" : "Déconnexion",
                 "index" : "Accueil",
                 "h1" : "Nom d'utilisateur",
-                "password" : "Mot de passe"
+                "password" : "Mot de passe",
+                "role" : "Rôle",
+                "connexion" : "Connexion",
+                "create" : "Créer",
+                "commercial" : "Commercial (Défaut)",
+                "marketing" : "Marketing",
+                "admin" : "Administrateur"
             },
 
             "en" : {
@@ -35,7 +41,13 @@ class Traductionservice():
                 "logout" : "Logout",
                 "index" : "Home",
                 "h1" : "Username",
-                "password" : "Password"
+                "role" : "Role",
+                "password" : "Password",
+                "connexion" : "Login",
+                "create" : "Create",
+                "commercial" : "Commercial (Default)",
+                "marketing" : "Marketing",
+                "admin" : "Administrator"
             }
         }
     
@@ -48,6 +60,7 @@ class Traductionservice():
                 "btn_rouge_2" : "Mettre à jour les M3U",
                 "btn_rouge_3" : "Playlist (accès page playlist)",
                 "btn_rouge_4" : "Base de données (accès BD)",
+                "btn_rouge_5" : "Créer un nouvel utilisateur",
                 "q_form_1" : "Quel est l'identifiant de la nouvelle Raspberry que vous voulez insérer ?",
                 "q_form_2" : "Quel est l'adresse IP de cette nouvelle Raspberry que vous voulez insérer ?",
                 "t_form_1" : "Entrez l'identifiant de la Raspberry",
@@ -65,6 +78,7 @@ class Traductionservice():
                 "btn_rouge_2" : "Update the M3U files",
                 "btn_rouge_3" : "Playlist (access playlist page)",
                 "btn_rouge_4" : "Database (DB access)",
+                "btn_rouge_5" : "Create a new user",
                 "q_form_1" : "What is the ID of the new Raspberry you want to insert?",
                 "q_form_2" : "What is the IP address of this new Raspberry Pi that you want to insert?",
                 "t_form_1" : "Enter the Raspberry ID",
@@ -114,7 +128,7 @@ class Traductionservice():
                 "select_value" : "— Sélectionner —",
                 "upload" : "Veuillez sélectionner une playlist",
                 "submit" : "Envoyer",
-                "convertir" : "Besoin de convertir en mp3?",
+                "convertir" : "Besoin de convertir en mp3?"
             },
             'en': {
                 "user" : "User",
@@ -133,6 +147,6 @@ class Traductionservice():
                 "select_value" : "— Select —",
                 "upload" : "Select a playlist",
                 "submit" : "Send",
-                "convertir" : "Need to convert to mp3?",
+                "convertir" : "Need to convert to mp3?"
             }
         }

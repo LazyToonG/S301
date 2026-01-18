@@ -43,6 +43,12 @@
         </div>
 
         <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script>
+            document.getElementById('login').addEventListener('click', function(){
+                window.location.href = "/login";
+            })
+        </script>
+
         {% include 'fin_nav.html' %}
     </body>
 </html>

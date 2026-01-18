@@ -18,12 +18,19 @@
             </div>
         </div>
         <div class="h1">
-            <h1>{{t.h1}} :<input class="login" type="text"/></h1>
-            <h1>{{t.password}} : <input class="password" type="text"/></h1>
-            <input class="seconnecte" type="button" value="Se connecter"/>
-        </div>
-        <div><a href="marketing_v2.html"><button>temporaire</button></a></div>
-        
+            <form id="form" action="/login" method="POST" class="form-inline">
+                <h1>{{t.h1}} :<input name="username" type="text"/></h1>
+                <h1>{{t.password}} : <input name="password" type="text"/></h1>
+                <input class="seconnecte" type="submit" value="{{t.connexion}}"/>
+            </form>
+        </div>        
         <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script>
+            document.getElementById('index').addEventListener('click', function(){
+                window.location.href = "http://localhost:8000";
+            })
+        </script>
+
+        {% include 'fin_nav.html' %}
     </body>
 </html>

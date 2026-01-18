@@ -67,7 +67,7 @@ class LoginController:
                 if user.role == "admin":
                     return redirect(url_for("admin_dashboard"))
                 elif user.role == "marketing":
-                    return redirect(url_for("marketing_dashboard"))
+                    return redirect(url_for("marketing"))
                 elif user.role == "commercial":
                     return redirect(url_for("commercial_dashboard"))
                 else:
@@ -78,6 +78,20 @@ class LoginController:
 
     @app.route("/signin", methods=['GET', 'POST'])
     def signin():
+
+        traductions=ts.tradLogin()
+
+        langue_url = request.args.get('lang')
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
+        if langue_choisie not in ['fr', 'en']:
+            langue_choisie = 'fr'
+        textes = traductions[langue_choisie]
+
         if request.method == "POST":
             username = request.form["username"]
             password = request.form["password"]
@@ -92,15 +106,15 @@ class LoginController:
                 if role == "admin":
                     return redirect(url_for("admin_dashboard"))
                 elif role == "marketing":
-                    return redirect(url_for("marketing_dashboard"))
+                    return redirect(url_for("marketing"))
                 elif role == "commercial":
                     return redirect(url_for("commercial_dashboard"))
                 else:
                     return redirect(url_for("index"))
             else:
-                return render_template("signin.html", msg_error="creation error")
+                return render_template("signin.html", msg_error="creation error", t=textes, current_lang=langue_choisie)
         else:
-            return render_template('signin.html', msg_error=None)
+            return render_template('signin.html', msg_error=None, t=textes, current_lang=langue_choisie)
 
     @app.route('/logout')
     @reqlogged

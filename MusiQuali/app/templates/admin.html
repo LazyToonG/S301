@@ -11,35 +11,35 @@
     <div class="main-content"> <!-- ajout class sombre ici -->
         <div class="col-gauche">
             <button class="btn-rouge">{{t.btn_rouge_1}}</button>
-            <button class="btn-rouge">{{t.btn_rouge_2}}</button>
+            <button class="btn-rouge" id="create">{{t.btn_rouge_5}}</button>
             <button class="btn-rouge">{{t.btn_rouge_3}}</button>
             <button class="btn-rouge">{{t.btn_rouge_4}}</button>
+            <button class="btn-rouge">{{t.btn_rouge_2}}</button>
             <br>
             <form action="/testRasp" method="POST">
-            <div class="mb-3 mt-3">
-                <label for="nom" class="form-label">{{t.q_form_1}}</label>
+                <div class="mb-3 mt-3">
+                    <label for="nom" class="form-label">{{t.q_form_1}}</label>
+                    <br>
+                    <input type="text" class="form-control" id="nom" placeholder="{{t.t_form_1}}" name="nom">
+                    <br>
+                    <label for="ipRasp" class="form-label">{{t.q_form_2}}</label>
+                    <br>
+                    <input type="text" class="form-control" id="ipRasp" placeholder="{{t.t_form_2}}" name="ipRasp">
+                </div>
                 <br>
-                <input type="text" class="form-control" id="nom" placeholder="{{t.t_form_1}}" name="nom">
-                <br>
-                <label for="ipRasp" class="form-label">{{t.q_form_2}}</label>
-                <br>
-                <input type="text" class="form-control" id="ipRasp" placeholder="{{t.t_form_2}}" name="ipRasp">
-            </div>
                 <button type="submit" class="submit" style="background-color: #a33e3e; margin-bottom: 20px; text-align: left;">{{t.valider}}</button>
             </form>
             
-            <p>{{t.refresh}} : 10:45</p>
+            <p>{{t.refresh}} : --:--</p>
 
             <div class="note-jaune">
                 <strong>{{t.notes}} :</strong>
                 <ul>
-                    <li>Remplacer raspberry 3 demain</li>
-                    <li>Vérifier logs serveur</li>
+                    <li>...</li>
                 </ul>
                 <hr>
                 <strong>{{t.contacts}} :</strong><br>
-                abcd@gmail.com<br>
-                technique@musi-quali.com
+                ...<br>
             </div>
         </div>
 
@@ -54,6 +54,11 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        document.getElementById('create').addEventListener('click', function(){
+            window.location.href = "/signin";
+        })
+    </script>
     {% include 'fin_nav.html' %}
 </body>
 </html>

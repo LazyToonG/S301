@@ -30,6 +30,8 @@ def marketing():
     musiques = service.get_musiques(sort)
     playlists = playlist_service.get_all()
     textes = traductions[langue_choisie]
+    user=session['username']
+    role=session['role']
     metadata = {"title": "Espace Marketing", "pagename": "marketing"}
     return render_template(
         "marketing_v2.html",
@@ -38,7 +40,9 @@ def marketing():
         current_lang=langue_choisie,
         musiques=musiques,
         t=textes,
-        playlists=playlists
+        playlists=playlists,
+        user=user,
+        role=role
         
         
     )

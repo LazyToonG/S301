@@ -19,24 +19,18 @@ body.sombre {
 
 body::after {
     content: "";
-    background-image: url('logo.png'); /* Mettez le bon nom de fichier ici */
-    
-    /* On gère la taille et la position */
+    background-image: url('logo.png'); 
     background-repeat: no-repeat;
-    background-position: center center; /* Centré horizontalement et verticalement */
-    background-size: 45vw; /* Ajustez cette taille selon vos envies (ex: 60%) */
-    
-    /* On gère la transparence */
-    opacity: 0.4; /* 0.1 est très discret, 0.2 un peu plus visible. Ne mettez pas trop fort ! */
-    
-    /* On s'assure que l'image reste DERRIÈRE le texte */
+    background-position: center center;
+    background-size: 45vw;
+    opacity: 0.4;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Envoie l'image en arrière-plan */
-    pointer-events: none; /* Permet de cliquer "au travers" de l'image si elle passe devant un bouton */
+    z-index: -1; 
+    pointer-events: none; 
 }
 
 .nav {
@@ -111,7 +105,7 @@ body::after {
     background-color: #083967;
 }
 
-.h1 {
+#form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -120,6 +114,10 @@ body::after {
     gap: 10px;
 }
 
+.mb-3.mt-3 {
+    display: flex;
+    flex-direction: column;
+}
 
 .main-content {
     display: flex;
@@ -135,6 +133,11 @@ body::after {
     flex-direction: column;
     justify-content: flex-start !important;
     gap: 15px; 
+}
+
+select, input {
+    padding : 5px;
+    border-radius: 5px;
 }
 
 

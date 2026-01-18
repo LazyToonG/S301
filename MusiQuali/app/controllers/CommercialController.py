@@ -24,8 +24,11 @@ class CommercialController:
             langue_choisie = 'fr'
         textes = traductions[langue_choisie]
 
+        user=session['username']
+        role=session['role']
+
         metadata = {"title": "Espace Commercial", "pagename": "commercial"}
-        return render_template('commercial.html', metadata=metadata, t=textes, current_lang=langue_choisie)
+        return render_template('commercial.html', metadata=metadata, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/commercial/message/urgent', methods=['POST'])
     @reqrole("commercial")
