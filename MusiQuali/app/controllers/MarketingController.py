@@ -27,7 +27,10 @@ def marketing():
         sort=sort,
         current_lang=langue_choisie,
         musiques=musiques,
-        t=service
+        t=service,
+        playlists=playlists
+        
+        
     )
 
 @app.route("/delete/<int:id>")
