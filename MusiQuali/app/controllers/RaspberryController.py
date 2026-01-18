@@ -2,7 +2,22 @@ from flask import render_template, request, redirect, url_for
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
-import subprocess, datetime
+import subprocess, ipaddress
+#import datetime
+
+@app.route('/testRasp', methods=['POST'])
+def ipCorrect():
+    ip = request.form.get("ipRasp")
+    msg_error = None
+
+    try:
+        ipaddress.IPv4Address(ip)
+        return redirect(url_for("admin"))
+    except ipaddress.AddressValueError:
+        msg_error = "IP invalid"
+
+    return render_template('testRasp.html', msg_error=msg_error)
+
 
 rs = RaspberryService()
 

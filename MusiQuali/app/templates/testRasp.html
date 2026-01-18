@@ -32,6 +32,9 @@
             </div>
             <button type="submit">Envoyer</button>
         </form>
+        {% if msg_error %}
+            <p class="text-danger" style = "color:red;"> {{ msg_error }}
+        {% endif %}
         <script src="{{ url_for('static', filename='script.js') }}"></script>
     </body>
 </html>
