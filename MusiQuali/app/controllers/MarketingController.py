@@ -43,10 +43,10 @@ def marketing():
         
     )
 
-@app.route("/delete/<int:id>")
-def delete(id):
-    service.delete_musique(id)
-    return redirect(url_for("marketing"))
+# @app.route("/delete/<int:id>")
+# def delete(id):
+#     service.delete_musique(id)
+#     return redirect(url_for("marketing"))
 
 @app.route("/search_by_title")
 def search_by_title():

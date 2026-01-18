@@ -10,6 +10,15 @@ class MusicDAO:
         conn.row_factory = sqlite3.Row
         return conn
 
+    # def __init__(self):
+    #     self.databasename = app.static_folder + '/data/database.db'
+    #     self._initTable()
+
+    # def _getDbConnection(self):
+    #     conn = sqlite3.connect(self.databasename)
+    #     conn.row_factory = sqlite3.Row
+    #     return conn
+
     def get_all(self):
         conn = self.get_connection()
         rows = conn.execute(

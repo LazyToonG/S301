@@ -11,7 +11,8 @@ class PlaylistService:
         return p
 
     def get_all(self):
-        return self.dao.get_all()
+        # return self.dao.get_all()
+        return self.dao.findAll()
 
     def get_by_id(self, playlist_id):
         return self.dao.get(playlist_id)
