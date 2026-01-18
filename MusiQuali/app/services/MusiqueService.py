@@ -31,10 +31,10 @@ class MusiqueService:
         file.save(filepath)
 
         audio = MP3(filepath) #mutagen pour gerer les mp3
-        length = int(audio.info.length)
+        duration = int(audio.info.length)
 
         # DAO retourne un objet Music
-        return self.dao.create(title=title, path=filepath, length=length)
+        return self.dao.create(title=title, path=filepath, duration=duration)
 
     def delete_musique(self, musique_id):
         self.dao.delete(musique_id)
