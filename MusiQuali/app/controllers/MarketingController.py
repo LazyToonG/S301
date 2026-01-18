@@ -4,12 +4,17 @@ from app import app
 from app.controllers.LoginController import reqrole
 from app.services.MusiqueService import MusiqueService
 from app.services.playlistServiceMarketing import PlaylistService
+from app.services.TraductionService import Traductionservice
 
+ts = Traductionservice()
 service = MusiqueService()
 playlist_service = PlaylistService()
 
 @app.route('/marketing', methods=['GET'])
+@reqrole("marketing")
 def marketing():
+
+    traductions=ts.tradMarketing()
     langue_url = request.args.get('lang')
     if langue_url:
         session['langue'] = langue_url
@@ -20,6 +25,7 @@ def marketing():
     sort = request.args.get("sort", "date")
     musiques = service.get_musiques(sort)
     playlists = playlist_service.get_all()
+    textes = traductions[langue_choisie]
     metadata = {"title": "Espace Marketing", "pagename": "marketing"}
     return render_template(
         "marketing_v2.html",
@@ -27,7 +33,7 @@ def marketing():
         sort=sort,
         current_lang=langue_choisie,
         musiques=musiques,
-        t=service,
+        t=textes,
         playlists=playlists
         
         
