@@ -106,8 +106,15 @@ class Traductionservice():
                 "genre" : "Genre",
                 "date" : "Date",
                 "auteur" : "Artiste",
-                "h3" : "Télécharger une nouvelle musique",
-                "p" : "Glisser le fichier ici"
+                "h3" : "Glisser-déposer ou cliquez pour sélectionner un fichier",
+                "h3_1" : "Créer une nouvelle playlist",
+                "nom" : "Nom de la playlist",
+                "creer" : "Créer",
+                "select" : "Choisir une playlist",
+                "select_value" : "— Sélectionner —",
+                "upload" : "Veuillez sélectionner une playlist",
+                "submit" : "Envoyer",
+                "convertir" : "Besoin de convertir en mp3?",
             },
             'en': {
                 "user" : "User",
@@ -118,7 +125,14 @@ class Traductionservice():
                 "genre" : "Genre",
                 "date" : "Date",
                 "auteur" : "Artist",
-                "h3" : "Download new music",
-                "p" : "Drag the file here"
+                "h3" : "Drag and drop or click to select a file",
+                "h3_1" : "Create a new playlist",
+                "nom" : "Playlist name",
+                "creer" : "Create",
+                "select" : "Select a playlist",
+                "select_value" : "— Select —",
+                "upload" : "Select a playlist",
+                "submit" : "Send",
+                "convertir" : "Need to convert to mp3?",
             }
         }

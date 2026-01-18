@@ -9,63 +9,65 @@
 <body>
     {% include 'nav_v2.html' %}
 
-    <div class="main-content">
+    <h1 class="section-title">Playlist</h1>
+    <div class="main-content"> <!-- ajout class sombre -->
 
-    <h2 class="section-title">Playlist</h2>
+        
 
-    <!-- creer playlist -->
-    <section class="card">
-        <h3>Créer une nouvelle playlist</h3>
-        <form id="create-playlist-form" action="/playlist/create" method="POST" class="form-inline">
-            <input
-                type="text"
-                name="title"
-                placeholder="Nom de la playlist"
-                required
-            >
-            <button type="submit" class="btn btn-primary">Créer</button>
-        </form>
-    </section>
-
-    <!-- select playlist -->
-    <section class="card">
-        <label for="playlist-select">Choisir une playlist</label>
-        <select id="playlist-select">
-            <option value="">— Sélectionner —</option>
-            {% for p in playlists %}
-                <option value="{{ p.id }}">{{ p.title }}</option>
-            {% endfor %}
-        </select>
-    </section>
-
-    <!-- upload mp3 -->
-    <section class="card">
-        <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
-            <input type="hidden" name="playlist_id" id="playlist-id">
-
-            <div class="upload-zone disabled" id="upload-zone">
-                <p class="upload-text">Veuillez sélectionner une playlist</p>
+        <!-- creer playlist -->
+        <section class="card">
+            <h3>{{t.h3_1}}</h3>
+            <form id="create-playlist-form" action="/playlist/create" method="POST" class="form-inline">
                 <input
-                    type="file"
-                    name="audio"
-                    id="audio-input"
-                    accept=".mp3"
+                    type="text"
+                    name="title"
+                    placeholder="{{t.nom}}"
                     required
-                    hidden
                 >
-            </div>
+                <button type="submit" class="btn btn-primary">{{t.creer}}</button>
+            </form>
+        </section>
 
-            <button type="submit" id="btn-upload" class="btn btn-secondary" disabled>
-                Envoyer
-            </button>
-            <button><a href="https://v1.y2mate.nu/" target="_blank">Besoin de convertir en mp3?</a></button>
-        </form>
-    </section>
+        <!-- select playlist -->
+        <section class="card card_1">
+            <label for="playlist-select">{{t.select}}</label>
+            <select id="playlist-select">
+                <option value="">{{t.select_value}}</option>
+                {% for p in playlists %}
+                    <option value="{{ p.id }}">{{ p.title }}</option>
+                {% endfor %}
+            </select>
+        </section>
 
-</div>
+        <!-- upload mp3 -->
+        <section class="card card_1">
+            <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
+                <input type="hidden" name="playlist_id" id="playlist-id">
 
+                <div class="upload-zone disabled" id="upload-zone">
+                    <p class="upload-text">{{t.upload}}</p>
+                    <input
+                        type="file"
+                        name="audio"
+                        id="audio-input"
+                        accept=".mp3"
+                        required
+                        hidden
+                    >
+                </div>
 
+                <div class="boutons">
+                    <button type="submit" id="btn-upload" class="btn btn-secondary" disabled>
+                        {{t.submit}}
+                    </button>
+                    <button><a href="https://v1.y2mate.nu/" target="_blank">{{t.convertir}}</a></button>
+                </div>
+            </form>
+        </section>
 
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script>
         const playlistSelect = document.getElementById('playlist-select');
         const uploadZone = document.getElementById('upload-zone');
@@ -79,7 +81,7 @@
                 uploadZone.classList.remove('disabled');
                 uploadBtn.disabled = false;
                 hiddenPlaylist.value = playlistSelect.value;
-                uploadZone.querySelector('p').innerText = "Drag & drop ou cliquez pour sélectionner un fichier";
+                uploadZone.querySelector('p').innerText = "{{t.h3}}";
 
                 // clic sur zone pour ouvrir le file picker
                 uploadZone.onclick = () => fileInput.click();
@@ -87,7 +89,7 @@
                 uploadZone.classList.add('disabled');
                 uploadBtn.disabled = true;
                 hiddenPlaylist.value = "";
-                uploadZone.querySelector('p').innerText = "Veuillez sélectionner une playlist";
+                uploadZone.querySelector('p').innerText = "{{t.upload}}";
             }
         });
 

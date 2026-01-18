@@ -57,6 +57,13 @@ body::after {
     border-radius: 10px;
 }
 
+.b {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+}
+
 #fin_nav {
     display :flex;
     align-items: end;
