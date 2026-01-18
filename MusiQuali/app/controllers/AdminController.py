@@ -1,50 +1,45 @@
-from flask import render_template, request, session
+from flask import render_template, request, session, redirect, url_for, flash
 from app import app
-from app.controllers.LoginController import reqrole
-from app.services.TraductionService import Traductionservice
+from app.services.UserService import UserService
 
-ts = Traductionservice()
+user_service = UserService()
 
-class AdminController:
 
-    @app.route('/admin', methods=['GET'])
-    @reqrole("admin")
-    def admin_dashboard():
-        traductions=ts.tradAdmin()
 
-        langue_url = request.args.get('lang')
-        
-        if langue_url:
-            session['langue'] = langue_url
-            langue_choisie = langue_url
-        else:
-            langue_choisie = session.get('langue')
 
-        if langue_choisie not in ['fr', 'en']:
-            langue_choisie = 'fr'
-        textes = traductions[langue_choisie]
+@app.route("/admin", methods=["GET"])
+def users_page():
+    users = user_service.getUsers()
+    return render_template("admin.html", users=users)
 
-        metadata = {"title": "Panel Admin", "pagename": "admin"}
 
-        data = {
-            "messages_diffuses": [],
-            "etat_lecteurs": [],
-            "playlist_ok": True,
-        }
+# Création utilisateur
 
-        return render_template('admin.html', metadata=metadata, data=data, t=textes, current_lang=langue_choisie)
 
-    @app.route('/admin/playlist/resync', methods=['POST'])
-    @reqrole("admin")
-    def resync_playlist():
-        pass
+@app.route("/admin/create", methods=["POST"])
+def create_user():
+    username = request.form.get("username")
+    password = request.form.get("password")
+    role = request.form.get("role")
 
-    @app.route('/admin/playlist/update', methods=['POST'])
-    @reqrole("admin")
-    def update_playlist():
-        pass
+    if not username or not password or not role:
+        flash("Tous les champs sont obligatoires", "error")
+        return redirect(url_for("users_page"))
 
-    @app.route('/admin/alert', methods=['POST'])
-    @reqrole("admin")
-    def trigger_alert():
-        pass
+    user_service.signin(username, password, role)
+
+    flash("Utilisateur créé avec succès", "success")
+    return redirect(url_for("users_page"))
+
+
+
+
+@app.route("/admin/search", methods=["POST"])
+def search_user():
+    username = request.form.get("username")
+
+    if not username:
+        return redirect(url_for("users_page"))
+
+    users = user_service.getUserByUsername(username)
+    return render_template("admin.html", users=users)

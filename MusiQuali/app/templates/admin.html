@@ -4,55 +4,81 @@
     <title>Admin Dashboard</title>
     <link rel="icon" href="../static/logo.png" type="image/png">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='admin.css') }}" rel="stylesheet">
 </head>
-<body class=""> <!-- ajout class sombre ici -->
-    {% include 'nav_v2.html' %}
+<body class="">
+<div class="main">
+    <!-- moitié gauche -->
+    <div class="left-panel">
+        <h2>Raspberry</h2>
 
-    <div class="main-content"> <!-- ajout class sombre ici -->
-        <div class="col-gauche">
-            <button class="btn-rouge">{{t.btn_rouge_1}}</button>
-            <button class="btn-rouge">{{t.btn_rouge_2}}</button>
-            <button class="btn-rouge">{{t.btn_rouge_3}}</button>
-            <button class="btn-rouge">{{t.btn_rouge_4}}</button>
-            <br>
-            <form action="/testRasp" method="POST">
-            <div class="mb-3 mt-3">
-                <label for="nom" class="form-label">{{t.q_form_1}}</label>
-                <br>
-                <input type="text" class="form-control" id="nom" placeholder="{{t.t_form_1}}" name="nom">
-                <br>
-                <label for="ipRasp" class="form-label">{{t.q_form_2}}</label>
-                <br>
-                <input type="text" class="form-control" id="ipRasp" placeholder="{{t.t_form_2}}" name="ipRasp">
-            </div>
-                <button type="submit" class="submit" style="background-color: #a33e3e; margin-bottom: 20px; text-align: left;">{{t.valider}}</button>
-            </form>
-            
-            <p>{{t.refresh}} : 10:45</p>
+       
+        <label for="raspberry-select">Sélectionner une Raspberry :</label>
+        <select id="raspberry-select">
+            <option value="">-- Select --</option>
+            <option value="raspi1">Raspberry 1</option>
+            <option value="raspi2">Raspberry 2</option>
+        </select>
 
-            <div class="note-jaune">
-                <strong>{{t.notes}} :</strong>
-                <ul>
-                    <li>Remplacer raspberry 3 demain</li>
-                    <li>Vérifier logs serveur</li>
-                </ul>
-                <hr>
-                <strong>{{t.contacts}} :</strong><br>
-                abcd@gmail.com<br>
-                technique@musi-quali.com
-            </div>
-        </div>
+       
+        <button id="download-logs">
+            Télécharger les logs
+        </button>
 
-        <div class="col-droite">
-            <div class="log-header">
-                LOGS
-                <select style="color:black;"><option>Raspberry n°1</option><option>Raspberry n°2</option></select>
-            </div>
-            <div class="console-logs">
-                
+        
+        <div class="terminal">
+            <h3>Terminal</h3>
+
+            <div class="terminal-screen">
+                <!-- terminal ici -->
             </div>
         </div>
     </div>
+
+    <!-- en haut a droite -->
+    <div class="top-right-panel">
+        <h2>Navigation</h2>
+        <a href="/marketing" class="nav-btn">Marketing</a>
+        <a href="/commercial" class="nav-btn">Commercial</a>
+    </div>
+
+    <!-- en bas a droite -->
+    <div class="bottom-right-panel">
+        <h2>Utilisateurs</h2>
+        <div class="créer user">
+
+            <h2>Créer un utilisateur</h2>
+
+<form method="post" action="/admin/create" class="user-form">
+    <input
+        type="text"
+        name="username"
+        placeholder="Nom d'utilisateur"
+        required
+    >
+
+    <input
+        type="password"
+        name="password"
+        placeholder="Mot de passe"
+        required
+    >
+
+    <select name="role" required>
+        <option value="">-- Choisir un rôle --</option>
+        <option value="marketing">Marketing</option>
+        <option value="commercial">Commercial</option>
+        <option value="admin">Admin</option>
+    </select>
+
+    <button type="submit">Créer l'utilisateur</button>
+</form>
+
+
+        </div>
+    </div>
+</div>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     {% include 'fin_nav.html' %}
 </body>
