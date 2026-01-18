@@ -11,16 +11,24 @@ service = MusiqueService()
 playlist_service = PlaylistService()
 
 @app.route('/marketing', methods=['GET'])
+<<<<<<< HEAD
 
+=======
+#@reqrole("marketing")
+>>>>>>> eda939e9177829050c0fb046158a5157ab9f2c79
 def marketing():
 
     traductions=ts.tradMarketing()
     langue_url = request.args.get('lang')
+        
     if langue_url:
         session['langue'] = langue_url
         langue_choisie = langue_url
     else:
         langue_choisie = session.get('langue')
+
+    if langue_choisie not in ['fr', 'en']:
+        langue_choisie = 'fr'
 
     sort = request.args.get("sort", "date")
     musiques = service.get_musiques(sort)

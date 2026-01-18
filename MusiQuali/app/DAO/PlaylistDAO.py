@@ -5,7 +5,7 @@ from app.models.db import get_db
 
 class PlaylisteDAO:
 
-    def __init__(self, db_path=None):#le chemin relatif plantait mais pas le chemin absolu et g fini par demander a chatgpt qui a proposé ca
+    def __init__(self, db_path=None):#le chemin relatif plantait mais pas le chemin absolu et g fini par demander a chatgpt qui a pondu ca
         # Determine absolute path to database inside project
         if db_path is None:
             # Adjust this relative to your project root

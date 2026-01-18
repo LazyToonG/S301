@@ -4,37 +4,65 @@
     <title>Marketing Dashboard</title>
     <link rel="icon" href="{{ url_for('static', filename='logo.png') }}" type="image/png">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='marketing.css') }}">
 </head>
 <body>
     {% include 'nav_v2.html' %}
 
     <div class="main-content">
-        <div class="col-gauche">
-            <button class="btn-bleu">▶ {{t.play}}</button>
-            <button class="btn-bleu">🔀 {{t.shuffle}}</button>
-        </div>
 
-        <h3>Playlist</h3>
+    <h2 class="section-title">Playlist</h2>
+
+    <!-- creer playlist -->
+    <section class="card">
         <h3>Créer une nouvelle playlist</h3>
-        <form id="create-playlist-form" action="/playlist/create" method="POST">
-            <input type="text" name="title" placeholder="Nom de la playlist" required>
-            <button type="submit" class="btn-bleu">Créer</button>
+        <form id="create-playlist-form" action="/playlist/create" method="POST" class="form-inline">
+            <input
+                type="text"
+                name="title"
+                placeholder="Nom de la playlist"
+                required
+            >
+            <button type="submit" class="btn btn-primary">Créer</button>
         </form>
+    </section>
 
+    <!-- select playlist -->
+    <section class="card">
+        <label for="playlist-select">Choisir une playlist</label>
         <select id="playlist-select">
-            <option value="">-- Choisir une playlist --</option>
+            <option value="">— Sélectionner —</option>
             {% for p in playlists %}
                 <option value="{{ p.id }}">{{ p.title }}</option>
             {% endfor %}
         </select>
+    </section>
 
+    <!-- upload mp3 -->
+    <section class="card">
         <form action="/upload" method="POST" enctype="multipart/form-data" id="upload-form">
             <input type="hidden" name="playlist_id" id="playlist-id">
 
             <div class="upload-zone disabled" id="upload-zone">
-                <p>Veuillez sélectionner une playlist</p>
-                <input type="file" name="audio" id="audio-input" accept=".mp3" required style="display:none;">
+                <p class="upload-text">Veuillez sélectionner une playlist</p>
+                <input
+                    type="file"
+                    name="audio"
+                    id="audio-input"
+                    accept=".mp3"
+                    required
+                    hidden
+                >
             </div>
+
+            <button type="submit" id="btn-upload" class="btn btn-secondary" disabled>
+                Envoyer
+            </button>
+        </form>
+    </section>
+
+</div>
+
 
             <button type="submit" id="btn-upload" disabled>Envoyer</button>
         </form>
@@ -47,7 +75,7 @@
         const uploadBtn = document.getElementById('btn-upload');
         const hiddenPlaylist = document.getElementById('playlist-id');
 
-        // Activer l'upload quand une playlist est choisie
+        // ctiver upload quand une playlist est choisie
         playlistSelect.addEventListener('change', () => {
             if (playlistSelect.value) {
                 uploadZone.classList.remove('disabled');
@@ -55,7 +83,7 @@
                 hiddenPlaylist.value = playlistSelect.value;
                 uploadZone.querySelector('p').innerText = "Drag & drop ou cliquez pour sélectionner un fichier";
 
-                // clic sur la zone pour ouvrir le file picker
+                // clic sur zone pour ouvrir le file picker
                 uploadZone.onclick = () => fileInput.click();
             } else {
                 uploadZone.classList.add('disabled');
@@ -65,7 +93,7 @@
             }
         });
 
-        // Drag & drop
+        // Dragon drop
         uploadZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadZone.classList.add('dragover');
