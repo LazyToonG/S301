@@ -1,110 +1,92 @@
 import sqlite3
 from app.models.Playliste import Playliste
-from app.models.Music import Music
-from app.models.db import get_db
+import os
 
 class PlaylisteDAO:
-    def __init__(self, db="database.db"):
-        self.db = db
+
+    def __init__(self, db_path=None):#le chemin relatif plantait mais pas le chemin absolu et g fini par demander a chatgpt qui a proposé ca
+        # Determine absolute path to database inside project
+        if db_path is None:
+            # Adjust this relative to your project root
+            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+            db_path = os.path.join(project_root, "static/data/database.db")
+        
+        # Ensure parent directories exist
+        os.makedirs(os.path.dirname(db_path), exist_ok=True)
+        
+        self.db = db_path
+        print("Connecting to database at:", self.db)
         self._init_db()
+
 
     def _init_db(self):
         conn = sqlite3.connect(self.db)
+        cursor = conn.cursor()
+        cursor.execute("PRAGMA table_info(playlist)")
+        print(cursor.fetchall())
         conn.execute("""
             CREATE TABLE IF NOT EXISTS playlist (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                titre TEXT,
-                auteur TEXT,
-                genre TEXT,
-                date_cree TEXT,
-                jour_prevu TEXT,
-                entreprise TEXT,
-                musiques TEXT
+                title TEXT NOT NULL,
+                music_ids TEXT
             )
         """)
         conn.close()
 
-    def _musiques_to_str(self, musiques):
-        return "|".join(str(m.id) for m in musiques)
+    def _ids_to_str(self, ids):
+        return "|".join(str(i) for i in ids)
 
-    def _str_to_musiques(self, data):
-        if not data:
-            return []
-        return [Music(id=int(mid)) for mid in data.split("|")]
+    def _str_to_ids(self, data):
+        return [int(i) for i in data.split("|")] if data else []
 
-    def insert(self, p: Playliste):
+    def insert(self, playlist: Playliste):
         conn = sqlite3.connect(self.db)
         cur = conn.cursor()
 
-        musiques_str = self._musiques_to_str(p.MusiqueAJouer)
+        music_ids_str = self._ids_to_str(playlist.music_ids)
 
-        if p.id is None:
-            cur.execute("""
-                INSERT INTO playlist
-                (titre, auteur, genre, date_cree, jour_prevu, entreprise, musiques)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            """, (
-                p.titre,
-                p.auteur,
-                p.genre,
-                p.dateCrée,
-                p.jourPrévu,
-                p.Entreprise,
-                musiques_str
-            ))
-            p.id = cur.lastrowid
+        if playlist.id is None:
+            cur.execute(
+                "INSERT INTO playlist (title, music_ids) VALUES (?, ?)",
+                (playlist.title, music_ids_str)
+            )
+            playlist.id = cur.lastrowid
         else:
-            cur.execute("""
-                UPDATE playlist
-                SET titre=?, auteur=?, genre=?, date_cree=?, jour_prevu=?, entreprise=?, musiques=?
-                WHERE id=?
-            """, (
-                p.titre,
-                p.auteur,
-                p.genre,
-                p.dateCrée,
-                p.jourPrévu,
-                p.Entreprise,
-                musiques_str,
-                p.id
-            ))
+            cur.execute(
+                "UPDATE playlist SET title=?, music_ids=? WHERE id=?",
+                (playlist.title, music_ids_str, playlist.id)
+            )
 
         conn.commit()
         conn.close()
 
-    def get(self, id):
+    def get(self, playlist_id):
         conn = sqlite3.connect(self.db)
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM playlist WHERE id=?", (id,))
-        row = cur.fetchone()
+        row = conn.execute(
+            "SELECT id, title, music_ids FROM playlist WHERE id=?",
+            (playlist_id,)
+        ).fetchone()
         conn.close()
 
         if not row:
             return None
 
-        p = Playliste(
-            titre=row[1],
-            auteur=row[2],
-            genre=row[3],
-            date_cree=row[4],
-            jour_prevu=row[5],
-            entreprise=row[6],
-            id=row[0]
+        return Playliste(
+            id=row[0],
+            title=row[1],
+            music_ids=self._str_to_ids(row[2])
         )
-        p.MusiqueAJouer = self._str_to_musiques(row[7])
-        return p
 
     def get_all(self):
         conn = sqlite3.connect(self.db)
-        rows = conn.execute("SELECT * FROM playlist").fetchall()
+        rows = conn.execute("SELECT id, title, music_ids FROM playlist").fetchall()
         conn.close()
 
-        playlists = []
-        for row in rows:
-            p = Playliste(
-                row[1], row[2], row[3], row[4], row[5], row[6], id=row[0]
+        return [
+            Playliste(
+                id=row[0],
+                title=row[1],
+                music_ids=self._str_to_ids(row[2])
             )
-            p.MusiqueAJouer = self._str_to_musiques(row[7])
-            playlists.append(p)
-
-        return playlists
+            for row in rows
+        ]

@@ -5,14 +5,8 @@ class PlaylistService:
     def __init__(self):
         self.dao = PlaylisteDAO()
 
-    def create_playlist(self, titre, auteur, genre, jour_prevu, entreprise):
-        p = Playliste(
-            titre=titre,
-            auteur=auteur,
-            genre=genre,
-            jour_prevu=jour_prevu,
-            entreprise=entreprise
-        )
+    def create_playlist(self, title):
+        p = Playliste(title=title)
         self.dao.insert(p)
         return p
 
@@ -22,10 +16,10 @@ class PlaylistService:
     def get_by_id(self, playlist_id):
         return self.dao.get(playlist_id)
 
-    def add_music_to_playlist(self, playlist_id, music):
+    def add_music_to_playlist(self, playlist_id, music_id):
         playlist = self.dao.get(playlist_id)
         if not playlist:
             raise ValueError("Playlist inexistante")
 
-        playlist.MusiqueAJouer.append(music)
+        playlist.addMusique(music_id)
         self.dao.insert(playlist)

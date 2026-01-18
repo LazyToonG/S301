@@ -8,89 +8,71 @@ from app.services.playlistServiceMarketing import PlaylistService
 service = MusiqueService()
 playlist_service = PlaylistService()
 
-class MarketingController:
-#reqlogfantome ici lol
-    @app.route('/marketing', methods=['GET'])
-    def marketing():
+@app.route('/marketing', methods=['GET'])
+def marketing():
+    langue_url = request.args.get('lang')
+    if langue_url:
+        session['langue'] = langue_url
+        langue_choisie = langue_url
+    else:
+        langue_choisie = session.get('langue')
 
-        langue_url = request.args.get('lang')
-        
-        if langue_url:
-            session['langue'] = langue_url
-            langue_choisie = langue_url
-        else:
-            langue_choisie = session.get('langue')
+    sort = request.args.get("sort", "date")
+    musiques = service.get_musiques(sort)
+    playlists = playlist_service.get_all()
+    metadata = {"title": "Espace Marketing", "pagename": "marketing"}
+    return render_template(
+        "marketing_v2.html",
+        metadata=metadata,
+        sort=sort,
+        current_lang=langue_choisie,
+        musiques=musiques,
+        t=service
+    )
 
-        """textes = service.get_traductions(langue_choisie)"""
+@app.route("/delete/<int:id>")
+def delete(id):
+    service.delete_musique(id)
+    return redirect(url_for("marketing"))
 
-        sort = request.args.get("sort", "date")
-        musiques = service.get_musiques(sort)
+@app.route("/search_by_title")
+def search_by_title():
+    title = request.args.get("title")
+    musiques = service.search_by_title(title)
+    if musiques:
+        return render_template("marketing_v2.html", musiques=[musiques])
+    return redirect(url_for("marketing"))
 
-        metadata = {"title": "Espace Marketing", "pagename": "marketing"}
-        return render_template("marketing_v2.html", metadata=metadata, sort=sort, current_lang=langue_choisie, musiques=musiques , t=service)
+@app.route("/playlist/create", methods=["POST"])
+def create_playlist():
+    title = request.form.get("title")
+    if not title:
+        abort(400, "Title de playlist obligatoire")
 
-    @app.route("/delete/<int:id>")
-    def delete(id):
-        service.delete_musique(id)
-        return redirect(url_for("marketing"))
-
-    @app.route("/search_by_titre")
-    def search_by_titre():
-        titre = request.args.get("titre")
-        musiques = service.search_by_titre(titre)
-        if musiques:
-            return render_template("marketing_v2.html", musiques=[musiques])
-        return redirect(url_for("marketing"))
-
-    @app.route("/playlist/create", methods=["POST"])
-    def create_playlist():
-        titre = request.form.get("titre")
-
-        if not titre:
-            abort(400, "Titre de playlist obligatoire")
-
-        playlist_service.create_playlist(
-            titre=titre,
-            auteur="marketing",
-            genre=None,
-            jour_prevu=None,
-            entreprise=None
-        )
-
-        return redirect(url_for("marketing"))
+    playlist_service.create_playlist(title=title)
+    return redirect(url_for("marketing"))
 
 
-    @app.route("/upload", methods=["POST"])#upload
-    @reqrole("marketing")
-    def upload():
-        file = request.files.get("audio")
-        playlist_id = request.form.get("playlist_id")
+@app.route("/upload", methods=["POST"])
+def upload():
+    file = request.files.get("audio")
+    playlist_id = request.form.get("playlist_id")
 
-        # sécurité
-        if not file:
-            abort(400, "Aucun fichier envoyé")
-        # sécurité aussi
-        if not playlist_id:
-            abort(400, "Aucune playlist sélectionnée")
+    if not file or not playlist_id:
+        abort(400, "Fichier ou playlist manquant")
 
-        playlist = playlist_service.get_by_id(int(playlist_id))
+    playlist = playlist_service.get_by_id(int(playlist_id))
+    if not playlist:
+        abort(400, "Playlist invalide")
 
-        if not playlist:
-            abort(400, "Playlist invalide")
+    music = service.save_file(file)
+    playlist_service.add_music_to_playlist(playlist.id, music.id)
 
-        try:
-            # sauvegarde via MusiqueService
-            result = service.save_file(file)
+    return redirect(url_for("marketing"))
 
-            # ajout à la playliste
-            playlist_service.add_music_to_playlist(
-                playlist.id,
-                result["music"]  # Music(result["id"]) 
-            )
 
-            return redirect(url_for("marketing"))
-
-        except ValueError as e: #sécurité
-            abort(400, str(e))
-        except Exception as e:
-            abort(500, f"Internal server error: {str(e)}")
+def upload():
+    print("Upload reached")  # debogage
+    print(request.method)
+    print(request.files)
+    return "OK"

@@ -1,19 +1,17 @@
 
 class Playliste:
-    def __init__(self, titre, genre, dateCrée, jourPrévu, Entreprise, id=None):
-        self.id=id # pour lui assigner un id automatiquement + tard quand on le met dans la bd
-        self.titre = titre
-        self.genre = genre
-        self.dateCrée = dateCrée #les 3 pour le tri dans la vue , jsp si on se servira de tous les filtres mais je mets au cas ou
-        self.jourPrévu = jourPrévu
-        self.Entreprise = Entreprise # ca dépend de comment on fait la bd 
-        self.MusiqueAJouer = [] #dans le dao je transforme en "id|id|etc" pour la bd
+    def __init__(self, title, id=None, musiques=None):
+        self.id = id
+        self.title = title
+        self.music_ids = musiques if musiques is not None else []
+        
+        #dans le dao je transforme en "id|id|etc" pour la bd
         #un objet peut avoir en attribut un autre (= composition si il en dépend sinon agregation)
-        #g crée un objet ChoixMusique qui sera pris en argument, c'est le titre d'une musique et une heure. 
-        #il y a sans doute un meilleur moyen de faire, notemment avec les dictionnaires mais bon
+        #au final je m'en sers pas mais c utile a savoir lol
   
-    def addMusique(self, MusiqueChoisie):
-        self.MusiqueAJouer.append(MusiqueChoisie)
+    def addMusique(self, music_id: int):
+        self.music_ids.append(music_id)
+
 
 
 

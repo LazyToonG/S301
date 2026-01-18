@@ -1,54 +1,68 @@
 import sqlite3
-from app.models.Musique import Musique
 from app import app
+from app.models.Music import Music
 from mutagen.mp3 import MP3
+import os
 
 class MusicDAO:
-
 
     def get_connection(self):
         conn = sqlite3.connect(app.static_folder + '/data/database.db')
         conn.row_factory = sqlite3.Row
         return conn
 
-    def get_musiques(self, order_by="titre"):
-        """ordre par defaut c'est titres'"""
+    def get_all(self):
         conn = self.get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, title, artist, path FROM music")
-        rows = cursor.fetchall()
+        rows = conn.execute("SELECT id, title, path, length FROM music").fetchall()
         conn.close()
+        return [Music(row["id"], row["title"], row["path"], row["length"]) for row in rows]
 
-        return [Musique(*row) for row in rows]
-
-    def get_by_titre(self, titre):
-
+    def get_by_id(self, music_id):
         conn = self.get_connection()
-        cursor = conn.cursor()
-        cursor.execute("SELECT id, title, artist, path FROM music WHERE title = ?", (titre,))
-        row = cursor.fetchone()
+        row = conn.execute(
+            "SELECT id, title, path, length FROM music WHERE id = ?",
+            (music_id,)
+        ).fetchone()
         conn.close()
+        return Music(row["id"], row["title"], row["path"], row["length"]) if row else None
 
-        return Musique(*row) if row else None
-
-
-    def create(self, title, length, path, playlist_id):
+    def create(self, title, path, length):
         conn = self.get_connection()
-        conn.execute('INSERT INTO music (title, duration, path, playlist_id) VALUES (?, ?, ?, ?)',
-                     (title, int(length), path, playlist_id))
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO music (title, path, length) VALUES (?, ?, ?)",
+            (title, path, length)
+        )
         conn.commit()
-        conn.close() 
+        music_id = cur.lastrowid
+        conn.close()
 
-    def delete_musique(self, musique_id):
+        return Music(music_id, title, path, length)
 
+    def delete(self, music_id):
         conn = self.get_connection()
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM music WHERE id = ?", (musique_id,))
+        conn.execute("DELETE FROM music WHERE id = ?", (music_id,))
         conn.commit()
         conn.close()
 
-    def get_by_playlist_id(self, playlist_id):
+    def get_all(self):
         conn = self.get_connection()
-        musics = conn.execute('SELECT * FROM music WHERE playlist_id = ?', (playlist_id,)).fetchall()
+        rows = conn.execute("SELECT id, title, path, length FROM music").fetchall()
         conn.close()
-        return musics
+        return [Music(*row) for row in rows]
+    
+    def get_musiques(self, order_by="title"):
+        allowed = {
+            "title": "title",
+            "length": "length"
+        }
+
+        order_column = allowed.get(order_by, "title")
+
+        conn = self.get_connection()
+        rows = conn.execute(
+            f"SELECT id, title, path, length FROM music ORDER BY {order_column}"
+        ).fetchall()
+        conn.close()
+
+        return [Music(*row) for row in rows]
