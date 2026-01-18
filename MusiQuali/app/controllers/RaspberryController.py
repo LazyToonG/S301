@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, Flask
+from flask import render_template, request, redirect, url_for
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
@@ -11,7 +11,7 @@ def ajoutDansRasp():
     rs.ajoutR(request.form["nom"], request.form["ipRasp"])
     return redirect(url_for('ToutRaspberry')) 
 
-@app.route('/admin', methods = ['GET'])
+@app.route('/admin/raspberries', methods = ['GET'])
 def ToutRaspberry():
     toutRasp = rs.montreToutRasp()
     tab = []
@@ -29,5 +29,3 @@ def pingTout():
 
     # if today.weekday() == 0:
     #     subprocess.run(["scp", "-v", "/home/shishkovskiy/Documents/perso_S301_perso/Musiquali.png", identifiant.identifiant_requested+"@"+identifiant.ip_requested+":/home/darragh/Images"])
-
-

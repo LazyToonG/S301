@@ -1,7 +1,4 @@
 
-import sys
-print(sys.path)
-#debogage
 
 
 from app import app

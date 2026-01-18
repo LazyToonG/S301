@@ -45,12 +45,6 @@ class MusicDAO:
         conn.commit()
         conn.close()
 
-    def get_all(self):
-        conn = self.get_connection()
-        rows = conn.execute("SELECT id, title, path, length FROM music").fetchall()
-        conn.close()
-        return [Music(*row) for row in rows]
-    
     def get_musiques(self, order_by="title"):
         allowed = {
             "title": "title",
@@ -66,3 +60,6 @@ class MusicDAO:
         conn.close()
 
         return [Music(*row) for row in rows]
+    
+    
+    

@@ -11,7 +11,11 @@ service = MusiqueService()
 playlist_service = PlaylistService()
 
 @app.route('/marketing', methods=['GET'])
+<<<<<<< HEAD
+
+=======
 #@reqrole("marketing")
+>>>>>>> eda939e9177829050c0fb046158a5157ab9f2c79
 def marketing():
 
     traductions=ts.tradMarketing()
@@ -82,10 +86,3 @@ def upload():
     playlist_service.add_music_to_playlist(playlist.id, music.id)
 
     return redirect(url_for("marketing"))
-
-
-def upload():
-    print("Upload reached")  # debogage
-    print(request.method)
-    print(request.files)
-    return "OK"

@@ -16,13 +16,17 @@ class PlaylistService:
         playlists = self.playlist_dao.get_all()
         data = {}
         for pl in playlists:
-            musics = self.music_dao.get_by_playlist_id(pl['id'])
-            data[pl['name']] = [{
-                'name': m['title'], 
-                'artist': m['artist'], 
-                'path': m['path'], 
-                'length': m['duration']
-            } for m in musics]
+            musics_data = []
+            for music_id in pl.music_ids:
+                m = self.music_dao.get_by_id(music_id)
+                if m:
+                    musics_data.append({
+                        'name': m.title, 
+                        'artist': "", 
+                        'path': m.path, 
+                        'length': m.length
+                    })
+            data[pl.title] = musics_data
         return data
 
 service_playlist = PlaylistService()
