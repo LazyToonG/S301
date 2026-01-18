@@ -75,7 +75,7 @@
         const uploadBtn = document.getElementById('btn-upload');
         const hiddenPlaylist = document.getElementById('playlist-id');
 
-        // Activer l'upload quand une playlist est choisie
+        // ctiver upload quand une playlist est choisie
         playlistSelect.addEventListener('change', () => {
             if (playlistSelect.value) {
                 uploadZone.classList.remove('disabled');
@@ -83,7 +83,7 @@
                 hiddenPlaylist.value = playlistSelect.value;
                 uploadZone.querySelector('p').innerText = "Drag & drop ou cliquez pour sélectionner un fichier";
 
-                // clic sur la zone pour ouvrir le file picker
+                // clic sur zone pour ouvrir le file picker
                 uploadZone.onclick = () => fileInput.click();
             } else {
                 uploadZone.classList.add('disabled');
