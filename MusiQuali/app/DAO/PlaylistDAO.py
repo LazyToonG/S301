@@ -2,21 +2,12 @@ import sqlite3
 from app.models.Playliste import Playliste
 import os
 from app.models.db import get_db
-
+from app import app
 class PlaylisteDAO:
 
-    def __init__(self, db_path=None):#le chemin relatif plantait mais pas le chemin absolu et g fini par demander a chatgpt qui a pondu ca
-        # Determine absolute path to database inside project
-        if db_path is None:
-            # Adjust this relative to your project root
-            project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-            db_path = os.path.join(project_root, "static/data/database.db")
+    def __init__(self):
         
-        # Ensure parent directories exist
-        os.makedirs(os.path.dirname(db_path), exist_ok=True)
-        
-        self.db = db_path
-        print("Connecting to database at:", self.db)
+        self.db=app.static_folder +'/data/database.db'
         self._init_db()
 
 
