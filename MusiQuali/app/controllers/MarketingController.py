@@ -11,7 +11,8 @@ service = MusiqueService()
 playlist_service = PlaylistService()
 
 @app.route('/marketing', methods=['GET'])
-#@reqrole("marketing")
+@reqrole("admin")
+@reqrole("marketing")
 def marketing():
 
     traductions=ts.tradMarketing()
@@ -30,8 +31,8 @@ def marketing():
     musiques = service.get_musiques(sort)
     playlists = playlist_service.get_all()
     textes = traductions[langue_choisie]
-    user=session['username']
-    role=session['role']
+    user = session['username']
+    role = session['role']
     metadata = {"title": "Espace Marketing", "pagename": "marketing"}
     return render_template(
         "marketing_v2.html",
