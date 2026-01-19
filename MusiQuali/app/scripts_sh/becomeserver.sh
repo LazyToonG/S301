@@ -9,3 +9,4 @@ fi
 echo "Redémarrage du service SSH..."
 systemctl restart ssh
 
+#permet aux machines qui ont nom@ip et le mdp d'ouvrir un port de leur choix
