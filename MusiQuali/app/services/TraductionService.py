@@ -68,7 +68,15 @@ class Traductionservice():
                 "valider" : "Validez",
                 "refresh" : "Dernier rafraîchissement",
                 "notes" : "Notes",
-                "contacts" : "Contacts"
+                "contacts" : "Contacts",
+                "h1" : "Nom d'utilisateur",
+                "password" : "Mot de passe",
+                "role" : "Rôle",
+                "connexion" : "Connexion",
+                "create" : "Créer",
+                "commercial" : "Commercial (Défaut)",
+                "marketing" : "Marketing",
+                "admin" : "Administrateur"
             },
 
             "en" : {
@@ -86,7 +94,15 @@ class Traductionservice():
                 "valider" : "Validate",
                 "refresh" : "Last refresh",
                 "notes" : "Notes",
-                "contacts" : "Contacts"
+                "contacts" : "Contacts",
+                "h1" : "Username",
+                "role" : "Role",
+                "password" : "Password",
+                "connexion" : "Login",
+                "create" : "Create",
+                "commercial" : "Commercial (Default)",
+                "marketing" : "Marketing",
+                "admin" : "Administrator"
             }
         }
     

@@ -10,8 +10,20 @@
 
     <div class="main-content"> <!-- ajout class sombre ici -->
         <div class="col-gauche">
-            <button class="btn-rouge">{{t.btn_rouge_1}}</button>
             <button class="btn-rouge" id="create">{{t.btn_rouge_5}}</button>
+            <form id="form_admin" action="/admin/create_user" method="POST" class="form-inline">
+            	<p>{{t.h1}} : <input name="username" type="text"/></p>
+            	<p>{{t.password}} : <input name="password" type="text"/></p>
+				<p><label for="role-select">{{t.role}} :</label>
+					<select name="role" id="role-select" class="form-control">
+    					<option value="commercial">{{t.commercial}}</option>
+    					<option value="marketing">{{t.marketing}}</option>
+    					<option value="admin">{{t.admin}}</option>
+					</select>
+				</p>
+            	<input class="seconnecte" type="submit" value="{{t.create}}"/>
+			</form>
+            <button class="btn-rouge">{{t.btn_rouge_1}}</button>
             <button class="btn-rouge">{{t.btn_rouge_3}}</button>
             <button class="btn-rouge">{{t.btn_rouge_4}}</button>
             <button class="btn-rouge">{{t.btn_rouge_2}}</button>
@@ -54,11 +66,7 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <script>
-        document.getElementById('create').addEventListener('click', function(){
-            window.location.href = "/signin";
-        })
-    </script>
+    
     {% include 'fin_nav.html' %}
 </body>
 </html>

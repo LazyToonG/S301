@@ -7,7 +7,7 @@
     </head>
     <body class=""> <!-- ajout class sombre ici -->
         <div class="nav"> <!-- ajout class sombre ici -->
-            <div class="page" id="index">{{t.index}}</div>
+            <div class="page" id="admin">{{t.admin}}</div>
             <div class="logo">Musi-quali <img src="{{ url_for('static', filename='logo.png') }}" alt="logo"/></div>
             <div class="b">
                 <input class="mode-sombre btn-mode" type="button" value="🌒" id="bouton"/>
@@ -32,6 +32,11 @@
 			</form>
         </div>        
         <script src="{{ url_for('static', filename='script.js') }}"></script>
+        <script>
+            document.getElementById('admin').addEventListener('click', function(){
+            window.location.href = "/admin";
+        });
+        </script>
 		{% include 'fin_nav.html' %}
     </body>
 </html>

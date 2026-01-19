@@ -5,16 +5,19 @@ from app.services.RaspberryService import RaspberryService
 import subprocess, ipaddress
 #import datetime
 
-@app.route('/testRasp', methods=['POST'])
+@app.route('/testRasp', methods=['GET','POST'])
 def ipCorrect():
-    ip = request.form.get("ipRasp")
     msg_error = None
 
-    try:
-        ipaddress.IPv4Address(ip)
-        return redirect(url_for("admin"))
-    except ipaddress.AddressValueError:
-        msg_error = "IP invalid"
+    if request.method == "POST":
+        ip = request.form.get("ipRasp")
+        msg_error = None
+
+        try:
+            ipaddress.IPv4Address(ip)
+            return redirect(url_for("admin_dashboard"))
+        except ipaddress.AddressValueError:
+            msg_error = "IP invalid"
 
     return render_template('testRasp.html', msg_error=msg_error)
 

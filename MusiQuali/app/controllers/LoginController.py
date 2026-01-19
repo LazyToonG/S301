@@ -76,10 +76,10 @@ class LoginController:
                 msg_error = 'Invalid Credentials'
         return render_template('login_v2.html', msg_error=msg_error, t=textes, current_lang=langue_choisie)
 
-    @app.route("/signin", methods=['GET', 'POST'])
+    @app.route("/admin/create_user", methods=['GET', 'POST'])
     def signin():
 
-        traductions=ts.tradLogin()
+        traductions=ts.tradAdmin()
 
         langue_url = request.args.get('lang')
         if langue_url:
@@ -92,29 +92,21 @@ class LoginController:
             langue_choisie = 'fr'
         textes = traductions[langue_choisie]
 
+        user=session['username']
+        role=session['role']
+
         if request.method == "POST":
-            username = request.form["username"]
-            password = request.form["password"]
-            role = request.form.get("role", "commercial")
+            user_1 = request.form["username"]
+            password_1 = request.form["password"]
+            role_1 = request.form.get("role", "commercial")
 
-            result = us.signin(username, password, role)
-            if result:
-                session["logged"] = True
-                session["username"] = username
-                session["role"] = role
-
-                if role == "admin":
-                    return redirect(url_for("admin_dashboard"))
-                elif role == "marketing":
-                    return redirect(url_for("marketing"))
-                elif role == "commercial":
-                    return redirect(url_for("commercial_dashboard"))
-                else:
-                    return redirect(url_for("index"))
+            result = us.signin(user_1, password_1, role_1)
+            if not result:
+                return render_template("admin.html", msg_error="creation error", t=textes, current_lang=langue_choisie, user=user, role=role)
             else:
-                return render_template("signin.html", msg_error="creation error", t=textes, current_lang=langue_choisie)
+                return render_template("admin.html", msg_error="user created", t=textes, current_lang=langue_choisie, user=user, role=role)
         else:
-            return render_template('signin.html', msg_error=None, t=textes, current_lang=langue_choisie)
+            return render_template('admin.html', msg_error=None, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/logout')
     @reqlogged

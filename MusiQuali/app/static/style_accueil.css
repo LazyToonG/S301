@@ -33,29 +33,22 @@ body.sombre {
     justify-content: center;
     height: 50vh;
     position: relative;
-    /* AJOUTEZ CECI pour que le texte reste au-dessus de l'image */
     z-index: 1;
 }
 
 .h1::after {
     content: "";
-    background-image: url('logo.png'); /* Vérifiez le chemin */
-    
-    /* Positionnement absolu DANS le bloc .h1 */
+    background-image: url('logo.png');
     position: absolute;
-    top: 50%;      /* On le place au milieu verticalement */
-    left: 50%;     /* On le place au milieu horizontalement */
-    transform: translate(-50%, -50%); /* Cette astuce centre l'image parfaitement */
-    
-    /* Taille et apparence */
-    width: 500px;  /* Définissez une taille fixe pour qu'il ne soit pas trop grand */
-    height: 500px; /* Adaptez selon la forme de votre logo */
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
     background-repeat: no-repeat;
-    background-size: contain; /* S'assure que le logo rentre dans le carré */
+    background-size: contain;
     background-position: center center;
-    opacity: 0.2;  /* Transparence discrète */
-    
-    /* On le met derrière le texte */
+    opacity: 0.2;
     z-index: -1; 
 }
 

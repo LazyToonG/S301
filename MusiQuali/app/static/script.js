@@ -99,3 +99,11 @@ if(btnLogout) {
         window.location.href = "/logout";
     });
 }
+
+function create(){
+    document.querySelector('.create').createElement('form').classList.add('form');
+}
+let btnCreate = document.getElementById('create');
+if (btnCreate) {
+    btnCreate.addEventListener('click', create)
+}
