@@ -22,7 +22,9 @@ class PlaylisteDAO:
                 music_ids TEXT
             )
         """)
+        conn.commit()
         conn.close()
+        
 
     def _ids_to_str(self, ids):
         return "|".join(str(i) for i in ids)
