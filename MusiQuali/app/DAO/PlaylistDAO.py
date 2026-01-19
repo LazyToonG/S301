@@ -10,9 +10,13 @@ class PlaylisteDAO:
         self.db=app.static_folder +'/data/database.db'
         self._init_db()
 
+    def _getDbConnection(self):
+        conn = sqlite3.connect(self.db)
+        conn.row_factory = sqlite3.Row
+        return conn
 
     def _init_db(self):
-        conn = sqlite3.connect(self.db)
+        conn = self._getDbConnection()
         cursor = conn.cursor()
         cursor.execute("PRAGMA table_info(playlist)")
         conn.execute("""
@@ -33,7 +37,7 @@ class PlaylisteDAO:
         return [int(i) for i in data.split("|")] if data else []
 
     def insert(self, playlist: Playliste):
-        conn = sqlite3.connect(self.db)
+        conn = self._getDbConnection()
         cur = conn.cursor()
 
         music_ids_str = self._ids_to_str(playlist.music_ids)
@@ -54,7 +58,7 @@ class PlaylisteDAO:
         conn.close()
 
     def get(self, playlist_id):
-        conn = sqlite3.connect(self.db)
+        conn = self._getDbConnection()
         row = conn.execute(
             "SELECT id, title, music_ids FROM playlist WHERE id=?",
             (playlist_id,)
@@ -71,8 +75,8 @@ class PlaylisteDAO:
         )
 
     def get_all(self):
-        conn = sqlite3.connect(self.db)
-        rows = conn.execute("SELECT id, title, music_ids FROM playlist").fetchall()
+        conn = self._getDbConnection()
+        rows = conn.execute("SELECT * FROM playlist").fetchall()
         conn.close()
 
         return [

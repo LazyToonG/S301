@@ -11,7 +11,7 @@ class ScheduleDAO:
     def init_db(self):
         conn = get_db()
         c = conn.cursor()
-        c.execute('CREATE TABLE IF NOT EXISTS playlist (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT)')
+        # c.execute('CREATE TABLE IF NOT EXISTS playlist (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, name TEXT)')
         c.execute('''CREATE TABLE IF NOT EXISTS music (
                         id INTEGER PRIMARY KEY AUTOINCREMENT, 
                         title TEXT, 
