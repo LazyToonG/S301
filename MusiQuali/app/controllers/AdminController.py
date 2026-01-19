@@ -26,12 +26,12 @@ def create_user():
 
     if not username or not password or not role:
         flash("Tous les champs sont obligatoires", "error")
-        return redirect(url_for("users_page"))
+        return redirect(url_for("admin_dashboard"))
 
     user_service.signin(username, password, role)
 
     flash("Utilisateur créé avec succès", "success")
-    return redirect(url_for("users_page"))
+    return redirect(url_for("admin_dashboard"))
 
 
 
@@ -41,7 +41,7 @@ def admin_search_user():
     username = request.form.get("username")
 
     if not username:
-        return redirect(url_for("admin_page"))
+        return redirect(url_for("admin_dashboard"))
 
     searched_users = user_service.getUserByUsername(username)
 

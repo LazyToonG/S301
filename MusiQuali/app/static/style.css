@@ -189,6 +189,11 @@ button:active { transform: scale(0.98); }
     width: 100%; 
     text-align: left;
 }
+
+#logout:hover {
+    color : white;
+    background-color: red;
+}
 .btn-logout { 
     background-color: white; 
     color: black; 
