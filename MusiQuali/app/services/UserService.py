@@ -13,7 +13,7 @@ class UserService():
     def getUsers(self):
         return self.udao.findAll()
     
-    def signin(self, username, password, role='commercial'):
+    def signin(self, username, password, role):
         return self.udao.createUser(username, password, role)
 
     def login(self, username, password):
@@ -21,3 +21,4 @@ class UserService():
     
     def deleteUser(self, username):
         return self.udao.deleteByUsername(username)
+    

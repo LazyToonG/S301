@@ -27,7 +27,7 @@ class UserSqliteDAO(UserDAOInterface):
         conn.commit()
         conn.close()
 
-    def createUser(self, username, password, role='commercial'):
+    def createUser(self, username, password, role):
         conn = self._getDbConnection()
         hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         try:
