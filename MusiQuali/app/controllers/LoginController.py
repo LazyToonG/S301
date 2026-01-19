@@ -20,7 +20,7 @@ def reqlogged(f):
     return wrap
 
 
-def reqrole(role):
+def reqrole(*role):
     """
     Décorateur vérifiant si l'utilisateur est connecté et s'il a le rôle requis.
     """
@@ -31,9 +31,8 @@ def reqrole(role):
                 return redirect(url_for('login'))
 
             current_role = session.get('role')
-            if current_role != role:
+            if current_role not in role:
                 abort(403)
-
             return f(*args, **kwargs)
         return verifyRole
     return wrap

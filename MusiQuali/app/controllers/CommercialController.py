@@ -8,7 +8,7 @@ ts = Traductionservice()
 class CommercialController:
 
     @app.route('/commercialzead', methods=['GET'])
-    @reqrole("commercial")
+    @reqrole("admin", "commercial")
     def commercial_dashboard():
         traductions=ts.tradCommercial()
 

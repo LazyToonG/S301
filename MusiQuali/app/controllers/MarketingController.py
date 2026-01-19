@@ -11,8 +11,7 @@ service = MusiqueService()
 playlist_service = PlaylistService()
 
 @app.route('/marketing', methods=['GET'])
-@reqrole("admin")
-@reqrole("marketing")
+@reqrole("admin","marketing")
 def marketing():
 
     traductions=ts.tradMarketing()

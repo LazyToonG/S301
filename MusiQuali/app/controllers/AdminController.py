@@ -2,13 +2,15 @@ from flask import render_template, request, session, redirect, url_for, flash
 from app import app
 from app.services.UserService import UserService
 
+from app.controllers.LoginController import reqrole
+from app.services.TraductionService import Traductionservice
+
 user_service = UserService()
 
 
-
-
 @app.route("/admin", methods=["GET"])
-def users_page():
+@reqrole('admin')
+def admin_dashboard():
 
     return render_template("admin.html")
 
