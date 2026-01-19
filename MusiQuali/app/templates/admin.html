@@ -7,101 +7,101 @@
     <link href="{{ url_for('static', filename='admin.css') }}" rel="stylesheet">
 </head>
 <body class="">
-<div class="main">
-    <!-- moitié gauche -->
-    <div class="left-panel">
-        <h2>Raspberry</h2>
-
+    {% include 'nav_v2.html' %}
+    <div class="main">
+        <!-- moitié gauche -->
+        <div class="left-panel panel card">
+            <h2>Raspberry</h2>
        
-        <label for="raspberry-select">Sélectionner une Raspberry :</label>
-        <select id="raspberry-select">
-            <option value="">-- Select --</option>
-            <option value="raspi1">Raspberry 1</option>
-            <option value="raspi2">Raspberry 2</option>
-        </select>
+            <label for="raspberry-select">{{t.select_rasp}} :</label>
+            <select id="raspberry-select">
+                <option value="">-- {{t.select}} --</option>
+                <option value="raspi1">Raspberry 1</option>
+                <option value="raspi2">Raspberry 2</option>
+            </select>
 
-       
-        <button id="download-logs">
-            Télécharger les logs
-        </button>
+
+            <button id="download-logs">
+                {{t.download}}
+            </button>
 
         
-        <div class="terminal">
-            <h3>Terminal</h3>
+            <div class="terminal">
+                <h3>Terminal</h3>
 
-            <div class="terminal-screen">
-                <!-- terminal ici -->
+                <div class="terminal-screen">
+                    <!-- terminal ici -->
+                </div>
+            </div>
+        </div>
+
+        <!-- en haut a droite -->
+        <div class="top-right-panel panel card">
+            <h2>Navigation</h2>
+            <a href="/marketing" class="nav-btn">Marketing</a>
+            <a href="/commercialzead" class="nav-btn">Commercial</a>
+        </div>
+
+        <!-- en bas a droite -->
+        <div class="bottom-right-panel panel card">
+            <h2>{{t.users}}</h2>
+            <div class="créer user">
+
+                <h2>{{t.create_user}}</h2>
+
+                <form method="post" action="/admin/create" class="user-form">
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="{{t.name_user}}"
+                        required
+                    >
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="{{t.password}}"
+                        required
+                    >
+
+                    <select name="role" required>
+                        <option value="">-- {{t.choix_role}} --</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="admin">{{t.admin}}</option>
+                    </select>
+
+                    <button type="submit">{{t.create}}</button>
+                </form>
+                <h2>{{t.recherche}}</h2>
+
+                <form method="post" action="/admin/search" class="user-search-form">
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="{{t.recherche_user}}"
+                        required
+                    >
+                    <button type="submit">{{t.search}}</button>
+                </form>
+                {% if searched_users %}
+                <h3>{{t.result}}</h3>
+                <ul>
+                    {% for user in searched_users %}
+                    <li>
+                    {{t.name}} : <strong>{{ user.username }}</strong><br>
+                    {{t.role}} : <strong>{{ user.role }}</strong>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+
+
+
             </div>
         </div>
     </div>
-
-    <!-- en haut a droite -->
-    <div class="top-right-panel">
-        <h2>Navigation</h2>
-        <a href="/marketing" class="nav-btn">Marketing</a>
-        <a href="/commercial" class="nav-btn">Commercial</a>
-    </div>
-
-    <!-- en bas a droite -->
-    <div class="bottom-right-panel">
-        <h2>Utilisateurs</h2>
-        <div class="créer user">
-
-            <h2>Créer un utilisateur</h2>
-
-<form method="post" action="/admin/create" class="user-form">
-    <input
-        type="text"
-        name="username"
-        placeholder="Nom d'utilisateur"
-        required
-    >
-
-    <input
-        type="password"
-        name="password"
-        placeholder="Mot de passe"
-        required
-    >
-
-    <select name="role" required>
-        <option value="">-- Choisir un rôle --</option>
-        <option value="marketing">Marketing</option>
-        <option value="commercial">Commercial</option>
-        <option value="admin">Admin</option>
-    </select>
-
-    <button type="submit">Créer l'utilisateur</button>
-</form>
-<h2>Rechercher un utilisateur</h2>
-
-<form method="post" action="/admin/search" class="user-search-form">
-    <input
-        type="text"
-        name="username"
-        placeholder="user recherché"
-        required
-    >
-    <button type="submit">Rechercher</button>
-</form>
-{% if searched_users %}
-    <h3>Résultat</h3>
-    <ul>
-    {% for user in searched_users %}
-        <li>
-            Nom : <strong>{{ user.username }}</strong><br>
-            Rôle : <strong>{{ user.role }}</strong>
-        </li>
-    {% endfor %}
-    </ul>
-{% endif %}
-
-
-
-        </div>
-    </div>
-</div>
-
-
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    {% include 'fin_nav.html' %}
 </body>
 </html>

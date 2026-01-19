@@ -5,6 +5,7 @@ from app.services.UserService import UserService
 from app.controllers.LoginController import reqrole
 from app.services.TraductionService import Traductionservice
 
+ts = Traductionservice()
 user_service = UserService()
 
 
@@ -12,7 +13,23 @@ user_service = UserService()
 @reqrole('admin')
 def admin_dashboard():
 
-    return render_template("admin.html")
+    traductions=ts.tradAdmin()
+
+    langue_url = request.args.get('lang')
+    if langue_url:
+        session['langue'] = langue_url
+        langue_choisie = langue_url
+    else:
+        langue_choisie = session.get('langue')
+
+    if langue_choisie not in ['fr', 'en']:
+        langue_choisie = 'fr'
+    textes = traductions[langue_choisie]
+
+    user=session['username']
+    role=session['role']
+
+    return render_template("admin.html", t=textes, current_lang=langue_choisie, user=user, role=role)
 
 
 # Création utilisateur
@@ -38,6 +55,21 @@ def create_user():
 
 @app.route("/admin/search", methods=["POST"])
 def admin_search_user():
+    traductions=ts.tradAdmin()
+
+    langue_url = request.args.get('lang')
+    if langue_url:
+        session['langue'] = langue_url
+        langue_choisie = langue_url
+    else:
+        langue_choisie = session.get('langue')
+
+    if langue_choisie not in ['fr', 'en']:
+        langue_choisie = 'fr'
+    textes = traductions[langue_choisie]
+
+    user=session['username']
+    role=session['role']
     username = request.form.get("username")
 
     if not username:
@@ -45,8 +77,5 @@ def admin_search_user():
 
     searched_users = user_service.getUserByUsername(username)
 
-    return render_template(
-        "admin.html",
-        searched_users=searched_users
-    )
+    return render_template("admin.html",searched_users=searched_users, t=textes, current_lang=langue_choisie, user=user, role=role)
 

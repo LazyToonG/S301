@@ -41,6 +41,7 @@ function activerModeSombre() {
     cards.forEach(card => {
         card.classList.add('sombre');
     });
+    
 
     if (bouton) {
         bouton.classList.remove('mode-sombre');
@@ -72,7 +73,6 @@ function activerModeClair() {
     cards.forEach(card => {
         card.classList.remove('sombre');
     });
-
     if (bouton) {
         bouton.classList.remove('mode-clair');
         bouton.classList.add('mode-sombre');

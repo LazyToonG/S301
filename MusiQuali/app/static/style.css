@@ -84,13 +84,16 @@ body::after {
 .seconnecte {
     height: 50px;
     width: 110px;
-    background-color: #f33b3bb1;
+    background-color: #d02424;
     color : white;
     font-family: Times, "Times New Roman", Georgia, serif;
     font-size: 15px;
     font-weight: bold;
     border-radius: 10px;
     margin-top: 15px; 
+}
+.seconnecte:hover {
+    background-color: #a81c1c;
 }
 
 #langue {
@@ -162,6 +165,17 @@ select, input {
     border-radius: 5px;
 }
 
+.card.sombre input, 
+.card.sombre select {
+    background-color: #0e1a25;
+    color: white;
+    border: 1px solid #555;
+}
+.card.sombre {
+    color : white;
+    background-color: #1a2b3c;
+}
+
 
 /* boutons */
 button {
@@ -192,7 +206,7 @@ button:active { transform: scale(0.98); }
 
 #logout:hover {
     color : white;
-    background-color: red;
+    background-color: #d02424;
 }
 .btn-logout { 
     background-color: white; 
