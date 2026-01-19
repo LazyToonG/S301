@@ -54,6 +54,20 @@ class RaspberrySqliteDAO():
 		finally:
 			conn.close()
 
+	def deleteRasp(self, ipRasp):
+		conn = self._getDbConnection()
+		try:
+			conn.execute(
+				"DELETE FROM raspberry WHERE ipRasp = :ipRasp",
+				{"ipRasp":ipRasp}
+			)
+			conn.commit()
+			return True
+		except Exception:
+			return False
+		finally:
+			conn.close()
+
 	def VerifieShell(self):
 		raspberrys = self.findAll()
 		subprocess.run(["ssh", r["nom"]+"@"+r["ipRasp"], "cd /"])
@@ -61,7 +75,6 @@ class RaspberrySqliteDAO():
 			subprocess.run(["scp", "-v", app.static_folder + '/fichierDefaut/initialisationRaspberry', r["nom"]+"@"+r["ipRasp"]+":/home/"+r["nom"]+"/Music/"])
 			subprocess.run(["ssh", r["nom"]+"@"+r["ipRasp"], "chmod +x /home/"+r["nom"]+"/Music/initialisationRaspberry"])
 			subprocess.run(["ssh", r["nom"]+"@"+r["ipRasp"], "sudo /home/"+r["nom"]+"/Music/initialisationRaspberry.sh"])
-
 
 	
 

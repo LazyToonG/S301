@@ -10,7 +10,13 @@ class RaspberryService():
     def ajoutR(self, identifiant, ipRasp):
         return self.rdao.createRasp(identifiant, ipRasp)
     
+    def supprimeR(self, ipRasp):
+        return self.rdao.deleteRasp(ipRasp)
+    
     def verifieShellRasp(self):
         return self.rdao.VerifieShell()
+    
+    # def envoieDossierMusique(self):
+        
     
         
