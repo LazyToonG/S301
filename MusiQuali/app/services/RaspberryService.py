@@ -8,7 +8,9 @@ class RaspberryService():
          return self.rdao.findAll()
     
     def ajoutR(self, identifiant, ipRasp):
-	    return self.rdao.createRasp(identifiant, ipRasp)
+        return self.rdao.createRasp(identifiant, ipRasp)
     
-
+    def verifieShellRasp(self):
+        return self.rdao.VerifieShell()
+    
         
