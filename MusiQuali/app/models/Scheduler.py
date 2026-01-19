@@ -1,13 +1,13 @@
 class Schedule:
     def __init__(self,planning):
         self.start_time= planning["start_time"]
-        self.monday= planning["monday"]
-        self.tuesday= planning["tuesday"]
-        self.wednesday= planning["wednesday"]
-        self.thursday= planning["thursday"]
-        self.friday= planning["friday"]
-        self.saturday= planning["saturday"]
-        self.sunday= planning["sunday"]
+        self.monday= planning["Monday"]
+        self.tuesday= planning["Tuesday"]
+        self.wednesday= planning["Wednesday"]
+        self.thursday= planning["Thursday"]
+        self.friday= planning["Friday"]
+        self.saturday= planning["Saturday"]
+        self.sunday= planning["Sunday"]
     
     def add_task(self, day, music, index):
         day_list = getattr(self, day)

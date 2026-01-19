@@ -39,7 +39,7 @@
         <div class="top-right-panel panel card">
             <h2>Navigation</h2>
             <a href="/marketing" class="nav-btn">Marketing</a>
-            <a href="/commercialzead" class="nav-btn">Commercial</a>
+            <a href="/commercial" class="nav-btn">Commercial</a>
         </div>
 
         <!-- en bas a droite -->
@@ -102,6 +102,13 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script>
+        if(document.querySelector('.role_nav').textContent==='admin'){
+            document.querySelector('.role_nav').addEventListener('click',function(){
+                window.location.href = "/admin";
+            });
+        };
+    </script>
     {% include 'fin_nav.html' %}
 </body>
 </html>

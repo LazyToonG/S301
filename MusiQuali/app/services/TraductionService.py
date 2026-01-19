@@ -33,7 +33,8 @@ class Traductionservice():
                 "create" : "Créer",
                 "commercial" : "Commercial (Défaut)",
                 "marketing" : "Marketing",
-                "admin" : "Administrateur"
+                "admin" : "Administrateur",
+                "error" : "Identifiants non valides"
             },
 
             "en" : {
@@ -47,7 +48,8 @@ class Traductionservice():
                 "create" : "Create",
                 "commercial" : "Commercial (Default)",
                 "marketing" : "Marketing",
-                "admin" : "Administrator"
+                "admin" : "Administrator",
+                "error" : "Invalid Credentials"
             }
         }
     
@@ -103,17 +105,30 @@ class Traductionservice():
             "fr" : {
                 "user" : "Utilisateur",
                 "logout" : "Déconnexion",
-                "h3_1" : "Jouer un message",
-                "h3_2" : "Télécharger un nouveau message",
-                "p" : "Importer un message vocal"
+                "role" : "Rôle",
+                "save_planning" : "Sauvegarder le planning",
+                "ajout_music" : "Ajouter une musique",
+                "heure_début" : "Heure de début",
+                "titre" : "Titre",
+                "artist" : "Artiste",
+                "duree" : "Durée",
+                "ajout" : "Ajouter",
+                "supp" : "Supprimer"
+
             },
 
             "en" : {
                 "user" : "User",
                 "logout" : "Logout",
-                "h3_1" : "Play a message",
-                "h3_2" : "Upload a new message",
-                "p" : "Import a voice message"
+                "role" : "Role",
+                "save_planning" : "Save the schedule",
+                "ajout_music" : "Add music",
+                "heure_début" : "Start time",
+                "titre" : "Title",
+                "artist" : "Artist",
+                "duree" : "Duration",
+                "ajout" : "Add",
+                "supp" : "Delete"
             }
         }
     

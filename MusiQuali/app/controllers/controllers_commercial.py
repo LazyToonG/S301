@@ -1,14 +1,35 @@
-from flask import Blueprint, render_template, request, jsonify, send_file, redirect, url_for, flash
+from flask import Blueprint, render_template, request, jsonify, send_file, redirect, url_for, flash, session
 from app.services.service_playlist import service_playlist
 from app.services.service_schedule import service_schedule
 from app import app
+from app.controllers.LoginController import reqrole
+from app.services.TraductionService import Traductionservice
+
+ts = Traductionservice()
 
 class commercial_Controller:
 
     @app.route('/commercial', methods=['GET'])
+    @reqrole("admin", "commercial")
     def voir_planning():
+        traductions=ts.tradCommercial()
+
+        langue_url = request.args.get('lang')
+        
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
+        if langue_choisie not in ['fr', 'en']:
+            langue_choisie = 'fr'
+        textes = traductions[langue_choisie]
+
+        user=session['username']
+        role=session['role']
         playlists = service_playlist.get_playlists_api_data()
-        return render_template('planning.html', planning=service_schedule.get_planning(), playlists=playlists)
+        return render_template('planning.html', planning=service_schedule.get_planning(), playlists=playlists, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/admin')
     def admin_page():

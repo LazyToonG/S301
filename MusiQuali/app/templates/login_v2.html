@@ -20,9 +20,12 @@
         <div class="h1">
             <form action="/login" method="POST" id="form">
                 <h1>{{t.h1}} : <input name="username" type="text"/></h1>
-                <h1>{{t.password}} : <input name="password" type="text"/></h1>
+                <h1>{{t.password}} : <input name="password" type="password"/></h1>
                 <input class="seconnecte" type="submit" value="{{t.connexion}}"/>
             </form>
+            {% if msg_error %}
+		        <h4 class="text-danger" style="color:#de2929; "> {{ msg_error }} </h4>
+	        {% endif %}
         </div>        
         <script src="{{ url_for('static', filename='script.js') }}"></script>
         <script>
