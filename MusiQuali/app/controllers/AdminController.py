@@ -36,6 +36,7 @@ def admin_dashboard():
 
 
 @app.route("/admin/create", methods=["POST"])
+@reqrole('admin')
 def create_user():
     username = request.form.get("username")
     password = request.form.get("password")
@@ -54,6 +55,7 @@ def create_user():
 
 
 @app.route("/admin/search", methods=["POST"])
+@reqrole('admin')
 def admin_search_user():
     traductions=ts.tradAdmin()
 

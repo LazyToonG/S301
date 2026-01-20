@@ -32,8 +32,9 @@ class commercial_Controller:
         return render_template('planning.html', planning=service_schedule.get_planning(), playlists=playlists, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/admin')
+    @reqrole("admin")
     def admin_page():
-        traductions=ts.tradCommercial()
+        traductions=ts.tradAdmin()
 
         langue_url = request.args.get('lang')
         
