@@ -70,9 +70,9 @@ def delete_user():
 
     if username==user:
         if langue_choisie=='fr':
-            message = "Utilisateur non supprimé (actuellement connecté)"
+            message = "Utilisateur ne peut pas être supprimé (actuellement connecté)"
         elif langue_choisie=="en":
-            message="User not deleted (currently logged)"
+            message="User cannot be deleted (currently logged)"
         flash(message, "error")
         return redirect(url_for("admin_dashboard"))
     
