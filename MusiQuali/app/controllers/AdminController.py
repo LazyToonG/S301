@@ -26,7 +26,7 @@ def admin_dashboard():
 # Création utilisateur
 
 
-@app.route("/admin/create", methods=["POST"])
+@app.route("/admin/create", methods=["POST", "GET"])
 @reqrole('admin')
 def create_user():
     langue_choisie=ts.getLangue()
@@ -77,7 +77,7 @@ def delete_user():
         return redirect(url_for("admin_dashboard"))
     
     user_service.deleteUser(username)
-    
+
     if langue_choisie=='fr':
         message = "Utilisateur supprimé avec succès"
     elif langue_choisie=="en":
@@ -85,7 +85,7 @@ def delete_user():
     flash(message, "success")
     return redirect(url_for("admin_dashboard"))
 
-@app.route("/admin/search", methods=["POST"])
+@app.route("/admin/search", methods=["POST", "GET"])
 @reqrole('admin')
 def admin_search_user():
     traductions=ts.tradAdmin()
