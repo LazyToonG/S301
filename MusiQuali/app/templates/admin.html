@@ -8,6 +8,7 @@
 </head>
 <body class="">
     {% include 'nav_v2.html' %}
+    {% include 'messages_alert.html' %}
     <div class="main">
         <!-- moitié gauche -->
         <div class="left-panel panel card">
@@ -45,7 +46,7 @@
         <!-- en bas a droite -->
         <div class="bottom-right-panel panel card">
             <h2>{{t.users}}</h2>
-            <div class="créer user">
+            <div class="user-panel">
 
                 <h2>{{t.create_user}}</h2>
 
@@ -73,7 +74,7 @@
 
                     <button type="submit">{{t.create}}</button>
                 </form>
-                <h2>{{t.recherche}}</h2>
+                <h2>{{t.recherchce}}</h2>
 
                 <form method="post" action="/admin/search" class="user-search-form">
                     <input
@@ -88,15 +89,25 @@
                 <h3>{{t.result}}</h3>
                 <ul>
                     {% for user in searched_users %}
-                    <li>
-                    {{t.name}} : <strong>{{ user.username }}</strong><br>
-                    {{t.role}} : <strong>{{ user.role }}</strong>
-                    </li>
+                        <li>
+                            <form method="post" action="/admin/delete" class="users">
+                                <input type="hidden" name="username" value="{{ user.username }}">
+                                <div class="users-info">
+                                    <div name="username" class="info-line">
+                                        {{ t.name }} : <strong>{{ user.username }}</strong>
+                                    </div>
+                                    <div class="info-line">
+                                        {{ t.role }} : <strong>{{ user.role }}</strong>
+                                    </div>
+                                </div>
+                                <div class="user-action">
+                                    <button type="submit" id="delete-user">{{t.supp}} &times;</button>
+                                </div>
+                            </form>
+                        </li>
                     {% endfor %}
                 </ul>
                 {% endif %}
-
-
 
             </div>
         </div>
@@ -109,6 +120,7 @@
             });
         };
     </script>
+    
     {% include 'fin_nav.html' %}
 </body>
 </html>
