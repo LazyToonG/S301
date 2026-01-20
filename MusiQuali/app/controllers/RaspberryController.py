@@ -1,8 +1,11 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
 import subprocess, ipaddress
+from app.services.TraductionService import Traductionservice
+
+ts = Traductionservice()
 #import datetime
 
 @app.route('/testRasp', methods=['GET','POST'])
@@ -31,11 +34,27 @@ def ajoutDansRasp():
 
 @app.route('/admin/raspberries', methods = ['GET'])
 def ToutRaspberry():
+
+    traductions=ts.tradAdmin()
+    langue_url = request.args.get('lang')
+    if langue_url:
+        session['langue'] = langue_url
+        langue_choisie = langue_url
+    else:
+        langue_choisie = session.get('langue')
+
+    if langue_choisie not in ['fr', 'en']:
+        langue_choisie = 'fr'
+    textes = traductions[langue_choisie]
+
+    user=session['username']
+    role=session['role']
+
     toutRasp = rs.montreToutRasp()
     tab = []
     for chaque in toutRasp:
             tab.append(chaque)
-    return render_template("admin.html", listRasp = tab)
+    return render_template("admin.html", listRasp = tab, t=textes, current_lang=langue_choisie, user=user, role=role)
 
 def pingTout():
     toutRasp = rs.montreToutRasp()
