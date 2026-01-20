@@ -32,9 +32,26 @@ class commercial_Controller:
         return render_template('planning.html', planning=service_schedule.get_planning(), playlists=playlists, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/admin')
+    @reqrole("admin")
     def admin_page():
+        traductions=ts.tradAdmin()
+
+        langue_url = request.args.get('lang')
+        
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
+        if langue_choisie not in ['fr', 'en']:
+            langue_choisie = 'fr'
+        textes = traductions[langue_choisie]
+
+        user=session['username']
+        role=session['role']
         playlists = service_playlist.get_all_playlists()
-        return render_template('admin.html', playlists=playlists)
+        return render_template('admin.html', playlists=playlists, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/add_playlist', methods=['POST'])
     def add_playlist():

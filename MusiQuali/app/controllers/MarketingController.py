@@ -54,10 +54,25 @@ def delete(id):
 
 @app.route("/search_by_title")
 def search_by_title():
+    traductions=ts.tradMarketing()
+    langue_url = request.args.get('lang')
+        
+    if langue_url:
+        session['langue'] = langue_url
+        langue_choisie = langue_url
+    else:
+        langue_choisie = session.get('langue')
+
+    if langue_choisie not in ['fr', 'en']:
+        langue_choisie = 'fr'
+    textes = traductions[langue_choisie]
+    user = session['username']
+    role = session['role']
+
     title = request.args.get("title")
     musiques = service.search_by_title(title)
     if musiques:
-        return render_template("marketing_v2.html", musiques=[musiques])
+        return render_template("marketing_v2.html", musiques=[musiques], t=textes, current_lang=langue_choisie, user=user, role=role)
     return redirect(url_for("marketing"))
 
 @app.route("/playlist/create", methods=["POST"])
