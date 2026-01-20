@@ -11,7 +11,7 @@ class ScheduleService:
 
     def _load_planning(self):
         planning_data = {"start_time": "00:00"}
-        days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         for day in days:
             start_time = self.schedule_dao.get_start_time(day)
             items = self.schedule_dao.get_items_by_day(day)
