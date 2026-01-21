@@ -13,25 +13,22 @@ ts = Traductionservice()
 @app.route("/admin/add_rasp", methods=["POST"])
 @reqrole('admin')
 def addRaspberry():
-    nom = request.form.get("nom")
     ip = request.form.get("ipRasp")
     
 
     rasps = rs.montreToutRasp()
-    if any(r.ipRasp == ip for r in rasps) or any(r.nom == nom for r in rasps):
-        flash("Raspberry déjà existant", "error")
-        return redirect(url_for("admin_dashboard"))
+    if any(r.ipRasp == ip for r in rasps):
+        flash("Raspberry déjà existant")
     
     try:
         ipaddress.IPv4Address(ip)
         rs.ajoutR(request.form["nom"], request.form["ipRasp"])
     except ipaddress.AddressValueError:
-        flash("IP invalid", "error")
+        flash("IP invalid")
 
     
     return redirect(url_for("admin_dashboard"))
 
-<<<<<<< HEAD
 # @app.route("/admin/delete_rasp", methods=["POST"])
 # @reqrole('admin')
 # def delete_user():
@@ -62,20 +59,30 @@ def delete_rasp():
 
 # @app.route("/admin/envoie_ping", methods=["POST"])
 # @reqrole('admin')
-# def delete_rasp():
-#     rs.verifieShellRasp()
-    
+# def envoie_ping():
+#     result = rs.verifieShellRasp()
+
+#     if result:
+#         flash("Ping et initialisation OK", "success")
+#     else:
+#         flash("Erreur lors de l'initialisation", "error")
+
 #     return redirect(url_for("admin_dashboard"))
 
+from threading import Thread
 
-=======
-@app.route("/admin/delete_rasp", methods=["POST"])
+@app.route("/admin/envoie_ping", methods=["POST"])
 @reqrole('admin')
-def deleteRaspberry():
-    ip = request.form.get("ipRasp")
-    rs.supprimeR(ip)
+def envoie_ping():
+    def background():
+        rs.verifieShellRasp()
+
+    Thread(target=background).start()
+    flash("Ping lancé en arrière-plan", "success")
     return redirect(url_for("admin_dashboard"))
->>>>>>> 77c5713236df339ae3d3b235e6a63f54d1a342e0
+
+
+
 
 
 
