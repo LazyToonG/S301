@@ -29,8 +29,6 @@ def admin_dashboard():
 @app.route("/admin/create", methods=["POST", "GET"])
 @reqrole('admin')
 def create_user():
-    langue_choisie=ts.getLangue()
-    
     username = request.form.get("username")
     password = request.form.get("password")
     role = request.form.get("role")
@@ -43,19 +41,13 @@ def create_user():
     for users in searched_users:
         if users!=None:
             if users.username==username:
-                if langue_choisie=='fr':
-                    message = "Nom d'utilisateur déjà existant"
-                elif langue_choisie=="en":
-                    message="Username already exists"
+                message=ts.message_langue("Nom d'utilisateur déjà existant","Username already exists")
                 flash(message, "error")
                 return redirect(url_for("admin_dashboard"))
                 
     user_service.signin(username, password, role)
 
-    if langue_choisie=='fr':
-        message = "Utilisateur créé avec succès"
-    elif langue_choisie=="en":
-        message="User successfully created"
+    message=ts.message_langue("Utilisateur créé avec succès","User successfully created")
     flash(message, "success")
     return redirect(url_for("admin_dashboard"))
 
@@ -63,25 +55,24 @@ def create_user():
 @app.route("/admin/delete", methods=["POST"])
 @reqrole('admin')
 def delete_user():
-    langue_choisie=ts.getLangue()
     user=session['username']
 
+    decision=request.form.get("decision")
+    if decision=="cancel" :
+        message=ts.message_langue("Suppression annulée", "Deletion cancelled")
+        flash(message, "error")
+        return redirect(url_for("admin_dashboard"))
+    
     username = request.form.get("username")
 
     if username==user:
-        if langue_choisie=='fr':
-            message = "Utilisateur ne peut pas être supprimé (actuellement connecté)"
-        elif langue_choisie=="en":
-            message="User cannot be deleted (currently logged)"
+        message=ts.message_langue("Utilisateur ne peut pas être supprimé (actuellement connecté)","User cannot be deleted (currently logged)")
         flash(message, "error")
         return redirect(url_for("admin_dashboard"))
     
     user_service.deleteUser(username)
 
-    if langue_choisie=='fr':
-        message = "Utilisateur supprimé avec succès"
-    elif langue_choisie=="en":
-        message="User successfully deleted"
+    message=ts.message_langue("Utilisateur supprimé avec succès","User successfully deleted")
     flash(message, "success")
     return redirect(url_for("admin_dashboard"))
 
@@ -103,16 +94,10 @@ def admin_search_user():
     searched_users = user_service.getUserByUsername(username)
     for users in searched_users:
         if users==None:
-            if langue_choisie=='fr':
-                message = "Utilisateur non trouvé"
-            elif langue_choisie=="en":
-                message="User not found"
+            message=ts.message_langue("Utilisateur non trouvé","User not found")
             flash(message, "error")
             return redirect(url_for("admin_dashboard"))
-    if langue_choisie=='fr':
-        message = "Utilisateur trouvé avec succès"
-    elif langue_choisie=="en":
-        message="User successfully found"
+    message=ts.message_langue("Utilisateur trouvé avec succès","User successfully found")
     flash(message, "success")
     return render_template("admin.html",searched_users=searched_users, t=textes, current_lang=langue_choisie, user=user, role=role)
 

@@ -156,9 +156,23 @@ button:hover,
     gap: 5px;
     text-align: left;
 }
-#delete-user{
+.user-action {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.user-action button{
     margin-top: 5px;
     padding: 5px 10px;
+}
+.user-action-confirm {
+    display: none;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.user-action-confirm button:hover{
+    background-color: #ccc;
 }
 
 /* SELECT RASPBERRY */
