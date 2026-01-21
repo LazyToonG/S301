@@ -15,6 +15,7 @@ user_service = UserService()
 @reqrole('admin')
 def admin_dashboard():
 
+
     traductions=ts.tradAdmin()
     langue_choisie=ts.getLangue()
     textes = traductions[langue_choisie]

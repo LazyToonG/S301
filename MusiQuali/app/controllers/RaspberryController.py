@@ -12,16 +12,22 @@ ts = Traductionservice()
 
 @app.route("/admin/add_rasp", methods=["POST"])
 @reqrole('admin')
-def ipCorrect():
-    if request.method == "POST":
+def addRaspberry():
+    ip = request.form.get("ipRasp")
+    
 
-        ip = request.form.get("ipRasp")
-        try:
-            ipaddress.IPv4Address(ip)
-            rs.ajoutR(request.form["nom"], request.form["ipRasp"])
-        except ipaddress.AddressValueError:
-            flash("IP invalid")
-        return redirect(url_for("admin_dashboard"))
+    rasps = rs.montreToutRasp()
+    if any(r.ipRasp == ip for r in rasps):
+        flash("Raspberry déjà existant")
+    
+    try:
+        ipaddress.IPv4Address(ip)
+        rs.ajoutR(request.form["nom"], request.form["ipRasp"])
+    except ipaddress.AddressValueError:
+        flash("IP invalid")
+
+    
+    return redirect(url_for("admin_dashboard"))
 
 
 
