@@ -56,12 +56,12 @@ class RaspberrySqliteDAO():
 		finally:
 			conn.close()
 
-	def deleteRasp(self, ipRasp):
+	def deleteRasp(self, idRasp):
 		conn = self._getDbConnection()
 		try:
 			conn.execute(
-				"DELETE FROM raspberry WHERE ipRasp = :ipRasp",
-				{"ipRasp":ipRasp}
+				"DELETE FROM raspberry WHERE idRasp = :idRasp",
+				{"idRasp":idRasp}
 			)
 			conn.commit()
 			return True

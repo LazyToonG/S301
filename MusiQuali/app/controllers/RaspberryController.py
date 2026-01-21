@@ -29,6 +29,42 @@ def addRaspberry():
     
     return redirect(url_for("admin_dashboard"))
 
+# @app.route("/admin/delete_rasp", methods=["POST"])
+# @reqrole('admin')
+# def delete_user():
+ 
+
+#     raspb_id = request.form.get("raspberry-select")
+
+
+#     rs.supprimeR(raspb_id)
+
+#     flash("delete", "success")
+#     return redirect(url_for("admin_dashboard"))
+
+@app.route("/admin/delete_rasp", methods=["POST"])
+@reqrole('admin')
+def delete_rasp():
+    rasp_id = request.form.get("raspberry-select")
+
+    if not rasp_id:
+        flash("Aucun Raspberry sélectionné", "error")
+        return redirect(url_for("admin_dashboard"))
+
+    rs.supprimeR(rasp_id)
+
+    flash("Raspberry supprimé avec succès", "success")
+    
+    return redirect(url_for("admin_dashboard"))
+
+# @app.route("/admin/envoie_ping", methods=["POST"])
+# @reqrole('admin')
+# def delete_rasp():
+#     rs.verifieShellRasp()
+    
+#     return redirect(url_for("admin_dashboard"))
+
+
 
 
 
