@@ -60,13 +60,8 @@ class RaspberrySqliteDAO():
 		conn = self._getDbConnection()
 		try:
 			conn.execute(
-<<<<<<< HEAD
 				"DELETE FROM raspberry WHERE idRasp = :idRasp",
 				{"idRasp":idRasp}
-=======
-				"DELETE FROM raspberry WHERE ipRasp = ?",
-				(ipRasp,)
->>>>>>> 77c5713236df339ae3d3b235e6a63f54d1a342e0
 			)
 			conn.commit()
 			return True
