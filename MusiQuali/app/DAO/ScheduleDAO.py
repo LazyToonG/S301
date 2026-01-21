@@ -11,15 +11,13 @@ class ScheduleDAO:
     def init_db(self):
         conn = get_db()
         c = conn.cursor()
-        # c.execute('CREATE TABLE IF NOT EXISTS playlist (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, name TEXT)')
+        
         c.execute('''CREATE TABLE IF NOT EXISTS music (
                         id INTEGER PRIMARY KEY AUTOINCREMENT, 
                         title TEXT, 
                         artist TEXT, 
                         duration INTEGER, 
-                        path TEXT, 
-                        playlist_id INTEGER,
-                        FOREIGN KEY(playlist_id) REFERENCES playlist(id))''')
+                        path TEXT, ''')
         c.execute('CREATE TABLE IF NOT EXISTS schedule_day (day_name TEXT PRIMARY KEY, start_time TEXT)')
         c.execute('''CREATE TABLE IF NOT EXISTS schedule_item (
                         id INTEGER PRIMARY KEY AUTOINCREMENT, 
