@@ -10,21 +10,21 @@ class MusicDAO:
         self.db=app.static_folder +'/data/database.db'
         self._init_db()
 
-    def _getDbConnection(self):
+    def get_connection(self):
         conn = sqlite3.connect(self.db)
         conn.row_factory = sqlite3.Row
         return conn
 
     def _init_db(self):
-        conn = self._getDbConnection()
+        conn = self.get_connection()
         cursor = conn.cursor()
         cursor.execute("PRAGMA table_info(playlist)")
         conn.execute("""
-            CREATE TABLE music (
-            id INT PRIMARY KEY AUTO INCREMENT,
+            CREATE TABLE if not exists music (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             title VARCHAR(255) NOT NULL,
-            duration INT,
-            path VARCHAR(255),    """)
+            duration INTEGER,
+            path VARCHAR(255)   );""")
         conn.commit()
         conn.close()
 

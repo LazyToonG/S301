@@ -17,7 +17,7 @@ class ScheduleDAO:
                         title TEXT, 
                         artist TEXT, 
                         duration INTEGER, 
-                        path TEXT, ''')
+                        path TEXT); ''')
         c.execute('CREATE TABLE IF NOT EXISTS schedule_day (day_name TEXT PRIMARY KEY, start_time TEXT)')
         c.execute('''CREATE TABLE IF NOT EXISTS schedule_item (
                         id INTEGER PRIMARY KEY AUTOINCREMENT, 
