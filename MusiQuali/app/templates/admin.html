@@ -130,7 +130,11 @@
                                     </div>
                                 </div>
                                 <div class="user-action">
-                                    <button type="submit" id="delete-user">{{t.supp}} &times;</button>
+                                    <button type="button" id="delete-user">{{t.supp}}</button>
+                                    <div class="user-action-confirm">
+                                        <button type="submit" name="decision" value="confirm" class="alert-success">{{t.confirm}} ✓</button>
+                                        <button type="submit" name="decision" value="cancel" class="alert-error">{{t.cancel}} &times;</button>
+                                    </div>
                                 </div>
                             </form>
                         </li>
@@ -148,6 +152,10 @@
                 window.location.href = "/admin";
             });
         };
+        
+        document.getElementById("delete-user").addEventListener('click', function(){
+            document.querySelector(".user-action-confirm").style.display='flex';
+        });
     </script>
     
     {% include 'fin_nav.html' %}
