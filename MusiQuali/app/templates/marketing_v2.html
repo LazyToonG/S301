@@ -30,14 +30,32 @@
 
         <!-- select playlist -->
         <section class="card card_1">
-            <label for="playlist-select">{{t.select}}</label>
-            <select id="playlist-select">
-                <option value="">{{t.select_value}}</option>
-                {% for p in playlists %}
-                    <option value="{{ p.id }}">{{ p.title }}</option>
-                {% endfor %}
-            </select>
+            <form method="post">
+                <label for="playlist-select">{{ t.select }}</label>
+                <select id="playlist-select" name="playlist_id" onchange="this.form.submit()">
+                    <option value="">{{ t.select_value }}</option>
+                    {% for p in playlists %}
+                        <option value="{{ p.id }}" {% if selected_playlist_id == p.id|string %}selected{% endif %}>
+                            {{ p.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+
+            {% if musics %}
+                <ul>
+                    {% for title in musics %}
+                        <li>{{ title }}</li>
+                    {% endfor %}
+                </ul>
+            {% elif selected_playlist_id %}
+                <p>No musics in this playlist</p>
+            {% endif %}
         </section>
+
+
+
+
 
         <!-- upload mp3 -->
         <section class="card card_1">
@@ -69,50 +87,70 @@
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script>
-        const playlistSelect = document.getElementById('playlist-select');
-        const uploadZone = document.getElementById('upload-zone');
-        const fileInput = document.getElementById('audio-input');
-        const uploadBtn = document.getElementById('btn-upload');
-        const hiddenPlaylist = document.getElementById('playlist-id');
 
-        // ctiver upload quand une playlist est choisie
-        playlistSelect.addEventListener('change', () => {
-            if (playlistSelect.value) {
-                uploadZone.classList.remove('disabled');
-                uploadBtn.disabled = false;
-                hiddenPlaylist.value = playlistSelect.value;
-                uploadZone.querySelector('p').innerText = "{{t.h3}}";
+    const playlistSelect = document.getElementById('playlist-select');
+    const uploadZone = document.getElementById('upload-zone');
+    const fileInput = document.getElementById('audio-input');
+    const uploadBtn = document.getElementById('btn-upload');
+    const hiddenPlaylist = document.getElementById('playlist-id');
 
-                // clic sur zone pour ouvrir le file picker
-                uploadZone.onclick = () => fileInput.click();
-            } else {
-                uploadZone.classList.add('disabled');
-                uploadBtn.disabled = true;
-                hiddenPlaylist.value = "";
-                uploadZone.querySelector('p').innerText = "{{t.upload}}";
-            }
-        });
+    // activer upload zone aussi si une playlist est deja selectionné
+    const playlistValue = playlistSelect.value;
+    if (playlistValue) {
+        uploadZone.classList.remove('disabled');
+        uploadBtn.disabled = false;
+        hiddenPlaylist.value = playlistValue;
+        uploadZone.querySelector('p').innerText = "{{t.h3}}";
 
-        // Dragon drop
-        uploadZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadZone.classList.add('dragover');
-        });
+        // clic sur zone pour ouvrir le file picker
+        uploadZone.onclick = () => fileInput.click();
+    } else {
+        uploadZone.classList.add('disabled');
+        uploadBtn.disabled = true;
+        hiddenPlaylist.value = "";
+        uploadZone.querySelector('p').innerText = "{{t.upload}}";
+    }
 
-        uploadZone.addEventListener('dragleave', (e) => {
-            e.preventDefault();
-            uploadZone.classList.remove('dragover');
-        });
+    // ctiver upload quand une playlist est choisie
+    playlistSelect.addEventListener('change', () => {
+        if (playlistSelect.value) {
+            uploadZone.classList.remove('disabled');
+            uploadBtn.disabled = false;
+            hiddenPlaylist.value = playlistSelect.value;
+            uploadZone.querySelector('p').innerText = "{{t.h3}}";
 
-        uploadZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadZone.classList.remove('dragover');
+            // clic sur zone pour ouvrir le file picker
+            uploadZone.onclick = () => fileInput.click();
+        } else {
+            uploadZone.classList.add('disabled');
+            uploadBtn.disabled = true;
+            hiddenPlaylist.value = "";
+            uploadZone.querySelector('p').innerText = "{{t.upload}}";
+        }
+    });
 
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-            }
-        });
+    // Dragon drop
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.classList.add('dragover');
+    });
+
+    uploadZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.classList.remove('dragover');
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+        }
+    });
+
+
     </script>
 
     {% include 'fin_nav.html' %}

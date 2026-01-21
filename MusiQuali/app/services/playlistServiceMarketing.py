@@ -1,5 +1,6 @@
 from app.DAO.PlaylistDAO import PlaylisteDAO
 from app.models.Playliste import Playliste
+from app.DAO.MusicDAO import MusicDAO
 
 class PlaylistService:
     def __init__(self):
@@ -23,3 +24,13 @@ class PlaylistService:
 
         playlist.addMusique(music_id)
         self.dao.insert(playlist)
+
+    def musics_in_playlist(self, playlist_id):
+        titleList=[]
+        a=PlaylisteDAO()
+        b=MusicDAO()
+        c=a.get(playlist_id)
+        for i in c.music_ids:
+            d=b.get_by_id(i)
+            titleList.append(d.title)
+        return titleList

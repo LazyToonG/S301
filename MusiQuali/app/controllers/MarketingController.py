@@ -10,20 +10,33 @@ ts = Traductionservice()
 service = MusiqueService()
 playlist_service = PlaylistService()
 
-@app.route('/marketing', methods=['GET'])
+@app.route('/marketing', methods=['GET', 'POST'])
 @reqrole("admin","marketing")
 def marketing():
+    # Translations
+    traductions = ts.tradMarketing()
+    langue_choisie = ts.getLangue()
+    textes = traductions[langue_choisie]
 
-    traductions=ts.tradMarketing()
-    langue_choisie=ts.getLangue()
-
+    # Page content
+    playlists = playlist_service.get_all()
     sort = request.args.get("sort", "date")
     musiques = service.get_musiques(sort)
-    playlists = playlist_service.get_all()
-    textes = traductions[langue_choisie]
     user = session['username']
     role = session['role']
     metadata = {"title": "Espace Marketing", "pagename": "marketing"}
+
+    # Playlist selection
+    selected_playlist_id = None
+    musics = []
+
+    if request.method == "POST":
+        playlist_id_raw = request.form.get("playlist_id")
+        if playlist_id_raw:
+            # Convert type to match your playlist IDs
+            selected_playlist_id = str(playlist_id_raw)  
+            musics = playlist_service.musics_in_playlist(selected_playlist_id)
+
     return render_template(
         "marketing_v2.html",
         metadata=metadata,
@@ -33,10 +46,12 @@ def marketing():
         t=textes,
         playlists=playlists,
         user=user,
-        role=role
-        
-        
+        role=role,
+        musics=musics,
+        selected_playlist_id=selected_playlist_id
     )
+
+
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -85,3 +100,26 @@ def upload():
     playlist_service.add_music_to_playlist(playlist.id, music.id)
 
     return redirect(url_for("marketing"))
+
+# @app.route("/musicsinplaylist", methods=["GET", "POST"])
+# def musicsinplaylist():
+
+#     t = ts.getLangue()
+
+#     playlist_id = request.values.get("playlist_id")
+
+#     playlists = playlist_service.get_all()
+
+#     musics = []
+#     if playlist_id:
+#         musics = playlist_service.musics_in_playlist(playlist_id)
+
+#     return render_template(
+#         "marketing_v2.html",
+#         playlists=playlists,
+#         musics=musics,
+#         selected_playlist_id=playlist_id,
+#         t=t
+#     )
+
+

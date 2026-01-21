@@ -38,3 +38,7 @@ class MusiqueService:
 
     def delete_musique(self, musique_id):
         self.dao.delete(musique_id)
+
+    def get_by_id(self, music_id):
+        a=MusicDAO()
+        return a.get_by_id(music_id)
