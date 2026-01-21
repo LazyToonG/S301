@@ -13,22 +13,25 @@ ts = Traductionservice()
 @app.route("/admin/add_rasp", methods=["POST"])
 @reqrole('admin')
 def addRaspberry():
+    nom = request.form.get("nom")
     ip = request.form.get("ipRasp")
     
 
     rasps = rs.montreToutRasp()
-    if any(r.ipRasp == ip for r in rasps):
-        flash("Raspberry déjà existant")
+    if any(r.ipRasp == ip for r in rasps) or any(r.nom == nom for r in rasps):
+        flash("Raspberry déjà existant", "error")
+        return redirect(url_for("admin_dashboard"))
     
     try:
         ipaddress.IPv4Address(ip)
         rs.ajoutR(request.form["nom"], request.form["ipRasp"])
     except ipaddress.AddressValueError:
-        flash("IP invalid")
+        flash("IP invalid", "error")
 
     
     return redirect(url_for("admin_dashboard"))
 
+<<<<<<< HEAD
 # @app.route("/admin/delete_rasp", methods=["POST"])
 # @reqrole('admin')
 # def delete_user():
@@ -65,6 +68,14 @@ def delete_rasp():
 #     return redirect(url_for("admin_dashboard"))
 
 
+=======
+@app.route("/admin/delete_rasp", methods=["POST"])
+@reqrole('admin')
+def deleteRaspberry():
+    ip = request.form.get("ipRasp")
+    rs.supprimeR(ip)
+    return redirect(url_for("admin_dashboard"))
+>>>>>>> 77c5713236df339ae3d3b235e6a63f54d1a342e0
 
 
 

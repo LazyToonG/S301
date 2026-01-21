@@ -46,6 +46,10 @@
                 <br>
                 <button type="submit">{{t.bouton_ajoutRasp}}</button>
             </form>
+            <form action="/admin/delete_rasp" method="POST">
+                <input type="text" class="form-control" id="ipRasp" placeholder="{{t.form_ipRasp}}" name="ipRasp">
+                <button type="submit">Delete &times;</button>
+            </form>
     
             <div class="terminal">
                 <h3>Terminal</h3>
