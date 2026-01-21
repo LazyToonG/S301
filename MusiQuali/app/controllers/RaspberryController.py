@@ -19,15 +19,16 @@ def ipCorrect():
     if request.method == "POST":
 
         ip = request.form.get("ipRasp")
-        msg_error = None
+        if ip not in rasp:
+            msg_error = None
 
-        try:
-            ipaddress.IPv4Address(ip)
-            rs.ajoutR(request.form["nom"], request.form["ipRasp"])
-            rasp = rs.montreToutRasp()
-            # return redirect(url_for("admin_dashboard"))
-        except ipaddress.AddressValueError:
-            msg_error = "IP invalid"
+            try:
+                ipaddress.IPv4Address(ip)
+                rs.ajoutR(request.form["nom"], request.form["ipRasp"])
+                rasp = rs.montreToutRasp()
+                # return redirect(url_for("admin_dashboard"))
+            except ipaddress.AddressValueError:
+                msg_error = "IP invalid"
         
         traductions=ts.tradAdmin()
         langue_url = request.args.get('lang')
@@ -50,13 +51,9 @@ def ipCorrect():
 
 
 
-<<<<<<< HEAD
-
-=======
-    traductions=ts.tradAdmin()
-    langue_choisie=ts.getLangue()
-    textes = traductions[langue_choisie]
->>>>>>> testmain5
+    # traductions=ts.tradAdmin()
+    # langue_choisie=ts.getLangue()
+    # textes = traductions[langue_choisie]
 
 # @app.route('/admin/raspberries', methods = ['GET'])
 # @app.route('/testRasp', methods = ['GET'])
