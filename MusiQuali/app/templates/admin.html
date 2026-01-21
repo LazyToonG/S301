@@ -14,16 +14,34 @@
             <h2>Raspberry</h2>
        
             <label for="raspberry-select">{{t.select_rasp}} :</label>
-            <select id="raspberry-select">
+            <!-- <select id="raspberry-select">
                 <option value="">-- {{t.select}} --</option>
                 <option value="raspi1">Raspberry 1</option>
                 <option value="raspi2">Raspberry 2</option>
+            </select> truc d'avant, probabalent à supprimer-->
+
+            <select id="raspberry-select">
+                {% for r in raspberry %}
+                    <option value="{{ r.nom }}">{{ r.nom }} {{ r.ipRasp }}</option>
+                {% endfor %}
             </select>
 
 
-            <button id="download-logs">
-                {{t.download}}
-            </button>
+            <h2>{{t.titreRasp}}</h2> 
+            <form action="{{ url_for('ipCorrect') }}" method="POST">
+                <div class="mb-3 mt-3">
+                    <label for="nom" class="form-label">{{t.nomRasp}}</label>
+                    <input type="text" class="form-control" id="nom" placeholder="{{t.form_nomRasp}}" name="nom">
+                    <br>
+                    <label for="ipRasp" class="form-label">{{t.ipRasp}}</label>
+                    <input type="text" class="form-control" id="ipRasp" placeholder="{{t.form_ipRasp}}" name="ipRasp">
+                </div>
+                <br>
+                <button type="submit">{{t.bouton_ajoutRasp}}</button>
+            </form>
+            {% if msg_error %}
+                <p class="text-danger" style = "color:red;"> {{ msg_error }}</p>
+            {% endif %}
 
         
             <div class="terminal">
@@ -32,7 +50,12 @@
                 <div class="terminal-screen">
                     <!-- terminal ici -->
                 </div>
+                
             </div>
+
+            <button id="download-logs">
+                {{t.download}}
+            </button>
         </div>
 
         <!-- en haut a droite -->

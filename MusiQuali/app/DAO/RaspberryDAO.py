@@ -44,12 +44,14 @@ class RaspberrySqliteDAO():
 		conn = self._getDbConnection()
 		try:
 			conn.execute(
-				"INSERT INTO raspberry (nom, ipRasp) VALUES (:nom, :ipRasp)",
-				{"nom":nom, "ipRasp":ipRasp}
+				"INSERT INTO raspberry (nom, ipRasp) VALUES (?, ?)",
+				(nom, ipRasp)
 			)
 			conn.commit()
 			return True
-		except Exception:
+		except Exception as e:
+			conn.rollback()
+			print("ERROR createRasp:", e)
 			return False
 		finally:
 			conn.close()
@@ -70,8 +72,8 @@ class RaspberrySqliteDAO():
 
 	def VerifieShell(self):
 		raspberrys = self.findAll()
-		subprocess.run(["ssh", r["nom"]+"@"+r["ipRasp"], "cd /"])
 		for r in raspberrys:
+			subprocess.run(["ssh", r["nom"]+"@"+r["ipRasp"], "cd /"])
 			subprocess.run(["scp", "-v", app.static_folder + '/fichierDefaut/initialisationRaspberry', r["nom"]+"@"+r["ipRasp"]+":/home/"+r["nom"]+"/Music/"])
 			subprocess.run(["ssh", r["nom"]+"@"+r["ipRasp"], "chmod +x /home/"+r["nom"]+"/Music/initialisationRaspberry"])
 			subprocess.run(["ssh", r["nom"]+"@"+r["ipRasp"], "sudo /home/"+r["nom"]+"/Music/initialisationRaspberry.sh"])
@@ -84,11 +86,12 @@ class RaspberryVerifieChemin():
 	
 	def __init__(self, chemin):
 		self.chemin = chemin
+		self.estAJour()
 
 	def estAJour(self):
 		raspberrys = rdao.findAll()
 
-		fichier = RaspberryVerifieChemin()
+		fichier = self.chemin
 		# Stocke le temps de dernière modification
 		dernier_time = os.path.getmtime(fichier)
 
@@ -98,4 +101,6 @@ class RaspberryVerifieChemin():
 		if nouveau_time != dernier_time:
 			for r in raspberrys:
 				subprocess.run(["scp", "-v", fichier, r["nom"]+"@"+r["ipRasp"]+":/home/"+r["nom"]+"/Music/"])
+
+
 
