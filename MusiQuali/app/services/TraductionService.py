@@ -12,6 +12,14 @@ class Traductionservice():
         if langue_choisie not in ['fr', 'en']:
             langue_choisie = 'fr' 
         return langue_choisie
+    
+    def message_langue(self, message_fr, message_en):
+        langue_choisie=Traductionservice.getLangue(self)
+        if langue_choisie=='fr':
+            message = message_fr
+        elif langue_choisie=="en":
+            message=message_en
+        return message
 
     def tradIndex(self):
         return {
@@ -88,7 +96,9 @@ class Traductionservice():
                 "search" : "Rechercher",
                 "result" : "Résultat",
                 "name" : "Nom",
-                "supp" : "Supprimer"
+                "supp" : "Supprimer",
+                "confirm" : "Confirmer",
+                "cancel" : "Annuler"
             },
 
             "en" : {
@@ -111,7 +121,9 @@ class Traductionservice():
                 "search" : "Search",
                 "result" : "Result",
                 "name" : "Name",
-                "supp" : "Delete"
+                "supp" : "Delete",
+                "confirm" : "Confirm",
+                "cancel" : "Cancel"
             }
         }
     
