@@ -50,7 +50,13 @@ def ipCorrect():
 
 
 
+<<<<<<< HEAD
 
+=======
+    traductions=ts.tradAdmin()
+    langue_choisie=ts.getLangue()
+    textes = traductions[langue_choisie]
+>>>>>>> testmain5
 
 # @app.route('/admin/raspberries', methods = ['GET'])
 # @app.route('/testRasp', methods = ['GET'])

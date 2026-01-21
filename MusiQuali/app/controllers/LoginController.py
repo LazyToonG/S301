@@ -44,16 +44,7 @@ class LoginController:
     def login():
         traductions=ts.tradLogin()
 
-        langue_url = request.args.get('lang')
-        
-        if langue_url:
-            session['langue'] = langue_url
-            langue_choisie = langue_url
-        else:
-            langue_choisie = session.get('langue')
-
-        if langue_choisie not in ['fr', 'en']:
-            langue_choisie = 'fr'
+        langue_choisie=ts.getLangue()
         textes = traductions[langue_choisie]
         
         msg_error = None
@@ -80,15 +71,7 @@ class LoginController:
 
         traductions=ts.tradAdmin()
 
-        langue_url = request.args.get('lang')
-        if langue_url:
-            session['langue'] = langue_url
-            langue_choisie = langue_url
-        else:
-            langue_choisie = session.get('langue')
-
-        if langue_choisie not in ['fr', 'en']:
-            langue_choisie = 'fr'
+        langue_choisie=ts.getLangue()
         textes = traductions[langue_choisie]
 
         user=session['username']

@@ -1,4 +1,17 @@
+from flask import session, request
 class Traductionservice():
+
+    def getLangue(self):
+        langue_url = request.args.get('lang')
+        if langue_url:
+            session['langue'] = langue_url
+            langue_choisie = langue_url
+        else:
+            langue_choisie = session.get('langue')
+
+        if langue_choisie not in ['fr', 'en']:
+            langue_choisie = 'fr' 
+        return langue_choisie
 
     def tradIndex(self):
         return {
@@ -79,8 +92,9 @@ class Traductionservice():
                 "recherche" : "Rechercher un utilisateur",
                 "recherche_user" : "Utilisateur recherché",
                 "search" : "Rechercher",
-                "result" : "Résultat(s)",
-                "name" : "Nom"
+                "result" : "Résultat",
+                "name" : "Nom",
+                "supp" : "Supprimer"
             },
 
             "en" : {
@@ -107,8 +121,9 @@ class Traductionservice():
                 "recherche" : "Search for a user",
                 "recherche_user" : "Desired user",
                 "search" : "Search",
-                "result" : "Result(s)",
-                "name" : "Name"
+                "result" : "Result",
+                "name" : "Name",
+                "supp" : "Delete"
             }
         }
     

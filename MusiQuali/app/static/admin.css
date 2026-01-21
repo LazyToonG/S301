@@ -1,8 +1,44 @@
+/* Message alert */
+.alert-box {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    position: relative; /* Pour positionner la croix */
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-error {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: inherit;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 20px;
+}
+.close-btn:hover {
+    opacity: 0.7;
+}
+
 /* RESET MINIMAL */
 * {
     box-sizing: border-box;
 }
-
 
 /* LAYOUT PRINCIPAL */
 .main {
@@ -109,18 +145,20 @@ button:hover,
 }
 
 /* UTILISATEURS */
-.user-panel ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.users {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
 }
-
-.user-panel li {
-    background: #f7f9fc;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-    font-size: 14px;
+.users-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    text-align: left;
+}
+#delete-user{
+    margin-top: 5px;
+    padding: 5px 10px;
 }
 
 /* SELECT RASPBERRY */

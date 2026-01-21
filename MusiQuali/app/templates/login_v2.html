@@ -19,8 +19,8 @@
         </div>
         <div class="h1">
             <form action="/login" method="POST" id="form">
-                <h1>{{t.h1}} : <input name="username" type="text"/></h1>
-                <h1>{{t.password}} : <input name="password" type="password"/></h1>
+                <h1>{{t.h1}} : <input name="username" type="text" required/></h1>
+                <h1>{{t.password}} : <input name="password" type="password" required/></h1>
                 <input class="seconnecte" type="submit" value="{{t.connexion}}"/>
             </form>
             {% if msg_error %}
