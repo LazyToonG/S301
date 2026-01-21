@@ -5,6 +5,23 @@ import os
 
 class MusicDAO:
 
+    def __init__(self):
+        
+        self.db=app.static_folder +'/data/database.db'
+        self._init_db()
+
+    def _init_db(self):
+        conn = self.get_connection()
+
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS music (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT NOT NULL,
+                duration INTEGER, 
+                path TEXT NOT NULL
+            );
+        """)
+
     def get_connection(self):
         conn = sqlite3.connect(os.path.join(app.static_folder, "data", "database.db"))
         conn.row_factory = sqlite3.Row
