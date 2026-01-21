@@ -18,13 +18,14 @@ def addRaspberry():
 
     rasps = rs.montreToutRasp()
     if any(r.ipRasp == ip for r in rasps):
-        flash("Raspberry déjà existant")
+        flash("Raspberry déjà existant","error")
+        return redirect(url_for("admin_dashboard"))
     
     try:
         ipaddress.IPv4Address(ip)
         rs.ajoutR(request.form["nom"], request.form["ipRasp"])
     except ipaddress.AddressValueError:
-        flash("IP invalid")
+        flash("IP invalid", "error")
 
     
     return redirect(url_for("admin_dashboard"))
