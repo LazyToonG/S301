@@ -60,15 +60,15 @@ class RaspberrySqliteDAO():
 		conn = self._getDbConnection()
 		try:
 			conn.execute(
-				"DELETE FROM raspberry WHERE ipRasp = :ipRasp",
-				{"ipRasp":ipRasp}
+				"DELETE FROM raspberry WHERE ipRasp = ?",
+				(ipRasp,)
 			)
 			conn.commit()
 			return True
 		except Exception:
 			return False
 		finally:
-			conn.close()
+			conn.close() 
 
 	def VerifieShell(self):
 		raspberrys = self.findAll()
