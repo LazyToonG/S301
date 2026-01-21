@@ -27,7 +27,6 @@
                 {% endfor %}
             </select>
 
-
             <h2>{{t.titreRasp}}</h2> 
             <form action="/admin/add_rasp" method="POST">
                 <div class="mb-3 mt-3">
@@ -40,11 +39,7 @@
                 <br>
                 <button type="submit">{{t.bouton_ajoutRasp}}</button>
             </form>
-            {% if msg_error %}
-                <p class="text-danger" style = "color:red;"> {{ msg_error }}</p>
-            {% endif %}
-
-        
+    
             <div class="terminal">
                 <h3>Terminal</h3>
 
@@ -97,7 +92,7 @@
 
                     <button type="submit">{{t.create}}</button>
                 </form>
-                <h2>{{t.recherchce}}</h2>
+                <h2>{{t.recherche}}</h2>
 
                 <form method="post" action="/admin/search" class="user-search-form">
                     <input

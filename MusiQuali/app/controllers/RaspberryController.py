@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, session
+from flask import render_template, request, redirect, url_for, flash
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
@@ -13,40 +13,15 @@ ts = Traductionservice()
 @app.route("/admin/add_rasp", methods=["POST"])
 @reqrole('admin')
 def ipCorrect():
-    msg_error = None
-    rasp = rs.montreToutRasp() 
-
     if request.method == "POST":
 
         ip = request.form.get("ipRasp")
-        if ip not in rasp:
-            msg_error = None
-
-            try:
-                ipaddress.IPv4Address(ip)
-                rs.ajoutR(request.form["nom"], request.form["ipRasp"])
-                rasp = rs.montreToutRasp()
-                # return redirect(url_for("admin_dashboard"))
-            except ipaddress.AddressValueError:
-                msg_error = "IP invalid"
-        
-        traductions=ts.tradAdmin()
-        langue_url = request.args.get('lang')
-        if langue_url:
-            session['langue'] = langue_url
-            langue_choisie = langue_url
-        else:
-            langue_choisie = session.get('langue')
-
-        if langue_choisie not in ['fr', 'en']:
-            langue_choisie = 'fr'
-        textes = traductions[langue_choisie]
-
-        user=session['username']
-        role=session['role']
-
-    return render_template('admin.html', msg_error=msg_error, raspberry=rasp, t=textes, current_lang=langue_choisie, user=user, role=role)
-
+        try:
+            ipaddress.IPv4Address(ip)
+            rs.ajoutR(request.form["nom"], request.form["ipRasp"])
+        except ipaddress.AddressValueError:
+            flash("IP invalid")
+        return redirect(url_for("admin_dashboard"))
 
 
 
