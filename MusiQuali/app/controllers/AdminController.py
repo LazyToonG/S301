@@ -1,10 +1,12 @@
 from flask import render_template, request, session, redirect, url_for, flash
 from app import app
-from app.services.UserService import UserService
-
 from app.controllers.LoginController import reqrole
+
+from app.services.UserService import UserService
+from app.services.RaspberryService import RaspberryService
 from app.services.TraductionService import Traductionservice
 
+rs = RaspberryService()
 ts = Traductionservice()
 user_service = UserService()
 
@@ -20,7 +22,9 @@ def admin_dashboard():
     user=session['username']
     role=session['role']
 
-    return render_template("admin.html", t=textes, current_lang=langue_choisie, user=user, role=role)
+    rasp = rs.montreToutRasp()
+
+    return render_template("admin.html", raspberry=rasp, t=textes, current_lang=langue_choisie, user=user, role=role)
 
 
 # Création utilisateur
