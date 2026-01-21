@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, send_file, redirect, url_for, flash, session
+from app.services.RaspberryService import RaspberryService
 from app.services.service_playlist import service_playlist
 from app.services.service_schedule import service_schedule
 from app import app
@@ -6,6 +7,7 @@ from app.controllers.LoginController import reqrole
 from app.services.TraductionService import Traductionservice
 
 ts = Traductionservice()
+rs = RaspberryService()
 
 class commercial_Controller:
 
@@ -22,6 +24,7 @@ class commercial_Controller:
         playlists = service_playlist.get_playlists_api_data()
         return render_template('planning.html', planning=service_schedule.get_planning(), playlists=playlists, t=textes, current_lang=langue_choisie, user=user, role=role)
 
+
     @app.route('/admin')
     @reqrole("admin")
     def admin_page():
@@ -33,7 +36,10 @@ class commercial_Controller:
         user=session['username']
         role=session['role']
         playlists = service_playlist.get_all_playlists()
-        return render_template('admin.html', playlists=playlists, t=textes, current_lang=langue_choisie, user=user, role=role)
+
+        rasp = rs.montreToutRasp()
+
+        return render_template('admin.html', raspberry=rasp, playlists=playlists, t=textes, current_lang=langue_choisie, user=user, role=role)
 
     @app.route('/add_playlist', methods=['POST'])
     def add_playlist():
