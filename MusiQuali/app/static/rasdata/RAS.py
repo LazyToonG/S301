@@ -9,15 +9,23 @@ import pygame
 
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# 2x pour pointer vers app plutôt que service
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+JSON_FILE = os.path.join(BASE_DIR, "rasjson.json")
+MUSIC_FOLDER = os.path.join(BASE_DIR, "allMusic")
 
-date_str = datetime.now().strftime("%Y-%m-%d")
+date_str = datetime.now().strftime("%Y-%m-%d")#nom du log.txt
+LOGS_FILE = os.path.join(BASE_DIR, "logs", f"logs[{date_str}].txt")
 
-LOGS_FILE = os.path.join(BASE_DIR, "programmeRaspberry", "logs", "logs[{date_str}].txt")
-
-
+# créer dossier 
 os.makedirs(os.path.dirname(LOGS_FILE), exist_ok=True)
+
+# Créer fichier 
+if not os.path.exists(LOGS_FILE):
+    with open(LOGS_FILE, "w", encoding="utf-8") as f:
+        f.write("")  #  vide au départ
+
+
+
 
 
 
@@ -86,16 +94,12 @@ def observateur(json_data, folder):
         time.sleep(2)
 
 while True:
-    with open(
-        "rasdata/rasjson.json",
-        "r",
-        encoding="utf-8"
-    ) as f:
+    with open(JSON_FILE, "r", encoding="utf-8") as f:
         json_data = json.load(f)
-    print("a")
-    observateur(
-        json_data,
-        "rasdata/allMusic"
-    )
+
+    print("observation ")
+
+    observateur(json_data, MUSIC_FOLDER)
 
     time.sleep(30)
+
