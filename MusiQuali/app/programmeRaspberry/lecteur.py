@@ -6,33 +6,47 @@ from datetime import datetime # 2. Pour la date et l'heure
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        #2x pour pointer vers app plutot que service
+# 2x pour pointer vers app plutôt que service
 
-# Set upload folder relative to the app structure
-LOGS_FILE = os.path.join(BASE_DIR, "static", "data", "logs.txt")
+date_str = datetime.now().strftime("%Y-%m-%d")
+
+LOGS_FILE = os.path.join(BASE_DIR, "programmeRaspberry", "logs", "logs[{date_str}].txt")
+
+# Créer uniquement le dossier parent
+os.makedirs(os.path.dirname(LOGS_FILE), exist_ok=True)
 
 
-# Make sure the folder exists
-os.makedirs(LOGS_FILE, exist_ok=True)
 
-
-
-def lecteur(folder): #folder=chemin vers dossier
-
+def lecteur(folder, noms):
     pygame.mixer.init()
 
-    LOG_FILE = LOGS_FILE
-    mp3_files = [file for file in os.listdir(folder) if file.endswith(".mp3")]
-    for fichier in mp3_files: #parcourir les mp3
-        chemin = os.path.join(folder, fichier) #chemin du mp3 actuel
+    # Construire la playlist dans l’ordre fourni
+    for nom in noms:
+        # Ajouter .mp3 si absent
+        fichier = nom if nom.lower().endswith(".mp3") else f"{nom}.mp3"
+        chemin = os.path.join(folder, fichier)
+
+        # Vérifier l’existence du fichier
+        if not os.path.isfile(chemin):
+            with open(LOGS_FILE, "a", encoding="utf-8") as f:
+                f.write(
+                    f"missing {chemin} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
+                )
+            continue
+
         pygame.mixer.music.load(chemin)
         pygame.mixer.music.play()
-        with open(LOG_FILE, "a") as f: #ouvrir logs
+
+        # Log de lecture
+        with open(LOGS_FILE, "a", encoding="utf-8") as f:
             f.write(
                 f"played {chemin} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n"
             )
-# attendre la fin de la lecture
+
+        # Attendre la fin de la lecture
         while pygame.mixer.music.get_busy():
             pygame.time.Clock().tick(10)
 
-#jq      cat monfichier.json | jq ....> toto.m3u ; vlc mp3
+ugh=["TV2OP_OPKing_GnuSPECIALZ1156MBS_TBS28", "Magnificent_Machines_Steampunk"]
+
+lecteur("/home/darragh/Documents/work/sae/S301/MusiQuali/app/static/rasdata/allMusic", ugh)
