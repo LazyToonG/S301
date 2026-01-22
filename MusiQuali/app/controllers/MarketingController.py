@@ -10,20 +10,35 @@ ts = Traductionservice()
 service = MusiqueService()
 playlist_service = PlaylistService()
 
-@app.route('/marketing', methods=['GET'])
+@app.route('/marketing', methods=['GET', 'POST'])
 @reqrole("admin","marketing")
 def marketing():
-
-    traductions=ts.tradMarketing()
-    langue_choisie=ts.getLangue()
-
-    sort = request.args.get("sort", "date")
-    musiques = service.get_musiques(sort)
-    playlists = playlist_service.get_all()
+    # Translations
+    traductions = ts.tradMarketing()
+    langue_choisie = ts.getLangue()
     textes = traductions[langue_choisie]
+
+    # Page content
+    playlists = playlist_service.get_all()
+    sort = request.args.get("sort", "date")
+    musiques = service.get_musiques(sort)#on s'en sert pas je crois
     user = session['username']
     role = session['role']
     metadata = {"title": "Espace Marketing", "pagename": "marketing"}
+
+    # Playlist selection
+    selected_playlist_id = None
+    musics = []
+
+    if request.method == "POST":
+        playlist_id_raw = request.form.get("playlist_id")
+        if playlist_id_raw:
+            #si une playlist est selectionnée
+            selected_playlist_id = str(playlist_id_raw)  
+            a = playlist_service.musics_in_playlist(selected_playlist_id)
+            for music in a:
+                musics.append(music.title)
+
     return render_template(
         "marketing_v2.html",
         metadata=metadata,
@@ -33,10 +48,12 @@ def marketing():
         t=textes,
         playlists=playlists,
         user=user,
-        role=role
-        
-        
+        role=role,
+        musics=musics,
+        selected_playlist_id=selected_playlist_id
     )
+
+
 
 @app.route("/delete/<int:id>")
 def delete(id):
@@ -54,7 +71,7 @@ def search_by_title():
     role = session['role']
 
     title = request.args.get("title")
-    musiques = service.search_by_title(title)
+    musiques = service.search_by_title(title)#nexiste pas
     if musiques:
         return render_template("marketing_v2.html", musiques=[musiques], t=textes, current_lang=langue_choisie, user=user, role=role)
     return redirect(url_for("marketing"))
@@ -68,6 +85,23 @@ def create_playlist():
     playlist_service.create_playlist(title=title)
     return redirect(url_for("marketing"))
 
+@app.route("/playlist/delete", methods=["POST"])
+def delete_playlist():
+    
+    playlist_id = request.form.get("playlist_id")  # récupère l'id du formulaire
+    if not playlist_id:
+        return "Aucune playlist sélectionnée", 400
+    
+    a=playlist_service.musics_in_playlist(playlist_id)
+    for music in a:
+        if music is not None:
+            service.delete_musique(music)
+    playlist_service.delete_playlist(playlist_id)
+    # for music in a:
+    #     delSql.append(music.id)
+    # for music in a:
+    #     delMp3.append(music.path)
+    return redirect(url_for('marketing'))
 
 @app.route("/upload", methods=["POST"])
 def upload():
@@ -85,3 +119,26 @@ def upload():
     playlist_service.add_music_to_playlist(playlist.id, music.id)
 
     return redirect(url_for("marketing"))
+
+# @app.route("/musicsinplaylist", methods=["GET", "POST"])
+# def musicsinplaylist():
+
+#     t = ts.getLangue()
+
+#     playlist_id = request.values.get("playlist_id")
+
+#     playlists = playlist_service.get_all()
+
+#     musics = []
+#     if playlist_id:
+#         musics = playlist_service.musics_in_playlist(playlist_id)
+
+#     return render_template(
+#         "marketing_v2.html",
+#         playlists=playlists,
+#         musics=musics,
+#         selected_playlist_id=playlist_id,
+#         t=t
+#     )
+
+
