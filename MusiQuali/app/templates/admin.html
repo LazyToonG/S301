@@ -15,25 +15,48 @@
             <h2>Raspberry</h2>
        
             <label for="raspberry-select">{{t.select_rasp}} :</label>
-            <select id="raspberry-select">
+            <!-- <select id="raspberry-select">
                 <option value="">-- {{t.select}} --</option>
                 <option value="raspi1">Raspberry 1</option>
                 <option value="raspi2">Raspberry 2</option>
-            </select>
+            </select> truc d'avant, probabalent à supprimer-->
+            <form method="POST" action="/admin/action_rasp">
+                <select id="raspberry-select" name="raspberry-select">
+                    {% for r in raspberry %}
+                        <option value="{{ r.idRasp }}">{{ r.nom }} {{ r.ipRasp }}</option>
+                    {% endfor %}
+                </select>
+                <div class="user-action">
+                    <button type="submit" name="action" value="delete-rasp">{{t.supp}} &times;</button>
+                </div>
+                <button type="submit" name="action" value="envoie-ping">ping</button>
+            </form>
 
-
-            <button id="download-logs">
-                {{t.download}}
-            </button>
-
-        
+            <h2>{{t.titreRasp}}</h2> 
+            <form action="/admin/add_rasp" method="POST">
+                <div class="mb-3 mt-3">
+                    <label for="nom" class="form-label">{{t.nomRasp}}</label>
+                    <input type="text" class="form-control" id="nom" placeholder="{{t.form_nomRasp}}" name="nom">
+                    <br>
+                    <label for="ipRasp" class="form-label">{{t.ipRasp}}</label>
+                    <input type="text" class="form-control" id="ipRasp" placeholder="{{t.form_ipRasp}}" name="ipRasp">
+                </div>
+                <br>
+                <button type="submit">{{t.bouton_ajoutRasp}}</button>
+            </form>
+    
             <div class="terminal">
                 <h3>Terminal</h3>
 
                 <div class="terminal-screen">
                     <!-- terminal ici -->
                 </div>
+                
             </div>
+
+            <button id="download-logs">
+                {{t.download}}
+            </button>
         </div>
 
         <!-- en haut a droite -->
@@ -74,7 +97,7 @@
 
                     <button type="submit">{{t.create}}</button>
                 </form>
-                <h2>{{t.recherchce}}</h2>
+                <h2>{{t.recherche}}</h2>
 
                 <form method="post" action="/admin/search" class="user-search-form">
                     <input
