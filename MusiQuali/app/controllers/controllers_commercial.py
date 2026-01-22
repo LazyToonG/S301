@@ -4,6 +4,8 @@ from app.services.service_schedule import service_schedule
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.TraductionService import Traductionservice
+import os
+import json
 
 ts = Traductionservice()
 
@@ -77,17 +79,40 @@ class commercial_Controller:
 
     @app.route('/sync_day', methods=['POST'])
     def sync_day():
-        data = request.json
+        data = request.get_json(silent=True)
+        if not data:
+            return jsonify(success=False, error="Données JSON invalides"), 400
+
         day = data.get('day')
         tasks = data.get('tasks', [])
-        start_time = data.get('start_time')
-        service_schedule.sync_day(day, tasks, start_time)
-        return jsonify(success=True)
+        start_time = data.get('start_time', '00:00')
+
+        try:
+            service_schedule.sync_day(day, tasks, start_time)
+            return jsonify(success=True)
+        except Exception as e:
+            print(f"Erreur sync_day: {e}")
+            return jsonify(success=False, error=str(e)), 500
 
     @app.route('/save_export', methods=['POST'])
     def save_export():
         try:
+            # Obtenir le contenu du planning en JSON
             mem_file = service_schedule.export_planning()
-            return send_file(mem_file, as_attachment=True, download_name='planning_export.txt', mimetype='text/plain')
+            json_content = mem_file.getvalue().decode('utf-8')
+            
+            # Chemin du dossier static/data en utilisant app.static_folder
+            data_dir = os.path.join(app.static_folder, 'rasdata')
+            
+            # Créer le dossier s'il n'existe pas
+            if not os.path.exists(data_dir):
+                os.makedirs(data_dir)
+            
+            # Sauvegarder le fichier JSON
+            file_path = os.path.join(data_dir, 'planning_export.json')
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(json_content)
+            
+            return jsonify(success=True, message="Planning exporté avec succès dans static/data/planning_export.json")
         except Exception as e:
             return jsonify(success=False, message=f"Erreur technique lors de l'exportation : {str(e)}"), 500

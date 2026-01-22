@@ -209,14 +209,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const tasks = items.map(item => {
             const duration = item.getAttribute('data-duration');
             const path = item.getAttribute('data-path') || "";
-            // Extraction du titre et artiste depuis le texte affiché
-            const clone = item.cloneNode(true);
-            if(clone.querySelector('strong')) clone.querySelector('strong').remove();
-            if(clone.querySelector('.insert-task-btn')) clone.querySelector('.insert-task-btn').remove();
-            const text = clone.innerText.trim();
-            const parts = text.split(' - ');
+            // Récupérer le titre et artiste directement des attributs data
+            const title = item.getAttribute('data-title') || "";
+            const artist = item.getAttribute('data-artist') || "";
             
-            return { title: parts[0] || "", artist: parts[1] || "", duration: duration, path: path };
+            return { title: title, artist: artist, duration: duration, path: path };
         });
 
         // Récupération de l'heure de début
@@ -466,6 +463,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             item.setAttribute('data-duration', duration);
             item.setAttribute('data-path', path); // Sauvegarde du chemin
+            item.setAttribute('data-title', title); // Sauvegarde du titre
+            item.setAttribute('data-artist', artist); // Sauvegarde de l'artiste
             item.style.height = ((duration / 60) * currentScale) + 'px';
             item.innerHTML = `<strong>--:--</strong><br>${title} - ${artist}`;
             addInsertButton(item); // Ré-ajout du bouton après modification du HTML
@@ -545,18 +544,13 @@ document.addEventListener('DOMContentLoaded', function() {
     if (saveFileBtn) {
         saveFileBtn.addEventListener('click', function() {
             fetch('/save_export', { method: 'POST' })
-            .then(response => {
-                if (response.ok) return response.blob();
-                throw new Error('Erreur export');
-            })
-            .then(blob => {
-                const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = "planning_export.txt";
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                } else {
+                    alert("Erreur : " + data.message);
+                }
             })
             .catch(e => alert("Erreur lors de l'exportation"));
         });
