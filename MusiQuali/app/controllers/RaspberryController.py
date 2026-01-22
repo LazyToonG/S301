@@ -62,10 +62,11 @@ def action_rasp():
             flash("Erreur lors de l'initialisation", "error")
     #tmp
     elif button=="test":
-        subprocess.run(["scp", "-r", "./app/static/", "test@" + rs.selectRIp(rasp_id) + ":/home/test/musiquali/"])
-        subprocess.run(["rsync", "-avz", "--delete", "-e",app.static_folder + "/data/schedule/",  f"{rs.selectRNom(rasp_id)}@{rs.selectRIp(rasp_id)}:/home/{rs.selectRNom(rasp_id)}/musiquali/"])
+        # subprocess.run(["scp", "-r", "./app/static/", "test@" + rs.selectRIp(rasp_id) + ":/home/test/musiquali/"])
+        subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  "test@192.168.56.101:/home/test/musiquali/"])
+        flash("envoyer", "success")
         time.sleep(5)
-        subprocess.run(["ssh", f"test@{rs.selectRIp(rasp_id)}", "python3", f"/home/{rs.selectRNom(rasp_id)}/musiquali/test.py"])
+        subprocess.run(["ssh", "test@192.168.56.101", "python3", f"/home/test/musiquali/RAS.py"])
     
     return redirect(url_for("admin_dashboard"))
 
