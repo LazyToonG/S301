@@ -13,7 +13,7 @@ class RaspberryService():
     def selectR(self, ipRasp):
         r = self.rdao.findByIp(ipRasp)
         if r:
-            return r.ipRasp  # retourne une string
+            return r  # retourne une string
         return None
 
     

@@ -46,33 +46,32 @@ def addRaspberry():
 #     flash("delete", "success")
 #     return redirect(url_for("admin_dashboard"))
 
-@app.route("/admin/delete_rasp", methods=["POST"])
+@app.route("/admin/action_rasp", methods=["POST"])
 @reqrole('admin')
-def delete_rasp():
-    rasp_id = request.form.get("raspberry-select")
+def action_rasp():
+    button=request.form.get("action")
+    rasp_id = int(request.form.get("raspberry-select"))
+    print("rasp_id :",rasp_id)
 
     if not rasp_id:
         flash("Aucun Raspberry sélectionné", "error")
         return redirect(url_for("admin_dashboard"))
+    
+    if button=="delete-rasp":
+        rs.supprimeR(rasp_id)
+        flash("Raspberry supprimé avec succès", "success")
 
-    rs.supprimeR(rasp_id)
-
-    flash("Raspberry supprimé avec succès", "success")
+    elif button=="envoie-ping":
+        print(rs.selectR(rasp_id))
+        result = subprocess.run(["ping", "-c", "4", rs.selectR(rasp_id)], capture_output=True, text=True)
+        if result.returncode == 0:
+            flash("Ping et initialisation OK", "success")
+        else:
+            flash("Erreur lors de l'initialisation", "error")
     
     return redirect(url_for("admin_dashboard"))
 
-@app.route("/admin/envoie_ping", methods=["POST"])
-@reqrole('admin')
-def envoie_ping():
-    rasp_ip = request.form.get("raspberry-select")
-    result = subprocess.run(["ping", "-c", "4", rs.selectR(rasp_ip)], capture_output=True, text=True)
 
-    if result.returncode == 0:
-        flash("Ping et initialisation OK", "success")
-    else:
-        flash("Erreur lors de l'initialisation", "error")
-
-    return redirect(url_for("admin_dashboard"))
 
 # ping_status = {"state": "idle", "message": ""}
 
