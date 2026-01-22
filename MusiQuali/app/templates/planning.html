@@ -26,7 +26,7 @@
                 <div class="day-header">{{ day|capitalize }}</div>
                 <div class="drop-zone" id="list-{{ day }}" data-day="{{ day }}" style="height: 2880px;">
                     {% for m in data.musics %}
-                        <div class="music-task" data-duration="{{ m.duration }}" data-start-sec="{{ m.start_sec }}" style="height: {{ (m.duration / 60) * 2 }}px; top: {{ (m.start_sec / 60) * 2 }}px;">
+                        <div class="music-task" data-duration="{{ m.duration }}" data-start-sec="{{ m.start_sec }}" data-title="{{ m.obj.titre }}" data-artist="{{ m.obj.artiste }}" data-path="{{ m.obj.path }}" style="height: {{ (m.duration / 60) * 2 }}px; top: {{ (m.start_sec / 60) * 2 }}px;">
                             <strong>{{ m.time }}</strong><br>
                             {{ m.obj.titre }} - {{ m.obj.artiste }}
                         </div>
