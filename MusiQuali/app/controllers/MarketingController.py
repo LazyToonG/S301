@@ -21,7 +21,7 @@ def marketing():
     # Page content
     playlists = playlist_service.get_all()
     sort = request.args.get("sort", "date")
-    musiques = service.get_musiques(sort)
+    musiques = service.get_musiques(sort)#on s'en sert pas je crois
     user = session['username']
     role = session['role']
     metadata = {"title": "Espace Marketing", "pagename": "marketing"}
@@ -33,9 +33,11 @@ def marketing():
     if request.method == "POST":
         playlist_id_raw = request.form.get("playlist_id")
         if playlist_id_raw:
-            # Convert type to match your playlist IDs
+            #si une playlist est selectionnée
             selected_playlist_id = str(playlist_id_raw)  
-            musics = playlist_service.musics_in_playlist(selected_playlist_id)
+            a = playlist_service.musics_in_playlist(selected_playlist_id)
+            for music in a:
+                musics.append(music.title)
 
     return render_template(
         "marketing_v2.html",
@@ -69,7 +71,7 @@ def search_by_title():
     role = session['role']
 
     title = request.args.get("title")
-    musiques = service.search_by_title(title)
+    musiques = service.search_by_title(title)#nexiste pas
     if musiques:
         return render_template("marketing_v2.html", musiques=[musiques], t=textes, current_lang=langue_choisie, user=user, role=role)
     return redirect(url_for("marketing"))
@@ -84,9 +86,22 @@ def create_playlist():
     return redirect(url_for("marketing"))
 
 @app.route("/playlist/delete", methods=["POST"])
-def delete_playlist(playlist_id):
-    pass
-
+def delete_playlist():
+    
+    playlist_id = request.form.get("playlist_id")  # récupère l'id du formulaire
+    if not playlist_id:
+        return "Aucune playlist sélectionnée", 400
+    
+    a=playlist_service.musics_in_playlist(playlist_id)
+    for music in a:
+        if music is not None:
+            service.delete_musique(music)
+    playlist_service.delete_playlist(playlist_id)
+    # for music in a:
+    #     delSql.append(music.id)
+    # for music in a:
+    #     delMp3.append(music.path)
+    return redirect(url_for('marketing'))
 
 @app.route("/upload", methods=["POST"])
 def upload():

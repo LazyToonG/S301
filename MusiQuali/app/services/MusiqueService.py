@@ -42,9 +42,10 @@ class MusiqueService:
         # DAO retourne un objet Music
         return self.dao.create(title=title, path=filepath, duration=duration)
 
-    def delete_musique(self, musique_id):
-        self.dao.delete(musique_id)
-
+    def delete_musique(self, music):
+        self.dao.delete(music.id)
+        if os.path.exists(music.path):  
+            os.remove(music.path)
     def get_by_id(self, music_id):
         a=MusicDAO()
         return a.get_by_id(music_id)

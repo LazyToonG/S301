@@ -87,3 +87,9 @@ class PlaylisteDAO:
             )
             for row in rows
         ]
+
+    def delete(self, playlist_id): #appeler seulement apres avoir effacé les musiques
+        conn = self._getDbConnection()
+        conn.execute("DELETE FROM playlist WHERE id = ?", (playlist_id,))
+        conn.commit()
+        conn.close()

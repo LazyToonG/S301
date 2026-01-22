@@ -26,14 +26,16 @@ class PlaylistService:
         self.dao.insert(playlist)
 
     def musics_in_playlist(self, playlist_id):
-        titleList=[]
+        musicList=[]
         a=PlaylisteDAO()
         b=MusicDAO()
         c=a.get(playlist_id)
         for i in c.music_ids:
             d=b.get_by_id(i)
-            titleList.append(d.title)
-        return titleList
+            musicList.append(d)
+            
+        return musicList
 
-    def delete_playlist():
-        pass
+    def delete_playlist(self, playlist_id):
+        a=PlaylisteDAO()
+        a.delete(playlist_id)
