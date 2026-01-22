@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     availablePlaylists[plName].forEach((song, index) => {
                         const opt = document.createElement('option');
                         opt.value = index; // On utilise l'index pour retrouver l'objet complet
-                        opt.innerText = `${song.name} (${song.length}s)`;
+                        opt.innerText = `${song.name} (${song.duration}s)`;
                         musicSelect.appendChild(opt);
                     });
                 }
@@ -328,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const songIdx = this.value;
                 if (plName && songIdx !== "" && availablePlaylists[plName][songIdx]) {
                     const song = availablePlaylists[plName][songIdx];
-                    if(durationInput) durationInput.value = song.length;
+                    if(durationInput) durationInput.value = song.duration;
                 }
             });
         }
@@ -432,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const song = availablePlaylists[plName][songIdx];
                 title = song.name;
                 artist = song.artist;
-                duration = parseInt(song.length);
+                duration = parseInt(song.duration);
                 path = song.path;
             } else {
                 // Mode Edition (Legacy ou déplacement simple)
