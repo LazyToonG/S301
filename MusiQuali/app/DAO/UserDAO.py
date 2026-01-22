@@ -15,17 +15,19 @@ class UserSqliteDAO(UserDAOInterface):
         return conn
 
     def _initTable(self):
+        
+
         conn = self._getDbConnection()
         cursor = conn.cursor()
-
-        # verif si users existe
+        # verif si table exist
         cursor.execute("""
             SELECT 1
             FROM sqlite_master
             WHERE type='table' AND name='users';
-        """)
+            """)
         table_exists = cursor.fetchone() is not None
 
+            
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -33,17 +35,15 @@ class UserSqliteDAO(UserDAOInterface):
                 password TEXT NOT NULL,
                 role TEXT NOT NULL
             );
-        """)
+            """)
 
-        #  insert admin si table vient d'être créée
+            # insert admin si table vient d'etre crée
         if not table_exists:
-            cursor.execute("""
-                INSERT INTO users (username, password, role)
-                VALUES (?, ?, ?);
-            """, ("admin", "admin", "admin"))
+            self.createUser("admin", "admin", "admin")
 
         conn.commit()
         conn.close()
+
         #ainsi, meme si on lance une bd vide on à un admin, mais que quand la table est crée donc que 1 fois
 
     def createUser(self, username, password, role):
