@@ -38,6 +38,9 @@ def addRaspberry():
 def action_rasp():
     button=request.form.get("action")
     rasp_id = request.form.get("raspberry-select")
+    nom = rs.selectRNom(rasp_id)
+    ip = rs.selectRIp(rasp_id)
+
     if rasp_id==None:
         flash("Pas de Raspberry trouvé", "error")
         return redirect(url_for("admin_dashboard"))
@@ -54,8 +57,8 @@ def action_rasp():
         flash("Raspberry supprimé avec succès", "success")
 
     elif button=="envoie-ping":
-        print(rs.selectRip(rasp_id))
-        result = subprocess.run(["ping", "-c", "4", rs.selectRip(rasp_id)], capture_output=True, text=True)
+        print(ip)
+        result = subprocess.run(["ping", "-c", "4", ip], capture_output=True, text=True)
         if result.returncode == 0:
             flash("Ping et initialisation OK", "success")
         else:
@@ -63,10 +66,10 @@ def action_rasp():
     #tmp
     elif button=="test":
         # subprocess.run(["scp", "-r", "./app/static/", "test@" + rs.selectRIp(rasp_id) + ":/home/test/musiquali/"])
-        subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  "test@192.168.56.101:/home/test/musiquali/"])
+        subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{nom}@{ip}:/home/{nom}/musiquali/"])
         flash("envoyer", "success")
         time.sleep(5)
-        subprocess.run(["ssh", "test@192.168.56.101", "python3", f"/home/test/musiquali/RAS.py"])
+        print(subprocess.run(["ssh", f"{nom}@{ip}", "python3", f"/home/{nom}/musiquali/RAS.py"]))
     
     return redirect(url_for("admin_dashboard"))
 
