@@ -4,11 +4,14 @@ from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
 import subprocess, ipaddress
 from app.services.TraductionService import Traductionservice
+import os
+from werkzeug.utils import secure_filename
 
 rs = RaspberryService()
 
 ts = Traductionservice()
 #import datetime
+
 
 @app.route("/admin/add_rasp", methods=["POST"])
 @reqrole('admin')
@@ -58,68 +61,43 @@ def delete_rasp():
     
     return redirect(url_for("admin_dashboard"))
 
-# @app.route("/admin/envoie_ping", methods=["POST"])
-# @reqrole('admin')
-# def envoie_ping():
-#     result = rs.verifieShellRasp()
-
-#     if result:
-#         flash("Ping et initialisation OK", "success")
-#     else:
-#         flash("Erreur lors de l'initialisation", "error")
-
-#     return redirect(url_for("admin_dashboard"))
-
-from threading import Thread
-
 @app.route("/admin/envoie_ping", methods=["POST"])
 @reqrole('admin')
 def envoie_ping():
-    def background():
-        rs.verifieShellRasp()
+    rasp_ip = request.form.get("raspberry-select")
+    result = subprocess.run(["ping", "-c", "4", rs.selectR(rasp_ip)], capture_output=True, text=True)
 
-    Thread(target=background).start()
-    flash("Ping lancé en arrière-plan", "success")
+    if result.returncode == 0:
+        flash("Ping et initialisation OK", "success")
+    else:
+        flash("Erreur lors de l'initialisation", "error")
+
     return redirect(url_for("admin_dashboard"))
 
+# ping_status = {"state": "idle", "message": ""}
+
+# @app.route("/admin/envoie_ping", methods=["POST"])
+# @reqrole('admin')
+# def envoie_ping():
+#     def background():
+#         if rs.verifieShellRasp():
+#             ping_status["state"] = "success"
+#             ping_status["message"] = "Ping et initialisation OK"
+#         else:
+#             ping_status["state"] = "error"
+#             ping_status["message"] = "Erreur lors de l'initialisation"
 
 
+#     Thread(target=background).start()
+#     flash("Ping lancé en arrière-plan", "success")
+#     return redirect(url_for("admin_dashboard"))
 
-
-
-    # traductions=ts.tradAdmin()
-    # langue_choisie=ts.getLangue()
-    # textes = traductions[langue_choisie]
-
-# @app.route('/admin/raspberries', methods = ['GET'])
-# @app.route('/testRasp', methods = ['GET'])
-# def ToutRaspberry():
-
-#     traductions=ts.tradAdmin()
-#     langue_url = request.args.get('lang')
-#     if langue_url:
-#         session['langue'] = langue_url
-#         langue_choisie = langue_url
-#     else:
-#         langue_choisie = session.get('langue')
-
-#     if langue_choisie not in ['fr', 'en']:
-#         langue_choisie = 'fr'
-#     textes = traductions[langue_choisie]
-
-#     user=session['username']
-#     role=session['role']
-
-#     toutRasp = rs.montreToutRasp()
-#     tab = []
-#     for chaque in toutRasp:
-#             tab.append(chaque)
-#     return render_template("testRasp.html", listRasp = tab, t=textes, current_lang=langue_choisie, user=user, role=role)
 
 def pingTout():
     toutRasp = rs.montreToutRasp()
     for chaque in toutRasp:
-            subprocess.run(["ping", "-c", "1", chaque.ipRasp])
+            subprocess.run(["ping", "-c", "1", "192.168.56.104"])
+             
 
 
     # today = datetime.datetime.today()

@@ -15,7 +15,6 @@ user_service = UserService()
 @reqrole('admin')
 def admin_dashboard():
 
-
     traductions=ts.tradAdmin()
     langue_choisie=ts.getLangue()
     textes = traductions[langue_choisie]
@@ -25,7 +24,7 @@ def admin_dashboard():
 
     rasp = rs.montreToutRasp()
 
-    return render_template("admin.html", raspberry=rasp, t=textes, current_lang=langue_choisie, user=user, role=role)
+    return render_template("admin.html",  raspberry=rasp, t=textes, current_lang=langue_choisie, user=user, role=role)
 
 
 # Création utilisateur
