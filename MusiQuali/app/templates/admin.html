@@ -20,18 +20,16 @@
                 <option value="raspi1">Raspberry 1</option>
                 <option value="raspi2">Raspberry 2</option>
             </select> truc d'avant, probabalent à supprimer-->
-            <form method="POST" action="/admin/delete_rasp">
+            <form method="POST" action="/admin/action_rasp">
                 <select id="raspberry-select" name="raspberry-select">
                     {% for r in raspberry %}
                         <option value="{{ r.idRasp }}">{{ r.nom }} {{ r.ipRasp }}</option>
                     {% endfor %}
                 </select>
                 <div class="user-action">
-                    <button type="submit" id="delete-user">{{t.supp}} &times;</button>
+                    <button type="submit" name="action" value="delete-rasp">{{t.supp}} &times;</button>
                 </div>
-            </form>
-            <form method="POST" action="/admin/envoie_ping">
-                <button type="submit">ping</button>
+                <button type="submit" name="action" value="envoie-ping">ping</button>
             </form>
 
             <h2>{{t.titreRasp}}</h2> 

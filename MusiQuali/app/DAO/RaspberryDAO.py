@@ -70,15 +70,16 @@ class RaspberrySqliteDAO():
 		finally:
 			conn.close() 
 
-	def findByIp(self, ipRasp):
+	def findByIp(self, idRasp):
 		conn = self._getDbConnection()
 		r = conn.execute(
-			"SELECT * FROM raspberry WHERE ipRasp = :ipRasp",
-			{"ipRasp": ipRasp}
+			"SELECT * FROM raspberry WHERE idRasp = ?",
+			(idRasp,)
 		).fetchone()
 		conn.close()
+		print("rrrrrrr_dao :",r)
 		if r:
-			return Raspberry(r["ipRasp"])
+			return r["ipRasp"]
 		else:
 			return None
 
