@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, flash
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
-import subprocess, ipaddress
+import subprocess, ipaddress, time
 from app.services.TraductionService import Traductionservice
 import os
 from werkzeug.utils import secure_filename
@@ -65,14 +65,25 @@ def delete_rasp():
 @reqrole('admin')
 def envoie_ping():
     rasp_ip = request.form.get("raspberry-select")
-    result = subprocess.run(["ping", "-c", "4", rs.selectR(rasp_ip)], capture_output=True, text=True)
-
+    r=rs.selectR(rasp_ip)
+    print(rasp_ip)
+    print(r)
+    result = subprocess.run(["ping", "-c", "4", r], capture_output=True, text=True)
     if result.returncode == 0:
-        flash("Ping et initialisation OK", "success")
+        flash("Ping et initialisation OK", "success" + rasp_ip)
     else:
         flash("Erreur lors de l'initialisation", "error")
 
     return redirect(url_for("admin_dashboard"))
+
+@app.route("/admin/envoie_ping", methods=["POST"])#chemin doit être changer pour correspondre au bouton sauvegarder planning
+@reqrole('commercial')
+def envoieChaqueChangementPlanning():
+    time.sleep(20)  # Attendre 20 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
+    raspberrys = rs.findAll()
+    for r in raspberrys:
+        subprocess.run(["rsync", "-avze", app.static_fold + "/data/schedule/",  r.nom + "@" + r.ipRasp + ":/home/" + r.nom + "musiquali/"])
+
 
 # ping_status = {"state": "idle", "message": ""}
 
