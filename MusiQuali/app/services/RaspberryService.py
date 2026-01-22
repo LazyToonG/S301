@@ -8,7 +8,22 @@ class RaspberryService():
          return self.rdao.findAll()
     
     def ajoutR(self, identifiant, ipRasp):
-	    return self.rdao.createRasp(identifiant, ipRasp)
+        return self.rdao.createRasp(identifiant, ipRasp)
     
+    def selectR(self, ipRasp):
+        r = self.rdao.findByIp(ipRasp)
+        if r:
+            return r  # retourne une string
+        return None
 
+    
+    def supprimeR(self, ipRasp):
+        return self.rdao.deleteRasp(ipRasp)
+    
+    def verifieShellRasp(self):
+        return self.rdao.verifieShell()
+    
+    # def envoieDossierMusique(self):
+        
+    
         

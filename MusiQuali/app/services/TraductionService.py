@@ -77,6 +77,12 @@ class Traductionservice():
     def tradAdmin(self):
         return {
             "fr" : {
+                "titreRasp" : "Ajouter une Raspberry",
+                "nomRasp" : "Quel est l'identifiant/nom de la nouvelle Raspberry que vous voulez insérer ?",
+                "ipRasp" : "Quel est l'adresse IP de la nouvelle Raspberry que vous voulez insérer ?",
+                "form_nomRasp" : "Entrez l'identifiant de la Raspberry",
+                "form_ipRasp" : "Entrez l'adresse IP de la Raspberry",
+                "bouton_ajoutRasp" : "Ajouter la Raspberry",
                 "user" : "Utilisateur",
                 "logout" : "Déconnexion",
                 "role" : "Rôle",
@@ -102,6 +108,12 @@ class Traductionservice():
             },
 
             "en" : {
+                "titreRasp" : "Add a Raspberry",
+                "nomRasp" : "What is the identifier/name of the new Raspberry you want to insert?",
+                "ipRasp" : "What is the IP address of the new Raspberry you want to insert?",
+                "form_nomRasp" : "Enter the Raspberry identifier",
+                "form_ipRasp" : "Enter the Raspberry IP address",
+                "bouton_ajoutRasp" : "Add the Raspberry",
                 "user" : "User",
                 "logout" : "Logout",
                 "role" : "Role",
