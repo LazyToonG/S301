@@ -12,7 +12,7 @@ date_str = datetime.now().strftime("%Y-%m-%d")
 
 LOGS_FILE = os.path.join(BASE_DIR, "programmeRaspberry", "logs", "logs[{date_str}].txt")
 
-# Créer uniquement le dossier parent
+
 os.makedirs(os.path.dirname(LOGS_FILE), exist_ok=True)
 
 
@@ -20,9 +20,9 @@ os.makedirs(os.path.dirname(LOGS_FILE), exist_ok=True)
 def lecteur(folder, noms):
     pygame.mixer.init()
 
-    # Construire la playlist dans l’ordre fourni
+    # jouer musiques dans l'ordre fourni
     for nom in noms:
-        # Ajouter .mp3 si absent
+        # ajouter ".mp3" si absent
         fichier = nom if nom.lower().endswith(".mp3") else f"{nom}.mp3"
         chemin = os.path.join(folder, fichier)
 
@@ -47,6 +47,6 @@ def lecteur(folder, noms):
         while pygame.mixer.music.get_busy():
             pygame.time.Clock().tick(10)
 
-ugh=["TV2OP_OPKing_GnuSPECIALZ1156MBS_TBS28", "Magnificent_Machines_Steampunk"]
+# ugh=["TV2OP_OPKing_GnuSPECIALZ1156MBS_TBS28", "Magnificent_Machines_Steampunk"]
 
-lecteur("/home/darragh/Documents/work/sae/S301/MusiQuali/app/static/rasdata/allMusic", ugh)
+# lecteur("/home/darragh/Documents/work/sae/S301/MusiQuali/app/static/rasdata/allMusic", ugh)
