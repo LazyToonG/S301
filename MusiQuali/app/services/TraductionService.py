@@ -190,7 +190,8 @@ class Traductionservice():
                 "select_value" : "— Sélectionner —",
                 "upload" : "Veuillez sélectionner une playlist",
                 "submit" : "Envoyer",
-                "convertir" : "Besoin de convertir en mp3?"
+                "convertir" : "Besoin de convertir en mp3?",
+                "supp" : "Supprimer la playlist"
             },
             'en': {
                 "user" : "User",
@@ -209,6 +210,7 @@ class Traductionservice():
                 "select_value" : "— Select —",
                 "upload" : "Select a playlist",
                 "submit" : "Send",
-                "convertir" : "Need to convert to mp3?"
+                "convertir" : "Need to convert to mp3?",
+                "supp" : "Delete the playlist"
             }
         }

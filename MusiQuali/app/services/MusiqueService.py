@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         #2x pour pointer vers app plutot que service
 
 # Set upload folder relative to the app structure
-UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "data", "allMusic")
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "rasdata", "allMusic")
 ALLOWED_EXTENSIONS = {"mp3"}
 
 # Make sure the folder exists
