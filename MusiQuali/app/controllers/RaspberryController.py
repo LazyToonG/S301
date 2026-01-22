@@ -54,12 +54,18 @@ def action_rasp():
         flash("Raspberry supprimé avec succès", "success")
 
     elif button=="envoie-ping":
-        print(rs.selectR(rasp_id))
-        result = subprocess.run(["ping", "-c", "4", rs.selectR(rasp_id)], capture_output=True, text=True)
+        print(rs.selectRip(rasp_id))
+        result = subprocess.run(["ping", "-c", "4", rs.selectRip(rasp_id)], capture_output=True, text=True)
         if result.returncode == 0:
             flash("Ping et initialisation OK", "success")
         else:
             flash("Erreur lors de l'initialisation", "error")
+    #tmp
+    elif button=="test":
+        subprocess.run(["scp", "-r", "./app/static/", "test@" + rs.selectRIp(rasp_id) + ":/home/test/musiquali/"])
+        subprocess.run(["rsync", "-avz", "--delete", "-e",app.static_folder + "/data/schedule/",  f"{rs.selectRNom(rasp_id)}@{rs.selectRIp(rasp_id)}:/home/{rs.selectRNom(rasp_id)}/musiquali/"])
+        time.sleep(5)
+        subprocess.run(["ssh", f"test@{rs.selectRIp(rasp_id)}", "python3", f"/home/{rs.selectRNom(rasp_id)}/musiquali/test.py"])
     
     return redirect(url_for("admin_dashboard"))
 

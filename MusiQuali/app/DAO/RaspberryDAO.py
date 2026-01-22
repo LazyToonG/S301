@@ -82,6 +82,19 @@ class RaspberrySqliteDAO():
 			return r["ipRasp"]
 		else:
 			return None
+	
+	def findByNom(self, nom):
+		conn = self._getDbConnection()
+		r = conn.execute(
+			"SELECT * FROM raspberry WHERE nom = ?",
+			(nom,)
+		).fetchone()
+		conn.close()
+		print("rrrrrrr_dao_nom :",r)
+		if r:
+			return r["ipRasp"]
+		else:
+			return None
 
 	# def VerifieShell(self):
 	# 	raspberrys = self.findAll()
@@ -95,66 +108,66 @@ class RaspberrySqliteDAO():
     #         print(f"Erreur sur {r['nom']} : {e}")
     #         return False
 		
-	def verifieShell(self):
-		raspberrys = self.findAll()
+	# def verifieShell(self):
+	# 	raspberrys = self.findAll()
 
-		for r in raspberrys:
-			host = f"{r.nom}@{r.ipRasp}"
+	# 	for r in raspberrys:
+	# 		host = f"{r.nom}@{r.ipRasp}"
 
-			try:
-				# subprocess.run(["ping", "-c", "1", r.ipRasp], check=True, timeout=5)
+	# 		try:
+	# 			# subprocess.run(["ping", "-c", "1", r.ipRasp], check=True, timeout=5)
 
-				# # subprocess.run(["ssh", host, "cd /"], check=True, timeout=15)
-				subprocess.run(["scp", "-v", 'app/static/fichierDefaut/initialisationRaspberry', f"{host}:/home/{r.nom}/Music/"], check=True, timeout=30)
+	# 			# # subprocess.run(["ssh", host, "cd /"], check=True, timeout=15)
+	# 			subprocess.run(["scp", "-v", 'app/static/fichierDefaut/initialisationRaspberry', f"{host}:/home/{r.nom}/Music/"], check=True, timeout=30)
 
-				# # subprocess.run(["ssh", host, f"chmod +x /home/{r.nom}/Music/initialisationRaspberry"], check=True, timeout=15)
-				# # subprocess.run(["ssh", host, f"sudo /home/{r.nom}/Music/initialisationRaspberry.sh"], check=True, timeout=60)
+	# 			# # subprocess.run(["ssh", host, f"chmod +x /home/{r.nom}/Music/initialisationRaspberry"], check=True, timeout=15)
+	# 			# # subprocess.run(["ssh", host, f"sudo /home/{r.nom}/Music/initialisationRaspberry.sh"], check=True, timeout=60)
 
-			except subprocess.CalledProcessError as e:
-				print(f"Erreur sur {host} : {e}")
-				return False
-			except subprocess.TimeoutExpired:
-				print(f"Timeout sur {host}")
-				return False
+	# 		except subprocess.CalledProcessError as e:
+	# 			print(f"Erreur sur {host} : {e}")
+	# 			return False
+	# 		except subprocess.TimeoutExpired:
+	# 			print(f"Timeout sur {host}")
+	# 			return False
 
-		return True
+	# 	return True
 
 
-rdao = RaspberrySqliteDAO()
+# rdao = RaspberrySqliteDAO()
 
-class RaspberryVerifieChemin():
+# class RaspberryVerifieChemin():
 	
-	def __init__(self, chemin):
-		self.chemin = chemin
-		self.estAJour()
+# 	def __init__(self, chemin):
+# 		self.chemin = chemin
+# 		self.estAJour()
 
-	def estAJour(self):
-		raspberrys = rdao.findAll()
+# 	def estAJour(self):
+# 		raspberrys = rdao.findAll()
 
-		fichier = self.chemin
-		# Stocke le temps de dernière modification
-		dernier_time = os.path.getmtime(fichier)
+# 		fichier = self.chemin
+# 		# Stocke le temps de dernière modification
+# 		dernier_time = os.path.getmtime(fichier)
 
-		# Plus tard
-		nouveau_time = os.path.getmtime(fichier)
+# 		# Plus tard
+# 		nouveau_time = os.path.getmtime(fichier)
 
-		if nouveau_time != dernier_time:
-			for r in raspberrys:
-				subprocess.run(["scp", "-v", fichier, r["nom"]+"@"+r["ipRasp"]+":/home/"+r["nom"]+"/Music/"])
+# 		if nouveau_time != dernier_time:
+# 			for r in raspberrys:
+# 				subprocess.run(["scp", "-v", fichier, r["nom"]+"@"+r["ipRasp"]+":/home/"+r["nom"]+"/Music/"])
 
-class RaspberryVerifieChemin():
-    def __init__(self, chemin):
-        self.chemin = chemin
-        self.dernier_time = os.path.getmtime(chemin)
+# class RaspberryVerifieChemin():
+#     def __init__(self, chemin):
+#         self.chemin = chemin
+#         self.dernier_time = os.path.getmtime(chemin)
 
-    def estAJour(self):
-        nouveau_time = os.path.getmtime(self.chemin)
-        if nouveau_time != self.dernier_time:
-            self.dernier_time = nouveau_time
-            raspberrys = rdao.findAll()
-            for r in raspberrys:
-                host = f"{r.nom}@{r.ipRasp}"
-                subprocess.run(["scp", "-v", self.chemin, f"{host}:/home/{r.nom}/Music/"])
+#     def estAJour(self):
+#         nouveau_time = os.path.getmtime(self.chemin)
+#         if nouveau_time != self.dernier_time:
+#             self.dernier_time = nouveau_time
+#             raspberrys = rdao.findAll()
+#             for r in raspberrys:
+#                 host = f"{r.nom}@{r.ipRasp}"
+#                 subprocess.run(["scp", "-v", self.chemin, f"{host}:/home/{r.nom}/Music/"])
 
 
 

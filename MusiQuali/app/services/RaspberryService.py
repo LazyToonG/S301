@@ -10,12 +10,17 @@ class RaspberryService():
     def ajoutR(self, identifiant, ipRasp):
         return self.rdao.createRasp(identifiant, ipRasp)
     
-    def selectR(self, ipRasp):
+    def selectRIp(self, ipRasp):
         r = self.rdao.findByIp(ipRasp)
         if r:
             return r  # retourne une string
         return None
 
+    def selectRNom(self, nom):
+        r = self.rdao.findByNom(nom)
+        if r:
+            return r  # retourne une string
+        return None
     
     def supprimeR(self, ipRasp):
         return self.rdao.deleteRasp(ipRasp)
