@@ -97,6 +97,9 @@ label {
     cursor: pointer;
     font-size: 0.95rem;
 }
+.btn:hover {
+    background-color: #af8585;
+}
 
 .btn-primary {
     background: #4a90e2;
