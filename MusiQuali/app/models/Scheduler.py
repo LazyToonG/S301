@@ -14,8 +14,8 @@ class Schedule:
         hour_test = 0
         # On ignore le premier élément qui est l'heure de début (str)
         for i in day_list[1:]:
-            hour_test += i.length
-        if hour_test + music.length > 86400:
+            hour_test += i.duration
+        if hour_test + music.duration > 86400:
             return False
         day_list.insert(index + 1, music)
         return True
@@ -41,9 +41,9 @@ class Schedule:
                 'obj': m_obj,
                 'time': start_str,
                 'start_sec': current_sec,
-                'duration': m_obj.length
+                'duration': m_obj.duration
             })
-            current_sec += m_obj.length
+            current_sec += m_obj.duration
         return {
             'start_offset_min': h * 60 + m,
             'musics': musics
