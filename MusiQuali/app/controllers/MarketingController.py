@@ -83,6 +83,10 @@ def create_playlist():
     playlist_service.create_playlist(title=title)
     return redirect(url_for("marketing"))
 
+@app.route("/playlist/delete", methods=["POST"])
+def delete_playlist(playlist_id):
+    pass
+
 
 @app.route("/upload", methods=["POST"])
 def upload():

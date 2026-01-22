@@ -34,3 +34,6 @@ class PlaylistService:
             d=b.get_by_id(i)
             titleList.append(d.title)
         return titleList
+
+    def delete_playlist():
+        pass

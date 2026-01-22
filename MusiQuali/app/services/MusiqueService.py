@@ -3,10 +3,16 @@ from app.DAO.MusicDAO import MusicDAO
 from mutagen.mp3 import MP3
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = "uploads"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        #2x pour pointer vers app plutot que service
+
+# Set upload folder relative to the app structure
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "static", "data", "allMusic")
 ALLOWED_EXTENSIONS = {"mp3"}
 
+# Make sure the folder exists
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 class MusiqueService:
     def __init__(self):
