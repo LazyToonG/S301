@@ -38,12 +38,14 @@ body::after {
     flex-direction: row;
     background-color: #267ac9;
     color : white;
-    font-size: 24px;
+    font-size: 18px;
     padding: 17px;
     align-items: center;
     justify-content: space-between;
 }
 .nav div {
+    display: flex;
+    flex-direction: row;
     color : white;
     background-color: #ffffff4c;
     margin: 5px;

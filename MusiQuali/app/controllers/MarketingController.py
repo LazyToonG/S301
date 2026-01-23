@@ -1,5 +1,5 @@
 # app/controllers/MarketingController.py
-from flask import render_template, request, redirect, url_for, abort, session, flash
+from flask import render_template, request, redirect, url_for, session, flash
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.MusiqueService import MusiqueService
@@ -31,7 +31,9 @@ def marketing():
         # For commercial, filter playlists to only show "message"
         playlists = [p for p in playlists if p.title.lower() == "message"]
         if not playlists:
-            abort(403, "Accès refusé: la playlist 'message' n'existe pas")
+            message=ts.message_langue("Accès refusé: la playlist 'message' n'existe pas","Access denied: the 'message' playlist does not exist.")
+            flash(message, "error")
+            return render_template("marketing_v2.html",metadata=metadata,sort=sort,current_lang=langue_choisie,musiques=musiques,t=textes,playlists=playlists,user=user,role=role,musics=musics,selected_playlist_id=selected_playlist_id)
 
     # Playlist selection
     selected_playlist_id = None
@@ -44,7 +46,9 @@ def marketing():
             if role == "commercial":
                 selected_playlist = playlist_service.get_by_id(playlist_id_raw)
                 if not selected_playlist or selected_playlist.title.lower() != "message":
-                    abort(403, "Accès refusé: vous ne pouvez modifier que la playlist 'message'")
+                    message=ts.message_langue("Accès refusé: vous ne pouvez modifier que la playlist 'message'","Access denied: you can only edit the 'message' playlist.")
+                    flash(message,"error")
+                    return render_template("marketing_v2.html",metadata=metadata,sort=sort,current_lang=langue_choisie,musiques=musiques,t=textes,playlists=playlists,user=user,role=role,musics=musics,selected_playlist_id=selected_playlist_id)
             
             #si une playlist est selectionnée
             selected_playlist_id = str(playlist_id_raw)  
@@ -145,7 +149,9 @@ def upload():
     
     # Verify commercial users can only upload to "message" playlist
     if role == "commercial" and playlist.title.lower() != "message":
-        abort(403, "Accès refusé: vous ne pouvez modifier que la playlist 'message'")
+        message=ts.message_langue("Accès refusé: vous ne pouvez modifier que la playlist 'message'","Access denied: you can only edit the 'message' playlist.")
+        flash(message, "error")
+        return redirect(url_for("marketing"))
 
     music = service.save_file(file)
     playlist_service.add_music_to_playlist(playlist.id, music.id)
