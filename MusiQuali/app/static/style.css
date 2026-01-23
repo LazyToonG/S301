@@ -179,7 +179,7 @@ select, input {
 
 
 /* boutons */
-button {
+.btn {
     border: none;
     color: white;
     padding: 15px;
@@ -222,75 +222,3 @@ button:active { transform: scale(0.98); }
     padding: 5px 10px; 
     font-size: 14px;
 }
-
-
-/* --- admin --- */
-.note-jaune {
-    background-color: #fffacd;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid #e0e0e0;
-    color: black;
-    font-size: 0.9em;
-}
-.console-logs {
-    background-color: #444;
-    font-family: monospace;
-    flex-grow: 1;
-    padding: 15px;
-    border-radius: 5px;
-    overflow-y: auto;
-}
-.log-header {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    border-radius: 5px 5px 0 0;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-}
-
-.form-rasberry {
-    flex-direction: column;
-    display: flex;
-}
-
-.form-control {
-    width: 235px;
-}
-
-/* --- marketing et commercial --- */
-.upload-zone {
-    border: 3px dashed #555;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
-    background-color: rgba(255, 255, 255, 0.3);
-    cursor: pointer;
-}
-.upload-zone:hover { background-color: rgba(255, 255, 255, 0.5); }
-.icone-upload { font-size: 50px; font-weight: bold; }
-
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: rgba(255,255,255,0.5);
-}
-th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-
-
-.user-info {
-    display: flex;
-    flex-direction: row;
-    font-size: 14px;
-    line-height: 1.2;
-}
-
-
-
-
