@@ -4,8 +4,7 @@ from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
 import subprocess, ipaddress, time
 from app.services.TraductionService import Traductionservice
-import os
-from werkzeug.utils import secure_filename
+
 
 rs = RaspberryService()
 
@@ -71,17 +70,21 @@ def action_rasp():
         subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{nom}@{ip}:/home/{nom}/musiquali/"])
         flash("envoyer", "success")
         time.sleep(5)
-        print(subprocess.run(["ssh", f"{nom}@{ip}", "python3", f"/home/{nom}/musiquali/RAS.py"]))
+        subprocess.run(["ssh", f"{nom}@{ip}", "python3", f"/home/{nom}/musiquali/RAS.py"])
     
     return redirect(url_for("admin_dashboard"))
 
-@app.route("/admin/envoie_ping", methods=["POST"])#chemin doit être changer pour correspondre au bouton sauvegarder planning
+@app.route("/save_export", methods=["POST"])
 @reqrole('commercial')
 def envoieChaqueChangementPlanning():
-    time.sleep(20)  # Attendre 20 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
+    time.sleep(10)  # Attendre 10 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
     raspberrys = rs.findAll()
     for r in raspberrys:
-        subprocess.run(["rsync", "-avze", app.static_folder + "/data/schedule/",  r.nom + "@" + r.ipRasp + ":/home/" + r.nom + "musiquali/"])
+        subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{r["nom"]}@{r["ipRasp"]}:/home/{r["nom"]}/musiquali/"])
+        flash("envoyer", "success")
+        time.sleep(5)
+        subprocess.run(["ssh", f"{r["nom"]}@{r["ipRasp"]}", "python3", f"/home/{r["nom"]}/musiquali/RAS.py"])
+
 
 
 def pingTout(): #pour les logs
