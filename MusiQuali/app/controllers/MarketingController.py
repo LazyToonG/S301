@@ -11,7 +11,7 @@ service = MusiqueService()
 playlist_service = PlaylistService()
 
 @app.route('/marketing', methods=['GET', 'POST'])
-@reqrole("admin","marketing")
+@reqrole("admin","marketing","commercial")
 def marketing():
     # Translations
     traductions = ts.tradMarketing()
@@ -26,6 +26,13 @@ def marketing():
     role = session['role']
     metadata = {"title": "Espace Marketing", "pagename": "marketing"}
 
+    # Restrict commercial users to "message" playlist only
+    if role == "commercial":
+        # For commercial, filter playlists to only show "message"
+        playlists = [p for p in playlists if p.title.lower() == "message"]
+        if not playlists:
+            abort(403, "Accès refusé: la playlist 'message' n'existe pas")
+
     # Playlist selection
     selected_playlist_id = None
     musics = []
@@ -33,6 +40,12 @@ def marketing():
     if request.method == "POST":
         playlist_id_raw = request.form.get("playlist_id")
         if playlist_id_raw:
+            # For commercial users, verify they only access "message" playlist
+            if role == "commercial":
+                selected_playlist = playlist_service.get_by_id(playlist_id_raw)
+                if not selected_playlist or selected_playlist.title.lower() != "message":
+                    abort(403, "Accès refusé: vous ne pouvez modifier que la playlist 'message'")
+            
             #si une playlist est selectionnée
             selected_playlist_id = str(playlist_id_raw)  
             a = playlist_service.musics_in_playlist(selected_playlist_id)
@@ -77,6 +90,7 @@ def search_by_title():
     return redirect(url_for("marketing"))
 
 @app.route("/playlist/create", methods=["POST"])
+@reqrole("admin","marketing")
 def create_playlist():
     title = request.form.get("title")
     if not title:
@@ -86,6 +100,7 @@ def create_playlist():
     return redirect(url_for("marketing"))
 
 @app.route("/playlist/delete", methods=["POST"])
+@reqrole("admin","marketing")
 def delete_playlist():
     
     playlist_id = request.form.get("playlist_id")  # récupère l'id du formulaire
@@ -107,6 +122,7 @@ def delete_playlist():
 def upload():
     file = request.files.get("audio")
     playlist_id = request.form.get("playlist_id")
+    role = session.get('role')
 
     if not file or not playlist_id:
         abort(400, "Fichier ou playlist manquant")
@@ -114,6 +130,10 @@ def upload():
     playlist = playlist_service.get_by_id(int(playlist_id))
     if not playlist:
         abort(400, "Playlist invalide")
+    
+    # Verify commercial users can only upload to "message" playlist
+    if role == "commercial" and playlist.title.lower() != "message":
+        abort(403, "Accès refusé: vous ne pouvez modifier que la playlist 'message'")
 
     music = service.save_file(file)
     playlist_service.add_music_to_playlist(playlist.id, music.id)

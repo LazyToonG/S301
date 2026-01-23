@@ -12,6 +12,9 @@
         <div class="controls-bar">
             <label>Zoom : <input type="range" min="1" max="10" value="2" step="0.5" id="zoomRange"></label>
             <button id="saveToFileBtn" style="padding: 5px 15px; cursor: pointer; background-color: #d02424;">{{t.save_planning}}</button>
+            {% if role == 'commercial' %}
+                <a href="{{ url_for('marketing') }}" style="padding: 5px 15px; cursor: pointer; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 4px; display: inline-block;">Message</a>
+            {% endif %}
         </div>
         <div class="planning-container">
             <div class="time-scale">
