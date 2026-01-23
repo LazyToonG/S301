@@ -179,7 +179,7 @@ select, input {
 
 
 /* boutons */
-button {
+.btn {
     border: none;
     color: white;
     padding: 15px;
@@ -221,43 +221,6 @@ button:active { transform: scale(0.98); }
     color: white; 
     padding: 5px 10px; 
     font-size: 14px;
-}
-
-
-/* --- admin --- */
-.note-jaune {
-    background-color: #fffacd;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid #e0e0e0;
-    color: black;
-    font-size: 0.9em;
-}
-.console-logs {
-    background-color: #444;
-    font-family: monospace;
-    flex-grow: 1;
-    padding: 15px;
-    border-radius: 5px;
-    overflow-y: auto;
-}
-.log-header {
-    background-color: #333;
-    color: white;
-    padding: 10px;
-    border-radius: 5px 5px 0 0;
-    font-weight: bold;
-    display: flex;
-    justify-content: space-between;
-}
-
-.form-rasberry {
-    flex-direction: column;
-    display: flex;
-}
-
-.form-control {
-    width: 235px;
 }
 
 /* --- marketing et commercial --- */

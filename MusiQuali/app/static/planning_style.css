@@ -24,8 +24,7 @@ h1 {
     background-color: #b5d3f0;
     padding: 10px 0;
     margin-bottom: 10px;
-    gap:10px;
-    height: 50px;
+    gap:30px;
 }
 .controls-bar.sombre {
     color : white;
@@ -128,7 +127,7 @@ h1 {
     
     /* Positionnement */
     position: relative;
-    width: 95%;
+    width: 88%;
     margin: 4px auto;
     user-select: none;
 }
@@ -169,7 +168,7 @@ h1 {
     max-width: 400px;
     border-radius: 8px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    font-family: 'Segoe UI', sans-serif;
+    font-family: Times, "Times New Roman", Georgia, serif;
 }
 
 .modal-content h3 {
@@ -305,8 +304,22 @@ h1 {
     box-sizing: border-box;
 }
 
-/* Zione upload message */
-#upload-form {
-    width: auto;
-    height: px;
+/* Zone upload message */
+.upload-zone-form {
+    border: 3px dashed #555;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 200px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+.upload{
+    display: flex;
+    flex-direction: row;
+    gap : 10px;
+
 }

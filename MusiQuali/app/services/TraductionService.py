@@ -154,7 +154,8 @@ class Traductionservice():
                 "artist" : "Artiste",
                 "duree" : "Durée",
                 "ajout" : "Ajouter",
-                "supp" : "Supprimer"
+                "supp" : "Supprimer",
+                "upload" : "Veuillez sélectionner un message"
 
             },
 
@@ -169,7 +170,8 @@ class Traductionservice():
                 "artist" : "Artist",
                 "duree" : "Duration",
                 "ajout" : "Add",
-                "supp" : "Delete"
+                "supp" : "Delete",
+                "upload" : "Select a message"
             }
         }
     
