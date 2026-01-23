@@ -65,7 +65,7 @@ def lecteur(folder, noms):
 
 from datetime import datetime
 import time
-
+#test
 def observateur(json_data, folder):
     jour_courant = datetime.now().strftime("%A").lower()
     print("Jour courant :", jour_courant)
