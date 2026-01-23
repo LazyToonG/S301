@@ -77,6 +77,7 @@ class Traductionservice():
     def tradAdmin(self):
         return {
             "fr" : {
+                "fichier" : "Envoyer des fichiers musiques manuellement",
                 "titreRasp" : "Ajouter une Raspberry",
                 "nomRasp" : "Quel est l'identifiant/nom de la nouvelle Raspberry que vous voulez insérer ?",
                 "ipRasp" : "Quel est l'adresse IP de la nouvelle Raspberry que vous voulez insérer ?",
@@ -108,6 +109,7 @@ class Traductionservice():
             },
 
             "en" : {
+                "fichier" : "Manually send music files",
                 "titreRasp" : "Add a Raspberry",
                 "nomRasp" : "What is the identifier/name of the new Raspberry you want to insert?",
                 "ipRasp" : "What is the IP address of the new Raspberry you want to insert?",

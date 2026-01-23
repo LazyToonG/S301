@@ -4,8 +4,7 @@ from app.controllers.LoginController import reqrole
 from app.services.RaspberryService import RaspberryService
 import subprocess, ipaddress, time
 from app.services.TraductionService import Traductionservice
-import os
-from werkzeug.utils import secure_filename
+
 
 rs = RaspberryService()
 
@@ -17,6 +16,7 @@ ts = Traductionservice()
 @reqrole('admin')
 def addRaspberry():
     ip = request.form.get("ipRasp")
+    nom = request.form.get("nom")
     
 
     rasps = rs.montreToutRasp()
@@ -26,31 +26,28 @@ def addRaspberry():
     
     try:
         ipaddress.IPv4Address(ip)
-        rs.ajoutR(request.form["nom"], request.form["ipRasp"])
+        rs.ajoutR(nom, ip)
+        subprocess.run(["scp", "-r", "./app/static/rasdata/*", f"{nom}@{ip}:/home/{nom}/musiquali/"])
+
     except ipaddress.AddressValueError:
         flash("IP invalid", "error")
 
     
     return redirect(url_for("admin_dashboard"))
 
-# @app.route("/admin/delete_rasp", methods=["POST"])
-# @reqrole('admin')
-# def delete_user():
- 
-
-#     raspb_id = request.form.get("raspberry-select")
-
-
-#     rs.supprimeR(raspb_id)
-
-#     flash("delete", "success")
-#     return redirect(url_for("admin_dashboard"))
-
 @app.route("/admin/action_rasp", methods=["POST"])
 @reqrole('admin')
 def action_rasp():
     button=request.form.get("action")
-    rasp_id = int(request.form.get("raspberry-select"))
+    rasp_id = request.form.get("raspberry-select")
+    nom = rs.selectRNom(rasp_id)
+    ip = rs.selectRIp(rasp_id)
+
+    if rasp_id==None:
+        flash("Pas de Raspberry trouvé", "error")
+        return redirect(url_for("admin_dashboard"))
+    else : 
+        rasp_id = int(rasp_id)
     print("rasp_id :",rasp_id)
 
     if not rasp_id:
@@ -62,62 +59,43 @@ def action_rasp():
         flash("Raspberry supprimé avec succès", "success")
 
     elif button=="envoie-ping":
-        print(rs.selectR(rasp_id))
-        result = subprocess.run(["ping", "-c", "4", rs.selectR(rasp_id)], capture_output=True, text=True)
+        print(ip)
+        result = subprocess.run(["ping", "-c", "4", ip], capture_output=True, text=True)
         if result.returncode == 0:
             flash("Ping et initialisation OK", "success")
         else:
             flash("Erreur lors de l'initialisation", "error")
+    #tmp
+    elif button=="test":
+        subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{nom}@{ip}:/home/{nom}/musiquali/"])
+        flash("envoyer", "success")
+        time.sleep(5)
+        subprocess.run(["ssh", f"{nom}@{ip}", "python3", f"/home/{nom}/musiquali/RAS.py"])
     
     return redirect(url_for("admin_dashboard"))
 
-@app.route("/admin/envoie_ping", methods=["POST"])
-@reqrole('admin')
-def envoie_ping():
-    rasp_ip = request.form.get("raspberry-select")
-    r=rs.selectR(rasp_ip)
-    print(rasp_ip)
-    print(r)
-    result = subprocess.run(["ping", "-c", "4", r], capture_output=True, text=True)
-    if result.returncode == 0:
-        flash("Ping et initialisation OK", "success" + rasp_ip)
-    else:
-        flash("Erreur lors de l'initialisation", "error")
 
-    return redirect(url_for("admin_dashboard"))
+#-> déplacement dans services/RaspberryService.py
 
-@app.route("/admin/envoie_ping", methods=["POST"])#chemin doit être changer pour correspondre au bouton sauvegarder planning
-@reqrole('commercial')
-def envoieChaqueChangementPlanning():
-    time.sleep(20)  # Attendre 20 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
-    raspberrys = rs.findAll()
-    for r in raspberrys:
-        subprocess.run(["rsync", "-avze", app.static_fold + "/data/schedule/",  r.nom + "@" + r.ipRasp + ":/home/" + r.nom + "musiquali/"])
+# @app.route("/save_export", methods=["POST"])
+# @reqrole('commercial')
+# def envoieChaqueChangementPlanning():
+#     time.sleep(10)  # Attendre 10 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
+#     raspberrys = rs.findAll()
+#     for r in raspberrys:
+#         if r["ipRasp"] is None or r["nom"] is None:
+#             continue  # Ignorer les entrées avec des informations incomplètes
+#         subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{r['nom']}@{r['ipRasp']}:/home/{r['nom']}/musiquali/"])
+#         flash("envoyer", "success")
+#         time.sleep(5)
+#         subprocess.run(["ssh", f"{r['nom']}@{r['ipRasp']}", "python3", f"/home/{r['nom']}/musiquali/RAS.py"])
 
 
-# ping_status = {"state": "idle", "message": ""}
 
-# @app.route("/admin/envoie_ping", methods=["POST"])
-# @reqrole('admin')
-# def envoie_ping():
-#     def background():
-#         if rs.verifieShellRasp():
-#             ping_status["state"] = "success"
-#             ping_status["message"] = "Ping et initialisation OK"
-#         else:
-#             ping_status["state"] = "error"
-#             ping_status["message"] = "Erreur lors de l'initialisation"
-
-
-#     Thread(target=background).start()
-#     flash("Ping lancé en arrière-plan", "success")
-#     return redirect(url_for("admin_dashboard"))
-
-
-def pingTout():
+def pingTout(): #pour les logs
     toutRasp = rs.montreToutRasp()
     for chaque in toutRasp:
-            subprocess.run(["ping", "-c", "1", "192.168.56.104"])
+            subprocess.run(["ping", "-c", "1", chaque["ipRasp"]])
              
 
 

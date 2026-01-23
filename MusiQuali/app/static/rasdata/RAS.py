@@ -7,7 +7,8 @@ import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 import pygame
 
-
+jour_courant = datetime.now().strftime("%A").lower()
+print("Jour courant :", jour_courant) 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 JSON_FILE = os.path.join(BASE_DIR, "planning_export.json")
