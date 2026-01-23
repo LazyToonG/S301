@@ -90,13 +90,13 @@ def observateur(json_data, folder):
     deja_joue = False
 
     while True:
-        maintenant = datetime.now()
+        maintenant = datetime.now() #heure_cible_dt + timedelta(minutes=5)
 
-        heure_cible_dt = datetime.combine(maintenant.date(), heure_cible)
-        limite_retard = heure_cible_dt + timedelta(minutes=5)
-        print("Playlist à jouer :", playlist)
-        lecteur(folder, playlist)
-        deja_joue = True
+        if maintenant.time() >= heure_cible and maintenant.time()<= (heure_cible+timedelta(minutes=5)) and not deja_joue:
+            print("Playlist à jouer :", playlist)
+            print("Playlist à jouer :", playlist)
+            lecteur(folder, playlist)
+            deja_joue = True
 
         # reset au changement de jour
         if maintenant.strftime("%A").lower() != jour_courant:
