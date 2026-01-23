@@ -85,14 +85,20 @@ def observateur(json_data, folder):
     print("Heure programmée :", heure_declenchement)
 
     playlist = programme[1:]
-
-    heure_cible = datetime.strptime(heure_declenchement, "%H:%M").time()
+    maintenant = datetime.now()
+    heure_cible_dt = datetime.combine(
+        maintenant.date(),
+        datetime.strptime(heure_declenchement, "%H:%M").time()
+    )
     deja_joue = False
-
     while True:
-        maintenant = datetime.now() #heure_cible_dt + timedelta(minutes=5)
+        
 
-        if maintenant.time() >= heure_cible and maintenant.time()<= (heure_cible+timedelta(minutes=5)) and not deja_joue:
+
+
+        tolerance = timedelta(minutes=5)
+
+        if (heure_cible_dt <= maintenant <= heure_cible_dt + tolerance and not deja_joue):
             print("Playlist à jouer :", playlist)
             print("Playlist à jouer :", playlist)
             lecteur(folder, playlist)
