@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 
@@ -91,7 +91,8 @@ def observateur(json_data, folder):
     while True:
         maintenant = datetime.now()
 
-        if maintenant.time() >= heure_cible and not deja_joue:
+        heure_cible_dt = datetime.combine(maintenant.date(), heure_cible)
+        limite_retard = heure_cible_dt + timedelta(minutes=5)
             print("Playlist à jouer :", playlist)
             lecteur(folder, playlist)
             deja_joue = True
