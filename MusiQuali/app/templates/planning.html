@@ -13,40 +13,7 @@
             <label>Zoom : <input type="range" min="1" max="10" value="2" step="0.5" id="zoomRange"></label>
             <button id="saveToFileBtn" style="padding: 5px 15px; cursor: pointer; background-color: #d02424;">{{t.save_planning}}</button>
         </div>
-        <div>
-        <form action="/annonces" method="POST" enctype="multipart/form-data" id="upload-form">
-                <input type="hidden" name="playlist_id" id="playlist-id">
-
-                <div class="upload-zone disabled" id="upload-zone">
-                    <p class="upload-text">{{t.upload}}</p>
-                    <input
-                        type="file"
-                        name="audio"
-                        id="audio-input"
-                        accept=".mp3"
-                        required
-                        hidden
-                    >
-                </div>
-
-                <div class="boutons">
-                    <button type="submit" id="btn-upload" class="btn btn-secondary" disabled>
-                        Submit
-                    </button>
-                    
-                </div>
-            </form>
-            </div>
-
-<div class="planning-container">
-
-
-
-
-
-
-
-        
+        <div class="planning-container">
             <div class="time-scale">
                 <div style="height: 40px;"></div> <!-- Alignement avec header -->
                 {% for h in range(24) %}
