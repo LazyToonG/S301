@@ -5,6 +5,7 @@
     <link rel="icon" href="../static/logo.png" type="image/png">
     <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='admin.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='message_alert.css') }}" rel="stylesheet">
 </head>
 <body class="">
     {% include 'nav_v2.html' %}
@@ -28,8 +29,10 @@
                 </select>
                 <div class="user-action">
                     <button type="submit" name="action" value="delete-rasp">{{t.supp}} &times;</button>
+                
+                <button type="submit" name="action" value="envoie-ping">Ping</button>
+                <button type="submit" name="action" value="test">{{t.fichier}}</button>
                 </div>
-                <button type="submit" name="action" value="envoie-ping">ping</button>
             </form>
 
             <h2>{{t.titreRasp}}</h2> 
@@ -140,6 +143,7 @@
         </div>
     </div>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='message_alert.js') }}"></script>
     <script>
         if(document.querySelector('.role_nav').textContent==='admin'){
             document.querySelector('.role_nav').addEventListener('click',function(){

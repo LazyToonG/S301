@@ -63,7 +63,7 @@ class LoginController:
                 else:
                     return redirect(url_for("index"))
             else:
-                msg_error = 'Invalid Credentials'
+                msg_error = ts.message_langue('Identifiants non valides','Invalid Credentials')
         return render_template('login_v2.html', msg_error=msg_error, t=textes, current_lang=langue_choisie)
 
     @app.route("/admin/create_user", methods=['GET', 'POST'])
@@ -94,5 +94,6 @@ class LoginController:
     @reqlogged
     def logout():
         session.clear()
-        flash('Successfully logged out')
+        message=ts.message_langue("Déconnexion réussie",'Successfully logged out')
+        flash(message,'success')
         return redirect(url_for('login'))

@@ -1,5 +1,5 @@
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 
 
@@ -7,10 +7,11 @@ import os
 os.environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "hide"
 import pygame
 
-
+jour_courant = datetime.now().strftime("%A").lower()
+print("Jour courant :", jour_courant) 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-JSON_FILE = os.path.join(BASE_DIR, "rasjson.json")
+JSON_FILE = os.path.join(BASE_DIR, "planning_export.json")
 MUSIC_FOLDER = os.path.join(BASE_DIR, "allMusic")
 
 date_str = datetime.now().strftime("%Y-%m-%d")#nom du log.txt
@@ -63,31 +64,41 @@ def lecteur(folder, noms):
 
 # lecteur("/home/darragh/Documents/work/sae/S301/MusiQuali/app/static/rasdata/allMusic", ugh)
 
+from datetime import datetime
+import time
+#test
 def observateur(json_data, folder):
     jour_courant = datetime.now().strftime("%A").lower()
-    print(jour_courant)
+    print("Jour courant :", jour_courant)
+
     if jour_courant not in json_data:
         return
 
     programme = json_data[jour_courant]
 
+    # extraire l'heure du nouveau format
+    if isinstance(programme[0], list):
+        heure_declenchement = programme[0][0]
+    else:
+        heure_declenchement = programme[0]
 
-    heure_declenchement = programme[0]  # "HH:MM"
-    print(heure_declenchement)
+    print("Heure programmée :", heure_declenchement)
+
     playlist = programme[1:]
-
-    heure_cible = datetime.strptime(heure_declenchement, "%H:%M").time()
+    heure_cible_dt = datetime.combine(datetime.today(), datetime.strptime(heure_declenchement, "%H:%M").time())
     deja_joue = False
 
     while True:
         maintenant = datetime.now()
 
-        if (maintenant.time() >= heure_cible and not deja_joue ):
-            print(playlist)
-            lecteur(folder, playlist)
-            deja_joue = True
+        # Wait until the scheduled time
+        if maintenant >= heure_cible_dt and not deja_joue:
+                print("Playlist à jouer :", playlist)
 
-        # reset au changement de jour
+                lecteur(folder, playlist)
+                deja_joue = True
+
+            # reset au changement de jour
         if maintenant.strftime("%A").lower() != jour_courant:
             break
 

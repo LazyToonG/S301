@@ -18,7 +18,8 @@ class PlaylisteDAO:
     def _init_db(self):
         conn = self._getDbConnection()
         cursor = conn.cursor()
-        cursor.execute("PRAGMA table_info(playlist)")
+        
+        table_exists = cursor.fetchone() is not None
         conn.execute("""
             CREATE TABLE IF NOT EXISTS playlist (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,6 +27,21 @@ class PlaylisteDAO:
                 music_ids TEXT
             )
         """)
+        conn.commit()
+
+# verif si table exist
+        cursor.execute(
+            "SELECT 1 FROM playlist WHERE title = ?", ("annonces",)
+            )
+
+        if not table_exists:
+            conn.execute("""
+
+            INSERT INTO playlist (title, music_ids)
+            VALUES ('annonces', NULL);
+
+            """)
+
         conn.commit()
         conn.close()
         
