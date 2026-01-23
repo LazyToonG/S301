@@ -91,11 +91,6 @@ def action_rasp():
 #         subprocess.run(["ssh", f"{r['nom']}@{r['ipRasp']}", "python3", f"/home/{r['nom']}/musiquali/RAS.py"])
 
 
-
-def pingTout(): #pour les logs
-    toutRasp = rs.montreToutRasp()
-    for chaque in toutRasp:
-            subprocess.run(["ping", "-c", "1", chaque["ipRasp"]])
              
 
 
