@@ -14,21 +14,22 @@
             <label>Zoom : <input type="range" min="1" max="10" value="2" step="0.5" id="zoomRange"></label>
             <button class="btn" id="saveToFileBtn" style="padding: 5px 15px; cursor: pointer; background-color: #d02424;">{{t.save_planning}}</button>
             <form action="/annonces" method="POST" enctype="multipart/form-data" id="upload-form" class="upload">
-                <input type="hidden" name="playlist_id" id="playlist-id">
+    <input type="hidden" name="playlist_id" id="playlist-id" value="1">
 
-                <div class="upload-zone-form disabled" id="upload-zone">
-                    <p class="upload-text" style="color: #555;margin: 0;padding: 0;text-align: center;">{{t.upload}}</p>
-                    <input
-                        type="file"
-                        name="audio"
-                        id="audio-input"
-                        accept=".mp3"
-                        required
-                        hidden
-                    >
-                </div>
-                <button type="submit" id="btn-upload" class="btn btn-secondary" style="padding: 5px 15px; cursor: pointer; background-color: #d02424;" disabled>Submit</button>
-            </form>
+    <div class="upload-zone-form" id="upload-zone" style="border: 2px dashed #ccc; padding: 20px; text-align: center; cursor: pointer;">
+        <p class="upload-text" style="color: #555; margin: 0; padding: 0;">Drag & drop your MP3 here or click to select</p>
+        <input
+            type="file"
+            name="audio"
+            id="audio-input"
+            accept=".mp3"
+            required
+            hidden
+        >
+    </div>
+
+    <button type="submit" id="btn-upload" class="btn btn-secondary" style="padding: 5px 15px; cursor: pointer; background-color: #d02424;" disabled>Submit</button>
+</form>
         </div>
         <div class="planning-container">
             <div class="time-scale">
@@ -85,5 +86,52 @@
     <script src="{{ url_for('static', filename='planning_script.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     {% include 'fin_nav.html' %}
+    
+    <script>
+    const uploadZone = document.getElementById('upload-zone');
+    const fileInput = document.getElementById('audio-input');
+    const submitButton = document.getElementById('btn-upload');
+
+    // Enable file input when zone clicked
+    uploadZone.addEventListener('click', () => fileInput.click());
+
+    // Handle file selection
+    fileInput.addEventListener('change', () => {
+        if (fileInput.files.length > 0) {
+            submitButton.disabled = false;
+            uploadZone.querySelector('.upload-text').textContent = fileInput.files[0].name;
+        }
+    });
+
+    // Drag events
+    uploadZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadZone.style.borderColor = '#d02424';
+        uploadZone.style.backgroundColor = '#f9f0f0';
+    });
+
+    uploadZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        uploadZone.style.borderColor = '#ccc';
+        uploadZone.style.backgroundColor = 'transparent';
+    });
+
+    uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.style.borderColor = '#ccc';
+        uploadZone.style.backgroundColor = 'transparent';
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0 && files[0].type === 'audio/mpeg') {
+            fileInput.files = files; // Assign dropped file to input
+            submitButton.disabled = false;
+            uploadZone.querySelector('.upload-text').textContent = files[0].name;
+        } else {
+            alert('Please upload a valid MP3 file.');
+        }
+    });
+</script>
+    
+
 </body>
 </html>
