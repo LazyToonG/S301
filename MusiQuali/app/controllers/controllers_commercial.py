@@ -118,6 +118,8 @@ class commercial_Controller:
             file_path = os.path.join(data_dir, 'planning_export.json')
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(json_content)
+
+            rs.envoieChaqueChangementPlanning()
             
             return jsonify(success=True, message="Planning exporté avec succès dans static/data/planning_export.json")
         except Exception as e:
