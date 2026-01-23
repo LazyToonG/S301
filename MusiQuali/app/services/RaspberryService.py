@@ -35,27 +35,21 @@ class RaspberryService():
         return self.rdao.verifieShell()
     
     def envoieChaqueChangementPlanning(self):
-        time.sleep(10)  # Attendre 10 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
-        raspberrys = self.findAll()
+        time.sleep(10)  # Attendre 10 secondes le temps que les fichiers json se mettent à jour
+        raspberrys = self.rdao.findAll()
         for r in raspberrys:
-            subprocess.run([
-                "rsync", "-avz", "--delete", "-e", "ssh",
-                "./app/static/rasdata/",
-                f"{r['nom']}@{r['ipRasp']}:/home/{r['nom']}/musiquali/"
-            ])
+            if r["ipRasp"] is None or r["nom"] is None:
+                continue  # Ignorer les entrées avec des informations incomplètes
+            subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{r['nom']}@{r['ipRasp']}:/home/{r['nom']}/musiquali/"])
+            time.sleep(5)
+            subprocess.run(["ssh", f"{r['nom']}@{r['ipRasp']}", "python3", f"/home/{r['nom']}/musiquali/RAS.py"])
+
+    def pingTout(self): #pour les logs
+        toutRasp = self.montreToutRasp()
+        for chaque in toutRasp:
+                subprocess.run(["ping", "-c", "1", chaque["ipRasp"]])
 
             
-            time.sleep(5)
-
-            subprocess.run([
-                "ssh",
-                f"{r['nom']}@{r['ipRasp']}",
-                "python3",
-                f"/home/{r['nom']}/musiquali/RAS.py"
-            ])
-
-    
-    # def envoieDossierMusique(self):
         
     
         
