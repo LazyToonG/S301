@@ -21,7 +21,8 @@ def addRaspberry():
 
     rasps = rs.montreToutRasp()
     if any(r.ipRasp == ip for r in rasps):
-        flash("Raspberry déjà existant","error")
+        message=ts.message_langue("Raspberry déjà existant","Raspberry already exists")
+        flash(message,"error")
         return redirect(url_for("admin_dashboard"))
     
     try:
@@ -44,27 +45,32 @@ def action_rasp():
     ip = rs.selectRIp(rasp_id)
 
     if rasp_id==None:
-        flash("Pas de Raspberry trouvé", "error")
+        message=ts.message_langue("Pas de Raspberry trouvé","No Raspberry found")
+        flash(message, "error")
         return redirect(url_for("admin_dashboard"))
     else : 
         rasp_id = int(rasp_id)
     print("rasp_id :",rasp_id)
 
     if not rasp_id:
-        flash("Aucun Raspberry sélectionné", "error")
+        message=ts.message_langue("Aucun Raspberry sélectionné","No Raspberry selected")
+        flash(message, "error")
         return redirect(url_for("admin_dashboard"))
     
     if button=="delete-rasp":
         rs.supprimeR(rasp_id)
-        flash("Raspberry supprimé avec succès", "success")
+        message=ts.message_langue("Raspberry supprimé avec succès","Raspberry successfully deleted")
+        flash(message, "success")
 
     elif button=="envoie-ping":
         print(ip)
         result = subprocess.run(["ping", "-c", "4", ip], capture_output=True, text=True)
         if result.returncode == 0:
-            flash("Ping et initialisation OK", "success")
+            message=ts.message_langue("Ping et initialisation OK","Ping and initialisation OK")
+            flash(message, "success")
         else:
-            flash("Erreur lors de l'initialisation", "error")
+            message=ts.message_langue("Erreur lors de l'initialisation","Error during initialisation")
+            flash(message, "error")
     #tmp
     elif button=="test":
         # # if rasp_id==None:

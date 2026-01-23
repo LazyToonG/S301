@@ -1,5 +1,5 @@
 # app/controllers/MarketingController.py
-from flask import render_template, request, redirect, url_for, abort, session
+from flask import render_template, request, redirect, url_for, abort, session, flash
 from app import app
 from app.controllers.LoginController import reqrole
 from app.services.MusiqueService import MusiqueService
@@ -80,9 +80,13 @@ def search_by_title():
 def create_playlist():
     title = request.form.get("title")
     if not title:
-        abort(400, "Title de playlist obligatoire")
+        message=ts.message_langue("Title de playlist obligatoire","Required playlist title")
+        flash(message,"error")
+        return redirect(url_for("marketing"))
 
     playlist_service.create_playlist(title=title)
+    message=ts.message_langue("Playlist créée avec succès","Playlist successfully created")
+    flash(message,"success")
     return redirect(url_for("marketing"))
 
 @app.route("/playlist/delete", methods=["POST"])
@@ -90,7 +94,9 @@ def delete_playlist():
     
     playlist_id = request.form.get("playlist_id")  # récupère l'id du formulaire
     if not playlist_id:
-        return "Aucune playlist sélectionnée", 400
+        message=ts.message_langue("Aucune playlist sélectionnée","No playlist selected")
+        flash(message,"error")
+        return redirect(url_for('marketing'))
     
     a=playlist_service.musics_in_playlist(playlist_id)
     for music in a:
@@ -101,6 +107,8 @@ def delete_playlist():
     #     delSql.append(music.id)
     # for music in a:
     #     delMp3.append(music.path)
+    message=ts.message_langue("Playlist supprimée avec succès","Playlist successfully deleted")
+    flash(message,"success")
     return redirect(url_for('marketing'))
 
 @app.route("/upload", methods=["POST"])
@@ -109,15 +117,21 @@ def upload():
     playlist_id = request.form.get("playlist_id")
 
     if not file or not playlist_id:
-        abort(400, "Fichier ou playlist manquant")
+        message=ts.message_langue("Fichier ou playlist manquant","File or playlist missing")
+        flash(message,"error")
+        return redirect(url_for("marketing"))
 
     playlist = playlist_service.get_by_id(int(playlist_id))
     if not playlist:
-        abort(400, "Playlist invalide")
+        message=ts.message_langue("Playlist invalide","Invalid playlist")
+        flash(message,"error")
+        return redirect(url_for("marketing"))
 
     music = service.save_file(file)
     playlist_service.add_music_to_playlist(playlist.id, music.id)
 
+    message=ts.message_langue("Playlist enregistrée avec succès","Playlist successfully saved")
+    flash(message,"success")
     return redirect(url_for("marketing"))
 
 # @app.route("/musicsinplaylist", methods=["GET", "POST"])
