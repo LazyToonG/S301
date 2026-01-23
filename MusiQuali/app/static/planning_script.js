@@ -1,5 +1,16 @@
 document.addEventListener('DOMContentLoaded', function() {
+
     console.log("Script chargé correctement depuis le dossier static.");
+    //infiltration (je mets le js de la zone dragand drop ici) 
+
+    const uploadZone = document.getElementById("upload-zone");
+    const audioInput = document.getElementById("audio-input");
+    const submitBtn = document.getElementById("btn-upload");
+
+    // Click on zone opens file selector
+    uploadZone.addEventListener("click", () => {
+        audioInput.click();
+
 
     let availablePlaylists = {}; // Stockera les données reçues de l'API
 
@@ -555,4 +566,45 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(e => alert("Erreur lors de l'exportation"));
         });
     }
+});
+
+// When file is selected manually
+    audioInput.addEventListener("change", () => {
+        if (audioInput.files.length > 0) {
+            uploadZone.classList.add("file-selected");
+            submitBtn.disabled = false;
+            uploadZone.querySelector(".upload-text").textContent = audioInput.files[0].name;
+        }
+    });
+
+    // Drag over
+    uploadZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploadZone.classList.add("dragover");
+    });
+
+    // Drag leave
+    uploadZone.addEventListener("dragleave", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploadZone.classList.remove("dragover");
+    });
+
+    // Drop
+    uploadZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        uploadZone.classList.remove("dragover");
+
+        const files = e.dataTransfer.files;
+        if (files.length > 0 && files[0].type === "audio/mpeg") { // Only allow mp3
+            audioInput.files = files; // Update hidden input
+            uploadZone.classList.add("file-selected");
+            submitBtn.disabled = false;
+            uploadZone.querySelector(".upload-text").textContent = files[0].name;
+        } else {
+            alert("Veuillez sélectionner un fichier MP3 valide.");
+        }
+    });
 });

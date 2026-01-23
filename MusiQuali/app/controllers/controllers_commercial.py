@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, send_file, redirect, url_for, flash, session
+from flask import Blueprint, render_template, request, jsonify, send_file, redirect, url_for, flash, session, abort
 from app.services.RaspberryService import RaspberryService
 from app.services.service_playlist import service_playlist
 from app.services.service_schedule import service_schedule
@@ -7,13 +7,16 @@ from app.controllers.LoginController import reqrole
 from app.services.TraductionService import Traductionservice
 import os
 import json
+from app.services.playlistServiceMarketing import PlaylistService
+from app.services.MusiqueService import MusiqueService
 
 ts = Traductionservice()
 rs = RaspberryService()
-
+playlist_service = PlaylistService()
+service = MusiqueService()
 class commercial_Controller:
 
-    @app.route('/commercial', methods=['GET'])
+    @app.route('/commercial', methods=['GET'], endpoint='commercial')
     @reqrole("admin", "commercial")
     def voir_planning():
         traductions=ts.tradCommercial()
@@ -122,3 +125,21 @@ class commercial_Controller:
             return jsonify(success=True, message="Planning exporté avec succès dans static/data/planning_export.json")
         except Exception as e:
             return jsonify(success=False, message=f"Erreur technique lors de l'exportation : {str(e)}"), 500
+        
+
+    @app.route("/annonces", methods=["POST"])
+    def newAnnonce():
+        file = request.files.get("audio")
+        playlist_id = 1
+
+        if not file or not playlist_id:
+            abort(400, "Fichier ou playlist manquant")
+
+        playlist = playlist_service.get_by_id(int(playlist_id))
+        if not playlist:
+            abort(400, "Playlist invalide")
+
+        music = service.save_file(file)
+        playlist_service.add_music_to_playlist(playlist.id, music.id)
+
+        return redirect(url_for("commercial"))
