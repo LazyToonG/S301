@@ -105,6 +105,7 @@ class commercial_Controller:
 
     @app.route('/save_export', methods=['POST'])
     def save_export():
+
         try:
             # Obtenir le contenu du planning en JSON
             mem_file = service_schedule.export_planning()
@@ -121,6 +122,9 @@ class commercial_Controller:
             file_path = os.path.join(data_dir, 'planning_export.json')
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(json_content)
+
+            rs.envoieChaqueChangementPlanning()
+            
             
             return jsonify(success=True, message="Planning exporté avec succès dans static/data/planning_export.json")
         except Exception as e:
@@ -143,3 +147,4 @@ class commercial_Controller:
         playlist_service.add_music_to_playlist(playlist.id, music.id)
 
         return redirect(url_for("commercial"))
+    

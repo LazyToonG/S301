@@ -81,9 +81,9 @@ def create_playlist():
     title = request.form.get("title")
     if not title:
         abort(400, "Title de playlist obligatoire")
-
-    playlist_service.create_playlist(title=title)
-    return redirect(url_for("marketing"))
+    if title != "annonces":
+        playlist_service.create_playlist(title=title)
+        return redirect(url_for("marketing"))
 
 @app.route("/playlist/delete", methods=["POST"])
 def delete_playlist():

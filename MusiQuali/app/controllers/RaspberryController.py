@@ -27,7 +27,7 @@ def addRaspberry():
     try:
         ipaddress.IPv4Address(ip)
         rs.ajoutR(nom, ip)
-        subprocess.run(["scp", "-r", "./app/static/rasdata/*", f"{nom}@{ip}:/home/{nom}/musiquali/"])
+        subprocess.run(["scp", "-r", "./app/static/rasdata/", f"{nom}@{ip}:/home/{nom}/musiquali/"])
 
     except ipaddress.AddressValueError:
         flash("IP invalid", "error")
