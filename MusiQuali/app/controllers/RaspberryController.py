@@ -17,6 +17,7 @@ ts = Traductionservice()
 @reqrole('admin')
 def addRaspberry():
     ip = request.form.get("ipRasp")
+    nom = request.form.get("nom")
     
 
     rasps = rs.montreToutRasp()
@@ -26,7 +27,9 @@ def addRaspberry():
     
     try:
         ipaddress.IPv4Address(ip)
-        rs.ajoutR(request.form["nom"], request.form["ipRasp"])
+        rs.ajoutR(nom, ip)
+        subprocess.run(["scp", "-r", "./app/static/rasdata/*", f"{nom}@{ip}:/home/{nom}/musiquali/"])
+
     except ipaddress.AddressValueError:
         flash("IP invalid", "error")
 
@@ -65,7 +68,6 @@ def action_rasp():
             flash("Erreur lors de l'initialisation", "error")
     #tmp
     elif button=="test":
-        # subprocess.run(["scp", "-r", "./app/static/", "test@" + rs.selectRIp(rasp_id) + ":/home/test/musiquali/"])
         subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{nom}@{ip}:/home/{nom}/musiquali/"])
         flash("envoyer", "success")
         time.sleep(5)
@@ -82,7 +84,7 @@ def envoieChaqueChangementPlanning():
         subprocess.run(["rsync", "-avze", app.static_folder + "/data/schedule/",  r.nom + "@" + r.ipRasp + ":/home/" + r.nom + "musiquali/"])
 
 
-def pingTout():
+def pingTout(): #pour les logs
     toutRasp = rs.montreToutRasp()
     for chaque in toutRasp:
             subprocess.run(["ping", "-c", "1", chaque["ipRasp"]])

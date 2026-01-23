@@ -21,8 +21,10 @@
     ],
     "friday": [
         [
-            "00:00"
-        ]
+            "01:01"
+        ],
+        "Sia_-_Snowman_Official_Video",
+        "Five_Nights_at_Freddys_Big_Band_Version_-_The8BitBigBand_Lyric_Video"
     ],
     "saturday": [
         [
@@ -32,8 +34,6 @@
     "sunday": [
         [
             "00:30"
-        ],
-        "Sia_-_Snowman_Official_Video",
-        "Five_Nights_at_Freddys_Big_Band_Version_-_The8BitBigBand_Lyric_Video"
+        ]
     ]
 }
