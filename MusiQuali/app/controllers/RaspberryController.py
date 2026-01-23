@@ -74,16 +74,21 @@ def action_rasp():
     
     return redirect(url_for("admin_dashboard"))
 
-@app.route("/save_export", methods=["POST"])
-@reqrole('commercial')
-def envoieChaqueChangementPlanning():
-    time.sleep(10)  # Attendre 10 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
-    raspberrys = rs.findAll()
-    for r in raspberrys:
-        subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{r["nom"]}@{r["ipRasp"]}:/home/{r["nom"]}/musiquali/"])
-        flash("envoyer", "success")
-        time.sleep(5)
-        subprocess.run(["ssh", f"{r["nom"]}@{r["ipRasp"]}", "python3", f"/home/{r["nom"]}/musiquali/RAS.py"])
+
+#-> déplacement dans services/RaspberryService.py
+
+# @app.route("/save_export", methods=["POST"])
+# @reqrole('commercial')
+# def envoieChaqueChangementPlanning():
+#     time.sleep(10)  # Attendre 10 secondes avant d'exécuter la fonction pour s'assurer que le fichier est complètement sauvegardé
+#     raspberrys = rs.findAll()
+#     for r in raspberrys:
+#         if r["ipRasp"] is None or r["nom"] is None:
+#             continue  # Ignorer les entrées avec des informations incomplètes
+#         subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{r['nom']}@{r['ipRasp']}:/home/{r['nom']}/musiquali/"])
+#         flash("envoyer", "success")
+#         time.sleep(5)
+#         subprocess.run(["ssh", f"{r['nom']}@{r['ipRasp']}", "python3", f"/home/{r['nom']}/musiquali/RAS.py"])
 
 
 
