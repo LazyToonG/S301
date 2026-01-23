@@ -73,10 +73,10 @@ def action_rasp():
             flash(message, "error")
     #tmp
     elif button=="test":
-        # # if rasp_id==None:
-        #     # flash("Pas de Raspberry trouvé", "error")
-        #     # return redirect(url_for("admin_dashboard"))
-        # # flash("En cours d'envoi...", "warning") #warning parceque c'est jaune, neutre
+        if rasp_id==None:
+            flash("Pas de Raspberry trouvé", "error")
+            return redirect(url_for("admin_dashboard"))
+        flash("En cours d'envoi...", "warning") #warning parceque c'est jaune, neutre
         subprocess.run(["rsync", "-avz", "--delete", "-e", "ssh","./app/static/rasdata/",  f"{nom}@{ip}:/home/{nom}/musiquali/"])
         flash("envoyer !", "success")
         time.sleep(5)
