@@ -16,12 +16,16 @@ h1 {
 
 /* Barre de contrôles (Zoom, Sauvegarde) */
 .controls-bar {
+    display: flex;
+    flex-direction: row;
     position: sticky;
     top: 0;
     z-index: 100;
     background-color: #b5d3f0;
     padding: 10px 0;
     margin-bottom: 10px;
+    gap:10px;
+    height: 50px;
 }
 .controls-bar.sombre {
     color : white;
@@ -299,4 +303,10 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 6px;
     box-sizing: border-box;
+}
+
+/* Zione upload message */
+#upload-form {
+    width: auto;
+    height: px;
 }
